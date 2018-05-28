@@ -82,6 +82,8 @@
     <Compile Include="Assets\GracesGames\SimpleFileBrowser\Scripts\UI\UserInterface.cs" />
     <Compile Include="Assets\Scripts\Bullets\Bullet.cs" />
     <Compile Include="Assets\Scripts\BulletsPool.cs" />
+    <Compile Include="Assets\Scripts\CSV\CSVFileStream.cs" />
+    <Compile Include="Assets\Scripts\CSV\PublicDataManager.cs" />
     <Compile Include="Assets\Scripts\Delaunay\BitmapData.cs" />
     <Compile Include="Assets\Scripts\Delaunay\Circle.cs" />
     <Compile Include="Assets\Scripts\Delaunay\DelaunayLinesForEdges.cs" />
@@ -126,11 +128,11 @@
     <None Include="Assets\Shaders\UCLA GameLab Double-Sided Wireframe.shader" />
     <None Include="Assets\Shaders\UCLA GameLab Double-Sided Cutout Wireframe.shader" />
     <None Include="Assets\GracesGames\2DTileMapLevelEditor\ReadMe.txt" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>F:/Raindrop-s-Dream/Raindrop's Dream/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>F:/Raindrop-s-Dream/Raindrop's Dream/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>F:/Raindrop-s-Dream/Raindrop's Dream/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Unity3D/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
