@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/********************************************************************************* 
+  *Author:AICHEN
+  *Version:1.0
+  *Date:  2018-5-29
+  *Description: CSV表读写
+  *Changes:
+**********************************************************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
