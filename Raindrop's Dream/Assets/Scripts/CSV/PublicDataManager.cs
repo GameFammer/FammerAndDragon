@@ -15,6 +15,9 @@ public class PublicDataManager : MonoBehaviour
 {
    //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance=null;
+
+    public string Map_Path;//Map存储路径
+    private Dictionary<int, LevelTable> levelTable;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -24,13 +27,20 @@ public class PublicDataManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+        //初始化Ini
+        InitIni();
         //初始化CSV
-        Init();
+        InitCsv();
     }
-    private void Init()
+    private void InitIni()
     {
-      //在这初始化每个CSV表
-     //   InitFromCsv<AIName>(ref items, "AIName.csv");
+        
+    }
+    private void InitCsv()
+    {
+        //在这初始化每个CSV表
+        //   InitFromCsv<AIName>(ref items, "AIName.csv");
+        InitFromCsv<LevelTable>(ref levelTable, "LevelTable.csv");
     }
     //初始化CSV表
     private void InitFromCsv<T>(ref Dictionary<int, T> _dataTable,string _fileName)
@@ -66,5 +76,11 @@ public class PublicDataManager : MonoBehaviour
         }
 
         return dic;
+    }
+
+    /*Level*/
+    public LevelTable GetLevelTable(int _ID)
+    {
+        return levelTable[_ID];
     }
 }

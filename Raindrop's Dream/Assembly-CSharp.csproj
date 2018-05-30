@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\BulletsPool.cs" />
      <Compile Include="Assets\Scripts\CSV\CSVClass\AIName.cs" />
      <Compile Include="Assets\Scripts\CSV\CSVClass\CSVTable.cs" />
+     <Compile Include="Assets\Scripts\CSV\CSVClass\LevelTable.cs" />
      <Compile Include="Assets\Scripts\CSV\CSVFileStream.cs" />
      <Compile Include="Assets\Scripts\CSV\PublicDataManager.cs" />
      <Compile Include="Assets\Scripts\CSV\ReflectUtil.cs" />
@@ -107,7 +108,7 @@
      <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Interface\IBeHitMessage.cs" />
-     <Compile Include="Assets\Scripts\MapEdit\MapEdit.cs" />
+     <Compile Include="Assets\Scripts\LevelEditor\LevelEditor.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAction.cs" />
      <Compile Include="Assets\Scripts\Room.cs" />
