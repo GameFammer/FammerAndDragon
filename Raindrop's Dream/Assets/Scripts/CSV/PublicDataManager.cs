@@ -16,8 +16,8 @@ public class PublicDataManager : MonoBehaviour
    //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance=null;
 
-    public string Map_Path;//Map存储路径
     private Dictionary<int, LevelTable> levelTable;
+    private Dictionary<int, TilePrefabTable> tilePrefabTable;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -41,6 +41,7 @@ public class PublicDataManager : MonoBehaviour
         //在这初始化每个CSV表
         //   InitFromCsv<AIName>(ref items, "AIName.csv");
         InitFromCsv<LevelTable>(ref levelTable, "LevelTable.csv");
+        InitFromCsv<TilePrefabTable>(ref tilePrefabTable, "TilePrefabTable.csv");
     }
     //初始化CSV表
     private void InitFromCsv<T>(ref Dictionary<int, T> _dataTable,string _fileName)
@@ -66,7 +67,7 @@ public class PublicDataManager : MonoBehaviour
 
             /* 使用反射，将CSV文件的数据赋值给CSV数据对象的相应字段，要求CSV文件的字段名和CSV数据对象的字段名完全相同 */
             T obj = Activator.CreateInstance<T>();
-            foreach (PropertyInfo p in props)
+            foreach (PropertyInfo p in props)                                                                                                                                                                                                                        
             {
                 ReflectUtil.PiSetValue<T>(datas[p.Name], p, obj);
             }
@@ -82,5 +83,16 @@ public class PublicDataManager : MonoBehaviour
     public LevelTable GetLevelTable(int _ID)
     {
         return levelTable[_ID];
+    }
+
+
+    /*TilePrefab*/
+    public Dictionary<int, TilePrefabTable>.KeyCollection GetTilePrefabTableKeys()
+    {
+        return tilePrefabTable.Keys;
+    }
+    public TilePrefabTable GetTilePrefabTable(int _ID)
+    {
+        return tilePrefabTable[_ID];
     }
 }

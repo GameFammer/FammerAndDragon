@@ -74,9 +74,9 @@
      <Compile Include="Assets\GracesGames\SimpleFileBrowser\Scripts\UI\UserInterface.cs" />
      <Compile Include="Assets\Scripts\Bullets\Bullet.cs" />
      <Compile Include="Assets\Scripts\BulletsPool.cs" />
-     <Compile Include="Assets\Scripts\CSV\CSVClass\AIName.cs" />
      <Compile Include="Assets\Scripts\CSV\CSVClass\CSVTable.cs" />
      <Compile Include="Assets\Scripts\CSV\CSVClass\LevelTable.cs" />
+     <Compile Include="Assets\Scripts\CSV\CSVClass\TilePrefabTable.cs" />
      <Compile Include="Assets\Scripts\CSV\CSVFileStream.cs" />
      <Compile Include="Assets\Scripts\CSV\PublicDataManager.cs" />
      <Compile Include="Assets\Scripts\CSV\ReflectUtil.cs" />

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/MapEdit.unity
+- path: Assets/GracesGames/2DTileMapLevelEditor/Scenes/PlatformerDemo.unity
   isLoaded: 1
   isActive: 1

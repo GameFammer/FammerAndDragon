@@ -4,4 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/GracesGames/2DTileMapLevelEditor/Scenes/PlatformerDemo.unity
+    guid: c576d742ad9094303a1073cee4e45539
+  - enabled: 1
+    path: Assets/Scenes/MapEdit.unity
+    guid: 1b4f2db9b54e3d540ae9d6bdf2f6ded6
+  - enabled: 1
+    path: Assets/Scenes/test.unity
+    guid: 3561ae5d07189db4193c6ede0a148826
+  - enabled: 1
+    path: Assets/Scenes/test1.unity
+    guid: 8298d6b28a367ce43ac75f481bb9a8e2
+  m_configObjects: {}
