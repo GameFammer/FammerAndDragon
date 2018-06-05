@@ -1,2 +1,7 @@
 ID,TileType,TileName,MakerName,TilePrefabName,TilePrefabPath
 Comment,"Tile类别（0：背景图，1：可碰撞地形组成，2：不可碰撞地形组成，3：道具，4:NPC,5：敌人",名称,作者名,TilePrefab名,TilePrefab路径
+0,,,,,
+1,,,,,
+2,,,,,
+3,,,,,
+4,,,,,

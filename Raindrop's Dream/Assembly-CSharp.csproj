@@ -112,6 +112,7 @@
      <Compile Include="Assets\Scripts\MapManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAction.cs" />
      <Compile Include="Assets\Scripts\Room.cs" />
+     <Compile Include="Assets\Scripts\UI\ShowHoverInfo.cs" />
      <None Include="Assets\GracesGames\2DTileMapLevelEditor\Sprites\Kenney\Sokoban Pack\License.txt" />
      <None Include="Assets\GracesGames\2DTileMapLevelEditor\Sprites\Kenney\UI Pack\license.txt" />
      <None Include="Assets\GracesGames\SimpleFileBrowser\ReadMe.txt" />

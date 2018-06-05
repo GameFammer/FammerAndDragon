@@ -13,5 +13,5 @@ public class LevelTable :CSVTable
 {
     public string LevelName;//关卡名
     public string MakerName;//制作者名
-    public string LevelFilePath;//关卡level文件路径
+    public string LevelFilePath;//关卡文件路径
 }

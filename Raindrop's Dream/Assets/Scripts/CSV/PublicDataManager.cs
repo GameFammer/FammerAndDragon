@@ -84,7 +84,18 @@ public class PublicDataManager : MonoBehaviour
     {
         return levelTable[_ID];
     }
-
+    public Dictionary<int, LevelTable>.KeyCollection GetLevelTableKeys()
+    {
+        return levelTable.Keys;
+    }
+    public string GetLevelName(int _ID)
+    {
+        return levelTable[_ID].LevelName;
+    }
+    public string GetLevelFilePath(int _ID)
+    {
+        return levelTable[_ID].LevelFilePath;
+    }
 
     /*TilePrefab*/
     public Dictionary<int, TilePrefabTable>.KeyCollection GetTilePrefabTableKeys()
@@ -94,5 +105,13 @@ public class PublicDataManager : MonoBehaviour
     public TilePrefabTable GetTilePrefabTable(int _ID)
     {
         return tilePrefabTable[_ID];
+    }
+    public string GetTilePrefabName(int _ID)
+    {
+        return tilePrefabTable[_ID].TilePrefabName;
+    }
+    public int GetTilePrefabType(int _ID)
+    {
+        return tilePrefabTable[_ID].TileType;
     }
 }
