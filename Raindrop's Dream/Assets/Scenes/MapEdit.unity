@@ -975,8 +975,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 106869700}
   m_HandleRect: {fileID: 106869699}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1550,7 +1550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.009863822, y: 0.8764098}
   m_AnchorMax: {x: 0.2781362, y: 1}
-  m_AnchoredPosition: {x: 0.19999695, y: -0.15002441}
+  m_AnchoredPosition: {x: 0.19999695, y: -0.15014648}
   m_SizeDelta: {x: 1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &867021854
@@ -1969,7 +1969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0605ec6397ee164a8ef07ad339a54d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileButton: {fileID: 1568575296382604, guid: 74dead7f528a4d8488cc24b1f3a38609, type: 2}
+  tileButton: {fileID: 1580036358922306, guid: 74dead7f528a4d8488cc24b1f3a38609, type: 2}
   levelButton: {fileID: 1974497378275188, guid: f830f0441e634da48aaab121a05c8932,
     type: 2}
   LevelPanel: {fileID: 1400793279}
@@ -2437,7 +2437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000031678032, y: 0.00012207031}
+  m_AnchoredPosition: {x: -0.000050168117, y: 0.00012207031}
   m_SizeDelta: {x: 0, y: 15.600006}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1423669520
@@ -2470,7 +2470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00002878315, y: -0.000030517578}
+  m_AnchoredPosition: {x: -0.000035710673, y: 0.000014737605}
   m_SizeDelta: {x: 0, y: -0.00012207}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1495558145

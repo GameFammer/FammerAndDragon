@@ -164,3 +164,7 @@ F:\Raindrop-s-Dream\Raindrop's Dream\Temp\bin\Debug\UnityEngine.SpatialTracking.
 F:\Raindrop-s-Dream\Raindrop's Dream\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 F:\Raindrop-s-Dream\Raindrop's Dream\obj\Debug\Assembly-CSharp.dll
 F:\Raindrop-s-Dream\Raindrop's Dream\obj\Debug\Assembly-CSharp.pdb
+F:\Raindrop-s-Dream\Raindrop's Dream\Temp\bin\Debug\Vuforia.UnityExtensions.dll
+F:\Raindrop-s-Dream\Raindrop's Dream\Temp\bin\Debug\Vuforia.UnityExtensions.xml
+F:\Raindrop-s-Dream\Raindrop's Dream\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+F:\Raindrop-s-Dream\Raindrop's Dream\obj\Debug\Assembly-CSharp.csproj.CopyComplete

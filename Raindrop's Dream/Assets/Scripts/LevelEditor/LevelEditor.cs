@@ -52,7 +52,7 @@ public class LevelEditor : MonoBehaviour
     public GameObject tileMap;//tile父对象
     private GameObject nowTileObject;//当前选中tile
     /*Mouse*/
-    private Vector3 mousePos;//鼠标指针位置坐标
+    private Vector3Int mousePos;//鼠标指针位置坐标
     /*图层*/
     private int nowLayer;
     /*TileType*/
@@ -78,7 +78,7 @@ public class LevelEditor : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-       
+
     }
     // Use this for initialization
     void Start()
@@ -99,33 +99,37 @@ public class LevelEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //跟随鼠标移动，更新Tile位置
-        if (mousePos != Camera.main.ScreenToWorldPoint(Input.mousePosition))
+        if (nowTileObject != null)
         {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            nowTileObject.transform.position = new Vector3Int(Mathf.CeilToInt(mousePos.x), Mathf.CeilToInt(mousePos.y), nowLayer);
-        }
-        //左键点击放置Tile,已经有物体的位置不能放置
-        if (Input.GetMouseButton(0) && IsValidPosition(mousePos))
-        {
-            GameObject des = tileMap.transform.Find(mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString()).gameObject;
-            if (!des)
+            //跟随鼠标移动，更新Tile位置
+            if (mousePos != Vector3Int.CeilToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
             {
-                SetNowTileToTileMap(nowTileId);
+                mousePos = Vector3Int.CeilToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                nowTileObject.transform.position = new Vector3Int(Mathf.CeilToInt(mousePos.x), Mathf.CeilToInt(mousePos.y), nowLayer);
             }
-        }
-        //右键
-        if (Input.GetMouseButton(1) && IsValidPosition(mousePos))
-        {
-            GameObject des = tileMap.transform.Find(mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString()).gameObject;
-            foreach (TileData t in mapData.tileList)
+            //左键点击放置Tile,已经有物体的位置不能放置
+            if (Input.GetMouseButton(0))
             {
-                if (t.position == Vector3Int.CeilToInt(new Vector3(mousePos.x, mousePos.y, nowLayer)))
+                string s = mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString();
+                Debug.Log(tileMap.transform.Find(s));
+                if (tileMap.transform.Find(s) == null)
+                    //{
+                    SetNowTileToTileMap(nowTileId);
+                // }
+            }
+            //右键
+            if (Input.GetMouseButton(1) && IsValidPosition(mousePos))
+            {
+                GameObject des = tileMap.transform.Find(mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString()).gameObject;
+                foreach (TileData t in mapData.tileList)
                 {
-                    mapData.tileList.Remove(t);
+                    if (t.position == Vector3Int.CeilToInt(new Vector3(mousePos.x, mousePos.y, nowLayer)))
+                    {
+                        mapData.tileList.Remove(t);
+                    }
                 }
+                DestroyImmediate(des);
             }
-            DestroyImmediate(des);
         }
     }
 
@@ -158,23 +162,25 @@ public class LevelEditor : MonoBehaviour
 
         foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
         {
+            GameObject btn = null;
             //创建按钮绑定点击函数
-            GameObject btn = Instantiate(tileButton, Vector3.zero, Quaternion.identity);
+            switch (PublicDataManager.instance.GetTilePrefabType(key))
+            {
+                case TILE_BACKGROUND: btn = Instantiate(tileButton, backgroundPage.transform); break;
+                case TILE_PLATFORMHASCOLLIDER: btn = Instantiate(tileButton, platformHasColliderPage.transform); break;
+                case TILE_PLATFORMNOCOLLIDER: btn = Instantiate(tileButton, platformNoColliderPage.transform); break;
+                case TILE_ITEM: btn = Instantiate(tileButton, itemsPage.transform); break;
+                case TILE_NPC: btn = Instantiate(tileButton, npcPage.transform); break;
+                case TILE_ENEMY: btn = Instantiate(tileButton, enemyPage.transform); break;
+                default: break;
+            }
+
             btn.tag = key.ToString();
             btn.GetComponent<Button>().name = PublicDataManager.instance.GetTilePrefabName(key);
             btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
             btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
             //根据Tpye加到不同的分页下
-            switch (PublicDataManager.instance.GetTilePrefabType(key))
-            {
-                case TILE_BACKGROUND: btn.transform.SetParent(backgroundPage.transform); break;
-                case TILE_PLATFORMHASCOLLIDER: btn.transform.SetParent(platformHasColliderPage.transform); break;
-                case TILE_PLATFORMNOCOLLIDER: btn.transform.SetParent(platformNoColliderPage.transform); break;
-                case TILE_ITEM: btn.transform.SetParent(itemsPage.transform); break;
-                case TILE_NPC: btn.transform.SetParent(npcPage.transform); break;
-                case TILE_ENEMY: btn.transform.SetParent(enemyPage.transform); break;
-                default: break;
-            }
+
             //初始显示背景分页
             SwitchTilePanel(TILE_BACKGROUND);
         }
@@ -238,9 +244,10 @@ public class LevelEditor : MonoBehaviour
         tileInfo.position = _pos;
         mapData.tileList.Add(tileInfo);
     }
+    //
     void SetNowTileToTileMap(int _ID)
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = Vector3Int.CeilToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(Mathf.CeilToInt(mousePos.x), Mathf.CeilToInt(mousePos.y), nowLayer), Quaternion.identity);
         nowTileObject.name = mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString();
         nowTileObject.tag = _ID.ToString();
@@ -337,10 +344,10 @@ public class LevelEditor : MonoBehaviour
     //读取level封面
     private Sprite LoadLevelImage(int _mapId)
     {
-        WWW www = new WWW("file:///"+PublicDataManager.DATA_PATH+ PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
+        WWW www = new WWW("file:///" + PublicDataManager.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
         if (www != null && string.IsNullOrEmpty(www.error))
         {
-            return Sprite.Create(www.texture,new Rect(0,0,www.texture.width,www.texture.height),Vector2.zero);
+            return Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
         }
         else
             return null;
