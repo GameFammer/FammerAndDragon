@@ -78,12 +78,13 @@ public class LevelEditor : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
+       
     }
     // Use this for initialization
     void Start()
     {
         nowLayer = 0;
+        tilePrefabs = new Dictionary<int, GameObject>();
         //初始化工具栏
         InitToolbars();
         //初始化Tile预制体
@@ -137,7 +138,12 @@ public class LevelEditor : MonoBehaviour
     //加载TilePrefabs
     void InitTilePrefabs()
     {
-
+        AssetBundle load = AssetBundle.LoadFromFile(PublicDataManager.DATA_PATH + "\\test.obj");
+        foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
+        {
+            GameObject prefab = load.LoadAsset<GameObject>(PublicDataManager.instance.GetTilePrefabName(key));
+            tilePrefabs.Add(key, prefab);
+        }
     }
     //初始化TileButton
     void InitTileButtons()
@@ -331,12 +337,7 @@ public class LevelEditor : MonoBehaviour
     //读取level封面
     private Sprite LoadLevelImage(int _mapId)
     {
-#if UNITY_IOS || UNITY_ANDROID
-                WWW www = new WWW("file://"+Application.persistentDataPath + PublicDataManager.instance.GetLevelFilePath(_mapId)+".png");
-
-#elif UNITY_STANDALONE_WIN
-        WWW www = new WWW("file:///"+Application.streamingAssetsPath + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
-#endif
+        WWW www = new WWW("file:///"+PublicDataManager.DATA_PATH+ PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
         if (www != null && string.IsNullOrEmpty(www.error))
         {
             return Sprite.Create(www.texture,new Rect(0,0,www.texture.width,www.texture.height),Vector2.zero);

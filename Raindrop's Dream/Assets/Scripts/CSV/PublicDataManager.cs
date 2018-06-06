@@ -15,7 +15,18 @@ public class PublicDataManager : MonoBehaviour
 {
    //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance=null;
+    public static string DATA_PATH
+    {
+        get
+        {
+#if UNITY_IOS || UNITY_ANDROID
+            return Application.persistentDataPath;
 
+#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            return Application.streamingAssetsPath;
+#endif
+        }
+    }
     private Dictionary<int, LevelTable> levelTable;
     private Dictionary<int, TilePrefabTable> tilePrefabTable;
     void Awake()
@@ -55,7 +66,6 @@ public class PublicDataManager : MonoBehaviour
 
         /* 从CSV文件读取数据 */
         Dictionary<string, Dictionary<string, string>> result = CSVFileStream.ReadCsvFile(_fileName);
-
         /* 遍历每一行数据 */
         foreach (string ID in result.Keys)
         {
@@ -65,13 +75,17 @@ public class PublicDataManager : MonoBehaviour
             /* 读取Csv数据对象的属性 */
             PropertyInfo[] props = typeof(T).GetProperties();
 
+            foreach (PropertyInfo t in props)
+            {
+                Debug.Log(t.PropertyType);
+            }
             /* 使用反射，将CSV文件的数据赋值给CSV数据对象的相应字段，要求CSV文件的字段名和CSV数据对象的字段名完全相同 */
             T obj = Activator.CreateInstance<T>();
             foreach (PropertyInfo p in props)                                                                                                                                                                                                                        
             {
                 ReflectUtil.PiSetValue<T>(datas[p.Name], p, obj);
             }
-
+          
             /* 按ID-数据的形式存储 */
             dic[Convert.ToInt32(ID)] = obj;
         }
@@ -113,5 +127,9 @@ public class PublicDataManager : MonoBehaviour
     public int GetTilePrefabType(int _ID)
     {
         return tilePrefabTable[_ID].TileType;
+    }
+    public string GetTilePrefabPath(int _ID)
+    {
+        return tilePrefabTable[_ID].TilePrefabPath;
     }
 }

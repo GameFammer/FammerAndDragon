@@ -16,10 +16,9 @@ public class CSVFileStream
     public static Dictionary<string, Dictionary<string, string>> ReadCsvFile(string _fileName)
     {
         Dictionary<string, Dictionary<string, string>> result = new Dictionary<string, Dictionary<string, string>>();
-        string url = Application.streamingAssetsPath + "\\CSV\\" + _fileName;
+        string url = PublicDataManager.DATA_PATH + "\\CSV\\" + _fileName;
        
         string[] fileData = File.ReadAllLines(url);
-
         if (fileData.Length < 3)
         {
             return result;
@@ -40,7 +39,6 @@ public class CSVFileStream
                 result[ID][keys[j]] = line[j];
             }
         }
-
         return result;
     }
 }
