@@ -1,3 +1,3 @@
-锘縄D,LevelName,MakerName,LevelFilePath
-Comment,鍏冲崱鍚嶇О,鍒朵綔鑰呭悕,鍏冲崱鏂囦欢璺緞锛堜綔鑰呭悕\\鍦板浘鍚峔\鍦板浘鍚嶏級
-1,ABC,AICHEN,AICHEN\\ABC\\ABC
+ID,LevelName,MakerName,LevelFilePath
+Comment,关卡名称,制作者名,关卡文件路径（作者名\地图名\地图名）
+1,WWW,AICHEN,AICHEN\WWW\WWW

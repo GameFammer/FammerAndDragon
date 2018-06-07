@@ -7,25 +7,13 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public struct TileData
-{
-    public int tileId;//CSV表中物品对应的ID
-    public Vector3Int position;//Tile位置坐标信息
-}
-public class MapData
-{
-    public int mapId;//csv表中对应id
-    public string mapName;//地图名称
-    public string makerName;//地图制作者
-    public List<TileData> tileList = new List<TileData>();//tile列表
-}
 public class LevelEditor : MonoBehaviour
 {
     public static LevelEditor instance = null;
     /*UI*/
     public GameObject tileButton;//tile按钮预制体
     public GameObject levelButton;//已有关卡按钮
-
+    //Right
     public GameObject LevelPanel;//已有level面板
     public GameObject backgroundPage;//背景tile分页
     public GameObject platformHasColliderPage;//可碰撞地形组成分页
@@ -42,11 +30,15 @@ public class LevelEditor : MonoBehaviour
     public GameObject enemyPageBtn;//enemy分页按钮
 
     public GameObject nowTileImage;//当前tile图标
+    //Up
+    public GameObject levelNameInputField;//关卡名输入框
+    public GameObject makerNameInputField;//关卡制作者输入框
     public GameObject saveButton;//保存按钮
+
     /*Data*/
-    private MapData mapData;//地图信息数据
     private Dictionary<int, GameObject> tilePrefabs;//Tile预制体
     private int nowTileId;//当前选中TileID
+    private int nowLevelId;//当前编辑关卡ID
 
     /*Object*/
     public GameObject tileMap;//tile父对象
@@ -83,7 +75,9 @@ public class LevelEditor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        nowLayer = 0;
+        nowLayer = -1;
+        nowTileId = -1;
+        nowLevelId = -1;
         tilePrefabs = new Dictionary<int, GameObject>();
         //初始化工具栏
         InitToolbars();
@@ -93,44 +87,53 @@ public class LevelEditor : MonoBehaviour
         InitTileButtons();
         //初始化已有Level列表
         InitLevelList();
-        StartCoroutine(AutoSave());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (nowTileObject != null)
+        //跟随鼠标移动，更新Tile位置
+        if (mousePos != Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
         {
-            //跟随鼠标移动，更新Tile位置
-            if (mousePos != Vector3Int.CeilToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (nowTileObject != null)
             {
-                mousePos = Vector3Int.CeilToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                nowTileObject.transform.position = new Vector3Int(Mathf.CeilToInt(mousePos.x), Mathf.CeilToInt(mousePos.y), nowLayer);
-            }
-            //左键点击放置Tile,已经有物体的位置不能放置
-            if (Input.GetMouseButton(0))
-            {
-                string s = mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString();
-                Debug.Log(tileMap.transform.Find(s));
-                if (tileMap.transform.Find(s) == null)
-                    //{
-                    SetNowTileToTileMap(nowTileId);
-                // }
-            }
-            //右键
-            if (Input.GetMouseButton(1) && IsValidPosition(mousePos))
-            {
-                GameObject des = tileMap.transform.Find(mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString()).gameObject;
-                foreach (TileData t in mapData.tileList)
-                {
-                    if (t.position == Vector3Int.CeilToInt(new Vector3(mousePos.x, mousePos.y, nowLayer)))
-                    {
-                        mapData.tileList.Remove(t);
-                    }
-                }
-                DestroyImmediate(des);
+                nowTileObject.transform.position = new Vector3Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y), nowLayer);
             }
         }
+        //左键点击放置Tile,已经有物体的位置不能放置
+        if (nowTileObject != null)
+        {
+            if (Input.GetMouseButton(0) && IsValidPosition(mousePos))
+            {
+                if (FindTileInChild(new Vector3Int(mousePos.x, mousePos.y, nowLayer)) == null)
+                {
+                    SetNowTileToTileMap(nowTileId);
+                }
+            }
+        }
+        //右键清除当前选择or橡皮擦
+        if (Input.GetMouseButton(1))
+        {
+            if (nowTileObject != null)
+            {
+                Destroy(nowTileObject);
+                nowTileObject = null;
+                nowTileImage.GetComponent<Image>().sprite = null;
+                nowTileId = -1;
+            }
+            mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (IsValidPosition(mousePos))
+            {
+                GameObject des = FindTileInChild(new Vector3Int(mousePos.x, mousePos.y, nowLayer));
+                if (des != null)
+                {
+                    Destroy(des.gameObject);
+                }
+            }
+        }
+        StartCoroutine(AutoSave());
     }
 
     /*各种初始化*/
@@ -174,11 +177,12 @@ public class LevelEditor : MonoBehaviour
                 case TILE_ENEMY: btn = Instantiate(tileButton, enemyPage.transform); break;
                 default: break;
             }
-
-            btn.tag = key.ToString();
-            btn.GetComponent<Button>().name = PublicDataManager.instance.GetTilePrefabName(key);
-            btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
-            btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
+            if (btn != null)
+            {
+                btn.GetComponent<Button>().name = PublicDataManager.instance.GetTilePrefabName(key);
+                btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
+                btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
+            }
             //根据Tpye加到不同的分页下
 
             //初始显示背景分页
@@ -190,29 +194,34 @@ public class LevelEditor : MonoBehaviour
     {
         foreach (int key in PublicDataManager.instance.GetLevelTableKeys())
         {
-            GameObject btn = Instantiate(levelButton, Vector3.zero, Quaternion.identity);
-            btn.tag = key.ToString();
+            GameObject btn = Instantiate(levelButton, LevelPanel.transform);
             btn.name = PublicDataManager.instance.GetLevelName(key);
             btn.GetComponent<Image>().sprite = LoadLevelImage(key);
             btn.GetComponent<Button>().onClick.AddListener(() => { LoadLevel(key); });
-            btn.transform.SetParent(LevelPanel.transform);
         }
     }
 
     /*各种按钮响应函数*/
+    //保存按钮
+    void OnSaveButtonClick()
+    {
+        SaveLevel();
+    }
     //tile按钮
     void OnTileButtonClick(int _ID)
     {
         if (nowTileObject != null)
         {
-            DestroyImmediate(nowTileObject);
+            Destroy(nowTileObject);
         }
         //设置当前ID
         nowTileId = _ID;
         //设置当前选中Tile图标
         nowTileImage.GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
         //创建tile
-        SetNowTileToTileMap(_ID);
+        mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(mousePos.x, mousePos.y, nowLayer), Quaternion.identity);
+        nowTileObject.name = _ID.ToString();
     }
     //切换tile分页
     void SwitchTilePanel(int _panelType)
@@ -234,42 +243,64 @@ public class LevelEditor : MonoBehaviour
             default: break;
         }
     }
-
-    /*各种Set*/
-    //记录Tile数据并加入到tileList
-    void SetTileDataAndAddToMapData(int _ID, Vector3Int _pos)
+    /*各种find*/
+    //查找子对象
+    GameObject FindTileInChild(Vector3Int _mpos)
     {
-        TileData tileInfo = new TileData();
-        tileInfo.tileId = _ID;
-        tileInfo.position = _pos;
-        mapData.tileList.Add(tileInfo);
+        GameObject pos;
+        for (int i = 0; i < tileMap.transform.childCount; i++)
+        {
+            pos = tileMap.transform.GetChild(i).gameObject;
+            if (Vector3Int.RoundToInt(pos.transform.position) == _mpos)
+            {
+                return pos;
+            }
+        }
+        return null;
     }
-    //
+    /*各种Set*/
+    //放置tile
     void SetNowTileToTileMap(int _ID)
     {
-        mousePos = Vector3Int.CeilToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(Mathf.CeilToInt(mousePos.x), Mathf.CeilToInt(mousePos.y), nowLayer), Quaternion.identity);
-        nowTileObject.name = mousePos.x.ToString() + mousePos.y.ToString() + nowLayer.ToString();
-        nowTileObject.tag = _ID.ToString();
         nowTileObject.transform.SetParent(tileMap.transform);
+
+        mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(mousePos.x, mousePos.y, nowLayer), Quaternion.identity);
+        nowTileObject.name = _ID.ToString();
     }
 
     /*各种判断*/
     //放置位置是否合法
     bool IsValidPosition(Vector3 pos)
     {
-        return pos.x >= 0 && pos.x <= MAX_WIDTH && pos.y >= 0 && pos.y <= MAX_HEIGHT && pos.z >= 0 && pos.z <= MAX_LAYERS;
+        return pos.x >= 0 && pos.x <= MAX_WIDTH && pos.y >= 0 && pos.y <= MAX_HEIGHT;
     }
 
     /*读写Level*/
     //保存地图
     public void SaveLevel()
     {
+        string levelName = levelNameInputField.GetComponent<InputField>().text;
+        if (levelName == null)
+        {
+            //请输入关卡名
+            return;
+        }
+        string makerName = makerNameInputField.GetComponent<InputField>().text;
+        if (makerName == null)
+        {
+            //请输入制作者名
+            return;
+        }
+        if (nowLevelId < 0)
+        {
+            nowLevelId = PublicDataManager.instance.GetLevelTableCount() + 1;
+        }
         //文件夹路径：/Level/作者名/地图名文件夹
 #if UNITY_IOS || UNITY_ANDROID      
-        string saveDirPath = Application.persistentDataPath + "\\Level\\" + mapData.makerName + "\\" + mapData.mapName;
+        string saveDirPath = Application.persistentDataPath + "\\Level\\" +  makerName  + "\\" + levelName;
 #elif UNITY_STANDALONE_WIN
-        string saveDirPath = Application.streamingAssetsPath + "\\Level\\" + mapData.makerName + "\\" + mapData.mapName;
+        string saveDirPath = Application.streamingAssetsPath + "\\Level\\" + makerName + "\\" + levelName;
 #endif
         if (!Directory.Exists(saveDirPath))
         {
@@ -279,17 +310,18 @@ public class LevelEditor : MonoBehaviour
         {
             try
             {
-                FileStream fs = new FileStream(saveDirPath + "\\" + mapData.mapName + ".level", FileMode.Create);
+                FileStream fs = new FileStream(saveDirPath + "\\" + levelName + ".level", FileMode.Create);
                 StreamWriter writer = new StreamWriter(fs);
-                writer.WriteLine(mapData.mapId);
-                writer.WriteLine(mapData.mapName);
-                writer.WriteLine(mapData.makerName);
-                foreach (TileData tile in mapData.tileList)
+                writer.WriteLine(nowLevelId);
+                writer.WriteLine(levelName);
+                writer.WriteLine(makerName);
+                GameObject obj;
+                for (int i = 0; i < tileMap.transform.childCount; i++)
                 {
-                    writer.WriteLine(tile.tileId + "#" + tile.position.x + "," + tile.position.y + "," + tile.position.z);
+                    obj = tileMap.transform.GetChild(i).gameObject;
+                    writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
+                    //关卡封面
                 }
-                //关卡封面
-
                 writer.Close();
             }
             catch (Exception e)
@@ -305,39 +337,35 @@ public class LevelEditor : MonoBehaviour
         try
         {
 #if UNITY_IOS || UNITY_ANDROID
-                FileStream fs = new FileStream(Application.persistentDataPath + "\\Level\\" + levelInfo.LevelFilePath, FileMode.Open);
+                FileStream fs = new FileStream(Application.persistentDataPath +PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
 
-#elif UNITY_STANDALONE_WIN
-            FileStream fs = new FileStream(Application.streamingAssetsPath + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
+#elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+            FileStream fs = new FileStream(Application.streamingAssetsPath + "\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
 #endif
             StreamReader reader = new StreamReader(fs);
-            mapData.mapId = int.Parse(reader.ReadLine());
-            mapData.mapName = reader.ReadLine();
-            mapData.makerName = reader.ReadLine();
+            nowLevelId = int.Parse(reader.ReadLine());
+            levelNameInputField.GetComponent<InputField>().text = reader.ReadLine();
+            makerNameInputField.GetComponent<InputField>().text = reader.ReadLine();
             string tileInfoLine;//读取的一行
             string[] tileInfo;//以#分二段
             string[] posInfo;//position以,分三段
             while ((tileInfoLine = reader.ReadLine()) != null)
             {
                 tileInfo = tileInfoLine.Split('#');
-                TileData t = new TileData();
-                t.tileId = int.Parse(tileInfo[0]);
 
                 posInfo = tileInfo[1].Split(',');
-                t.position = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
+                Vector3Int position = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
 
-                GameObject obj = Instantiate(tilePrefabs[t.tileId], t.position, Quaternion.identity);
-                nowTileObject.name = t.position.x.ToString() + t.position.y.ToString() + t.position.z.ToString();
-                nowTileObject.tag = t.tileId.ToString();
+                GameObject obj = Instantiate(tilePrefabs[int.Parse(tileInfo[0])], position, Quaternion.identity);
+                obj.name = tileInfo[0];
                 obj.transform.SetParent(tileMap.transform);
-
-                mapData.tileList.Add(t);
             }
 
         }
         catch (Exception e)
         {
-            //读取level文件失败
+            //读取level文件失败\
+            Debug.Log(e.ToString());
         }
 
     }
@@ -357,7 +385,7 @@ public class LevelEditor : MonoBehaviour
     {
         if (Time.time - lastSaveTime >= saveSpan)
         {
-            if (mapData.tileList.Count != 0)
+            if (tileMap.transform.childCount != 0)
             {
                 SaveLevel();
             }

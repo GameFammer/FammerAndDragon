@@ -74,11 +74,6 @@ public class PublicDataManager : MonoBehaviour
 
             /* 读取Csv数据对象的属性 */
             PropertyInfo[] props = typeof(T).GetProperties();
-
-            foreach (PropertyInfo t in props)
-            {
-                Debug.Log(t.PropertyType);
-            }
             /* 使用反射，将CSV文件的数据赋值给CSV数据对象的相应字段，要求CSV文件的字段名和CSV数据对象的字段名完全相同 */
             T obj = Activator.CreateInstance<T>();
             foreach (PropertyInfo p in props)                                                                                                                                                                                                                        
@@ -101,6 +96,10 @@ public class PublicDataManager : MonoBehaviour
     public Dictionary<int, LevelTable>.KeyCollection GetLevelTableKeys()
     {
         return levelTable.Keys;
+    }
+    public int GetLevelTableCount()
+    {
+        return levelTable.Count;
     }
     public string GetLevelName(int _ID)
     {
