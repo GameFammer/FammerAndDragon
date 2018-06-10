@@ -13,14 +13,25 @@ public class LevelEditor : MonoBehaviour
     /*UI*/
     public GameObject tileButton;//tile按钮预制体
     public GameObject levelButton;//已有关卡按钮
+    //Left
+    public GameObject layerOneButton;//图层按钮
+    public GameObject layerTwoButton;
+    public GameObject layerThreeButton;
+    public GameObject hideOtherToggle;//隐藏其它图层
     //Right
-    public GameObject LevelPanel;//已有level面板
-    public GameObject backgroundPage;//背景tile分页
-    public GameObject platformHasColliderPage;//可碰撞地形组成分页
-    public GameObject platformNoColliderPage;//不可碰撞地形组成分页
-    public GameObject itemsPage;//道具分页
-    public GameObject npcPage;//NPC分页
-    public GameObject enemyPage;//enemy分页
+    public GameObject bgScrollView;//用于切页
+    public GameObject phcScrollView;
+    public GameObject pncScrollView;
+    public GameObject itemScrollView;
+    public GameObject npcScrollView;
+    public GameObject enemyScrollView;
+
+    public GameObject backgroundPage;//用于设置tileButton父对象
+    public GameObject platformHasColliderPage;
+    public GameObject platformNoColliderPage;
+    public GameObject itemsPage;
+    public GameObject npcPage;
+    public GameObject enemyPage;
 
     public GameObject backgroundPageBtn;//背景tile分页按钮
     public GameObject platformHasColliderPageBtn;//可碰撞地形组成分页按钮
@@ -34,19 +45,30 @@ public class LevelEditor : MonoBehaviour
     public GameObject levelNameInputField;//关卡名输入框
     public GameObject makerNameInputField;//关卡制作者输入框
     public GameObject saveButton;//保存按钮
-
+    //Down
+    public GameObject LevelPanel;//已有level面板
     /*Data*/
     private Dictionary<int, GameObject> tilePrefabs;//Tile预制体
     private int nowTileId;//当前选中TileID
     private int nowLevelId;//当前编辑关卡ID
+    private string levelName;//当前关卡名称
+    private string makerName;//当前关卡制作者名
 
     /*Object*/
-    public GameObject tileMap;//tile父对象
+    private Camera mainCamera;//主相机
+
+    public GameObject layerOne;//Layer1对象
+    public GameObject layerTwo;//Layer2对象
+    public GameObject layerThree;//Layer3对象
+
     private GameObject nowTileObject;//当前选中tile
     /*Mouse*/
     private Vector3Int mousePos;//鼠标指针位置坐标
     /*图层*/
     private int nowLayer;
+    /*运行*/
+    private bool isPlaying;//是否开始测试运行
+
     /*TileType*/
     private const int TILE_BACKGROUND = 0;
     private const int TILE_PLATFORMHASCOLLIDER = 1;
@@ -75,10 +97,11 @@ public class LevelEditor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        nowLayer = -1;
+        nowLayer = -3;
         nowTileId = -1;
         nowLevelId = -1;
         tilePrefabs = new Dictionary<int, GameObject>();
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         //初始化工具栏
         InitToolbars();
         //初始化Tile预制体
@@ -133,6 +156,19 @@ public class LevelEditor : MonoBehaviour
                 }
             }
         }
+        //鼠标滑轮缩放
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && !EventSystem.current.IsPointerOverGameObject())
+        {
+            if (mainCamera.orthographicSize > 0.5f)
+            {
+                mainCamera.orthographicSize += Input.GetAxis("Mouse ScrollWheel");
+            }
+        }
+        //未开始运行水平、竖直输入移动地图
+        if (!isPlaying)
+        {
+            mainCamera.transform.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * 5f, Input.GetAxis("Vertical") * Time.deltaTime * 5f, 0);
+        }
         StartCoroutine(AutoSave());
     }
 
@@ -140,7 +176,11 @@ public class LevelEditor : MonoBehaviour
     //初始化工具栏
     void InitToolbars()
     {
+        layerOneButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-1));
+        layerTwoButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-2));
+        layerThreeButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-3));
 
+        hideOtherToggle.GetComponent<Toggle>().onValueChanged.AddListener((isOn) => HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn));
     }
     //加载TilePrefabs
     void InitTilePrefabs()
@@ -165,8 +205,9 @@ public class LevelEditor : MonoBehaviour
 
         foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
         {
+
             GameObject btn = null;
-            //创建按钮绑定点击函数
+            //创建按钮绑定点击函数,根据Tpye加到不同的分页下
             switch (PublicDataManager.instance.GetTilePrefabType(key))
             {
                 case TILE_BACKGROUND: btn = Instantiate(tileButton, backgroundPage.transform); break;
@@ -183,8 +224,6 @@ public class LevelEditor : MonoBehaviour
                 btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
                 btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
             }
-            //根据Tpye加到不同的分页下
-
             //初始显示背景分页
             SwitchTilePanel(TILE_BACKGROUND);
         }
@@ -199,9 +238,27 @@ public class LevelEditor : MonoBehaviour
             btn.GetComponent<Image>().sprite = LoadLevelImage(key);
             btn.GetComponent<Button>().onClick.AddListener(() => { LoadLevel(key); });
         }
+
     }
 
     /*各种按钮响应函数*/
+    //隐藏其它图层按钮
+    void HideOtherLayer(bool isOn)
+    {
+        if (isOn)
+        {
+            layerOne.SetActive(false);
+            layerTwo.SetActive(false);
+            layerThree.SetActive(false);
+            GetLayerObject(nowLayer).SetActive(true);
+        }
+        else
+        {
+            layerOne.SetActive(true);
+            layerTwo.SetActive(true);
+            layerThree.SetActive(true);
+        }
+    }
     //保存按钮
     void OnSaveButtonClick()
     {
@@ -226,31 +283,34 @@ public class LevelEditor : MonoBehaviour
     //切换tile分页
     void SwitchTilePanel(int _panelType)
     {
-        backgroundPage.SetActive(false);
-        platformHasColliderPage.SetActive(false);
-        platformNoColliderPage.SetActive(false);
-        itemsPage.SetActive(false);
-        npcPage.SetActive(false);
-        enemyPage.SetActive(false);
+        bgScrollView.SetActive(false);
+        phcScrollView.SetActive(false);
+        pncScrollView.SetActive(false);
+        itemScrollView.SetActive(false);
+        npcScrollView.SetActive(false);
+        enemyScrollView.SetActive(false);
         switch (_panelType)
         {
-            case TILE_BACKGROUND: backgroundPage.SetActive(true); break;
-            case TILE_PLATFORMHASCOLLIDER: platformHasColliderPage.SetActive(true); break;
-            case TILE_PLATFORMNOCOLLIDER: platformNoColliderPage.SetActive(true); break;
-            case TILE_ITEM: itemsPage.SetActive(true); break;
-            case TILE_NPC: npcPage.SetActive(true); break;
-            case TILE_ENEMY: enemyPage.SetActive(true); break;
+            case TILE_BACKGROUND: bgScrollView.SetActive(true); break;
+            case TILE_PLATFORMHASCOLLIDER: phcScrollView.SetActive(true); break;
+            case TILE_PLATFORMNOCOLLIDER: pncScrollView.SetActive(true); break;
+            case TILE_ITEM: itemScrollView.SetActive(true); break;
+            case TILE_NPC: npcScrollView.SetActive(true); break;
+            case TILE_ENEMY: enemyScrollView.SetActive(true); break;
             default: break;
         }
     }
     /*各种find*/
-    //查找子对象
+    //根据图层查找子对象
     GameObject FindTileInChild(Vector3Int _mpos)
     {
-        GameObject pos;
-        for (int i = 0; i < tileMap.transform.childCount; i++)
+        GameObject pos, father;
+        int childCount = 0;
+        childCount = GetLayerObject(_mpos.z).transform.childCount;
+        father = GetLayerObject(_mpos.z);
+        for (int i = 0; i < childCount; i++)
         {
-            pos = tileMap.transform.GetChild(i).gameObject;
+            pos = father.transform.GetChild(i).gameObject;
             if (Vector3Int.RoundToInt(pos.transform.position) == _mpos)
             {
                 return pos;
@@ -258,17 +318,31 @@ public class LevelEditor : MonoBehaviour
         }
         return null;
     }
-    /*各种Set*/
-    //放置tile
+    /*各种Set/Get*/
+    //根据当前图层放置tile
     void SetNowTileToTileMap(int _ID)
     {
-        nowTileObject.transform.SetParent(tileMap.transform);
-
+        nowTileObject.transform.SetParent(GetLayerObject(nowLayer).transform);
         mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(mousePos.x, mousePos.y, nowLayer), Quaternion.identity);
         nowTileObject.name = _ID.ToString();
     }
-
+    //设置当前图层
+    void SetNowLayer(int _layer)
+    {
+        nowLayer = _layer;
+    }
+    //获取当前层对象
+    GameObject GetLayerObject(int _layer)
+    {
+        switch (_layer)
+        {
+            case -1: return layerOne; break;
+            case -2: return layerTwo; break;
+            case -3: return layerThree; break;
+            default: return layerThree; break;
+        }
+    }
     /*各种判断*/
     //放置位置是否合法
     bool IsValidPosition(Vector3 pos)
@@ -280,13 +354,13 @@ public class LevelEditor : MonoBehaviour
     //保存地图
     public void SaveLevel()
     {
-        string levelName = levelNameInputField.GetComponent<InputField>().text;
+        levelName = levelNameInputField.GetComponent<InputField>().text;
         if (levelName == null)
         {
             //请输入关卡名
             return;
         }
-        string makerName = makerNameInputField.GetComponent<InputField>().text;
+        makerName = makerNameInputField.GetComponent<InputField>().text;
         if (makerName == null)
         {
             //请输入制作者名
@@ -302,34 +376,45 @@ public class LevelEditor : MonoBehaviour
 #elif UNITY_STANDALONE_WIN
         string saveDirPath = Application.streamingAssetsPath + "\\Level\\" + makerName + "\\" + levelName;
 #endif
-        if (!Directory.Exists(saveDirPath))
+        try
         {
-            Directory.CreateDirectory(saveDirPath);
-        }
-        else
-        {
-            try
+            if (!Directory.Exists(saveDirPath))
             {
-                FileStream fs = new FileStream(saveDirPath + "\\" + levelName + ".level", FileMode.Create);
-                StreamWriter writer = new StreamWriter(fs);
-                writer.WriteLine(nowLevelId);
-                writer.WriteLine(levelName);
-                writer.WriteLine(makerName);
-                GameObject obj;
-                for (int i = 0; i < tileMap.transform.childCount; i++)
-                {
-                    obj = tileMap.transform.GetChild(i).gameObject;
-                    writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
-                    //关卡封面
-                }
-                writer.Close();
+                Directory.CreateDirectory(saveDirPath);
             }
-            catch (Exception e)
+            FileStream fs = new FileStream(saveDirPath + "\\" + levelName + ".level", FileMode.Create);
+            StreamWriter writer = new StreamWriter(fs);
+            writer.WriteLine(nowLevelId);
+            writer.WriteLine(levelName);
+            writer.WriteLine(makerName);
+            GameObject obj;
+            for (int i = 0; i < layerOne.transform.childCount; i++)
             {
-                //文件写入失败
+                obj = layerOne.transform.GetChild(i).gameObject;
+                writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
 
             }
+            for (int i = 0; i < layerTwo.transform.childCount; i++)
+            {
+                obj = layerTwo.transform.GetChild(i).gameObject;
+                writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
+
+            }
+            for (int i = 0; i < layerThree.transform.childCount; i++)
+            {
+                obj = layerThree.transform.GetChild(i).gameObject;
+                writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
+
+            }
+            //关卡封面
+            writer.Close();
         }
+        catch (Exception e)
+        {
+            //文件写入失败
+
+        }
+
     }
     //从level文件读取Level
     public void LoadLevel(int _mapId)
@@ -337,10 +422,10 @@ public class LevelEditor : MonoBehaviour
         try
         {
 #if UNITY_IOS || UNITY_ANDROID
-                FileStream fs = new FileStream(Application.persistentDataPath +PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
+                FileStream fs = new FileStream(Application.persistentDataPath +"\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
 
 #elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-            FileStream fs = new FileStream(Application.streamingAssetsPath + "\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
+            FileStream fs = new FileStream(Application.streamingAssetsPath + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
 #endif
             StreamReader reader = new StreamReader(fs);
             nowLevelId = int.Parse(reader.ReadLine());
@@ -358,7 +443,7 @@ public class LevelEditor : MonoBehaviour
 
                 GameObject obj = Instantiate(tilePrefabs[int.Parse(tileInfo[0])], position, Quaternion.identity);
                 obj.name = tileInfo[0];
-                obj.transform.SetParent(tileMap.transform);
+                obj.transform.SetParent(GetLayerObject(position.z).transform);
             }
 
         }
@@ -383,13 +468,18 @@ public class LevelEditor : MonoBehaviour
     //自动保存
     IEnumerator AutoSave()
     {
-        if (Time.time - lastSaveTime >= saveSpan)
+        levelName = levelNameInputField.GetComponent<InputField>().text;
+        makerName = makerNameInputField.GetComponent<InputField>().text;
+        if (levelName != null && makerName != null)
         {
-            if (tileMap.transform.childCount != 0)
+            if (Time.time - lastSaveTime >= saveSpan)
             {
-                SaveLevel();
+                if (layerOne.transform.childCount != 0 || layerTwo.transform.childCount != 0 || layerThree.transform.childCount != 0)
+                {
+                    SaveLevel();
+                }
             }
+            yield return null;
         }
-        yield return null;
     }
 }
