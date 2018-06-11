@@ -2,10 +2,7 @@ WindowsStandalone
 PlayerPath?
 F:/新建文件夹/新建文件夹.exe
 SceneListBegin?
-Assets/GracesGames/2DTileMapLevelEditor/Scenes/PlatformerDemo.unity
 Assets/Scenes/MapEdit.unity
-Assets/Scenes/test.unity
-Assets/Scenes/test1.unity
 SceneListEnd?
 395647ef1d237b79a69128944df645ad Assembly-CSharp.dll:GracesGames.SimpleFileBrowser.Scripts.UI.PortraitUserInterface
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
@@ -124,7 +121,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 5c00711da9661a4591b5dbf10847a733 Assembly-CSharp.dll:GracesGames._2DTileMapLevelEditor.Scripts.MoveCamera
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:GracesGames._2DTileMapLevelEditor.Scripts.Functionalities.FillFunctionality
-2b9da304c86d9b10a3eb1a73ba291671 Assembly-CSharp.dll:.LevelEditor
+cdf905cf2d099e726389e58a6b4c9ac8 Assembly-CSharp.dll:.LevelEditor
 4411b483a76b6ab55cecd2f5b9c1dc71 Assembly-CSharp.dll:GracesGames.SimpleFileBrowser.Scripts.FileBrowser
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GameManager
 8001c23ec06c768dcd520a2bac35fe78 Assembly-CSharp.dll:.Enemy
@@ -171,6 +168,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 c8bd1cbc74762887d72a7b1cea0b9845 Assembly-CSharp.dll:GracesGames._2DTileMapLevelEditor.Scripts.LevelEditor
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:GracesGames._2DTileMapLevelEditor.Scripts.Functionalities.LoadFunctionality
 2dedba1ba1894e7d2d24da59f75e8fda Assembly-CSharp.dll:.BulletsPool
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ShowHoverInfo
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:GracesGames._2DTileMapLevelEditor.Scripts.Functionalities.LayerFunctionality
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:GracesGames._2DTileMapLevelEditor.Scripts.Functionalities.UndoRedoFunctionality
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:GracesGames.Common.Scripts.Utilities

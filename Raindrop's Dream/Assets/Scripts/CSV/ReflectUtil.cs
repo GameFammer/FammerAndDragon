@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System;
-
 public class ReflectUtil {
 
     //给属性赋值

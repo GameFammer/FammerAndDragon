@@ -7,14 +7,16 @@
 **********************************************************************************/
 
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Text;
 using System.Reflection;
 using UnityEngine;
 
 public class PublicDataManager : MonoBehaviour
 {
-   //private static  Dictionary<int, AIName> items;
-    public static PublicDataManager instance=null;
+    //private static  Dictionary<int, AIName> items;
+    public static PublicDataManager instance = null;
     public static string DATA_PATH
     {
         get
@@ -45,20 +47,86 @@ public class PublicDataManager : MonoBehaviour
     }
     private void InitIni()
     {
-        
+
     }
     private void InitCsv()
     {
         //在这初始化每个CSV表
-        //   InitFromCsv<AIName>(ref items, "AIName.csv");
+        /*level*/
         InitFromCsv<LevelTable>(ref levelTable, "LevelTable.csv");
+        InitLevelFromFile(ref levelTable);
+
         InitFromCsv<TilePrefabTable>(ref tilePrefabTable, "TilePrefabTable.csv");
+
     }
     //初始化CSV表
-    private void InitFromCsv<T>(ref Dictionary<int, T> _dataTable,string _fileName)
+    private void InitFromCsv<T>(ref Dictionary<int, T> _dataTable, string _fileName)
     {
-        _dataTable=LoadCsvData<T>(_fileName);
+        _dataTable = LoadCsvData<T>(_fileName);
     }
+    //初始化玩家自定义关卡(Level)
+    private void InitLevelFromFile(ref Dictionary<int, LevelTable> _dataTable)
+    {
+        string url = PublicDataManager.DATA_PATH + "\\Level\\User";
+        //ID为当前最后一个+1
+        int id = levelTable.Count + 1;
+
+        if (!Directory.Exists(url))
+        {
+            //文件读取失败
+        }
+        else
+        {
+            try
+            {
+                DirectoryInfo makerPath = new DirectoryInfo(url);
+                foreach(DirectoryInfo maker in makerPath.GetDirectories())
+                {
+                    
+                    foreach(FileInfo level in maker.GetFiles())
+                    {
+                        if(level.Extension==".level")
+                        {
+                            LevelTable t = new LevelTable();
+                            t.ID = id;
+                            //maker、level名在最后
+                            t.LevelName = level.Name.Split('.')[0];
+                            t.MakerName = maker.Name;
+                            t.LevelFilePath = "User\\" + t.MakerName + '\\' + t.LevelName;
+                            levelTable.Add(t.ID, t);
+                            id++;
+                        }
+                       
+                    }
+                }
+                /*   foreach (string pathOnMaker in Directory.GetDirectories(url))
+                   {
+                       string[] makerNameSplit = pathOnMaker.Split('\\');
+                       foreach (string pathOnLevel in Directory.GetFiles(pathOnMaker))
+                       {
+                           string[] levelNamerSplit = pathOnLevel.Split('\\');
+                           LevelTable t = new LevelTable();
+                           t.ID = id;
+                           //maker、level名在最后
+                           t.LevelName = levelNamerSplit[levelNamerSplit.Length-1];   
+                           t.MakerName = makerNameSplit[makerNameSplit.Length - 1];
+                           t.LevelFilePath = "User\\"+t.MakerName + '\\' + t.LevelName;
+                           levelTable.Add(t.ID, t);
+                           id++;
+                       }
+
+
+                   }*/
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
+    }
+
     //从CSV表初始化Dictionary
     private static Dictionary<int, T> LoadCsvData<T>(string _fileName)
     {
@@ -76,11 +144,11 @@ public class PublicDataManager : MonoBehaviour
             PropertyInfo[] props = typeof(T).GetProperties();
             /* 使用反射，将CSV文件的数据赋值给CSV数据对象的相应字段，要求CSV文件的字段名和CSV数据对象的字段名完全相同 */
             T obj = Activator.CreateInstance<T>();
-            foreach (PropertyInfo p in props)                                                                                                                                                                                                                        
+            foreach (PropertyInfo p in props)
             {
                 ReflectUtil.PiSetValue<T>(datas[p.Name], p, obj);
             }
-          
+
             /* 按ID-数据的形式存储 */
             dic[Convert.ToInt32(ID)] = obj;
         }

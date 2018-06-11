@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -126,7 +125,7 @@ public class LevelEditor : MonoBehaviour
             }
         }
         //左键点击放置Tile,已经有物体的位置不能放置
-        if (nowTileObject != null)
+        if (nowTileObject != null && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetMouseButton(0) && IsValidPosition(mousePos))
             {
@@ -137,7 +136,7 @@ public class LevelEditor : MonoBehaviour
             }
         }
         //右键清除当前选择or橡皮擦
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             if (nowTileObject != null)
             {
@@ -165,7 +164,7 @@ public class LevelEditor : MonoBehaviour
             }
         }
         //未开始运行水平、竖直输入移动地图
-        if (!isPlaying)
+        if (!isPlaying && !EventSystem.current.IsPointerOverGameObject())
         {
             mainCamera.transform.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * 5f, Input.GetAxis("Vertical") * Time.deltaTime * 5f, 0);
         }
@@ -236,7 +235,7 @@ public class LevelEditor : MonoBehaviour
             GameObject btn = Instantiate(levelButton, LevelPanel.transform);
             btn.name = PublicDataManager.instance.GetLevelName(key);
             btn.GetComponent<Image>().sprite = LoadLevelImage(key);
-            btn.GetComponent<Button>().onClick.AddListener(() => { LoadLevel(key); });
+            btn.GetComponent<Button>().onClick.AddListener(() => { RefreshLevel(); LoadLevel(key); });
         }
 
     }
@@ -263,6 +262,7 @@ public class LevelEditor : MonoBehaviour
     void OnSaveButtonClick()
     {
         SaveLevel();
+        //
     }
     //tile按钮
     void OnTileButtonClick(int _ID)
@@ -300,6 +300,21 @@ public class LevelEditor : MonoBehaviour
             default: break;
         }
     }
+    void RefreshLevel()
+    {
+        for(int i=0;i<layerOne.transform.childCount;i++)
+        {
+            Destroy(layerOne.transform.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < layerTwo.transform.childCount; i++)
+        {
+            Destroy(layerTwo.transform.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < layerThree.transform.childCount; i++)
+        {
+            Destroy(layerThree.transform.GetChild(i).gameObject);
+        }
+    }
     /*各种find*/
     //根据图层查找子对象
     GameObject FindTileInChild(Vector3Int _mpos)
@@ -318,6 +333,7 @@ public class LevelEditor : MonoBehaviour
         }
         return null;
     }
+
     /*各种Set/Get*/
     //根据当前图层放置tile
     void SetNowTileToTileMap(int _ID)
@@ -331,6 +347,7 @@ public class LevelEditor : MonoBehaviour
     void SetNowLayer(int _layer)
     {
         nowLayer = _layer;
+        HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn);
     }
     //获取当前层对象
     GameObject GetLayerObject(int _layer)
@@ -370,11 +387,11 @@ public class LevelEditor : MonoBehaviour
         {
             nowLevelId = PublicDataManager.instance.GetLevelTableCount() + 1;
         }
-        //文件夹路径：/Level/作者名/地图名文件夹
+        //文件夹路径：/Level/User/作者名/地图名文件夹
 #if UNITY_IOS || UNITY_ANDROID      
-        string saveDirPath = Application.persistentDataPath + "\\Level\\" +  makerName  + "\\" + levelName;
+        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" +  makerName;
 #elif UNITY_STANDALONE_WIN
-        string saveDirPath = Application.streamingAssetsPath + "\\Level\\" + makerName + "\\" + levelName;
+        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" + makerName;
 #endif
         try
         {
@@ -407,6 +424,7 @@ public class LevelEditor : MonoBehaviour
 
             }
             //关卡封面
+
             writer.Close();
         }
         catch (Exception e)
@@ -422,10 +440,10 @@ public class LevelEditor : MonoBehaviour
         try
         {
 #if UNITY_IOS || UNITY_ANDROID
-                FileStream fs = new FileStream(Application.persistentDataPath +"\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
+                FileStream fs = new FileStream(PublicDataManager.DATA_PATH +"\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
 
 #elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-            FileStream fs = new FileStream(Application.streamingAssetsPath + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
+            FileStream fs = new FileStream(PublicDataManager.DATA_PATH + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
 #endif
             StreamReader reader = new StreamReader(fs);
             nowLevelId = int.Parse(reader.ReadLine());
@@ -445,7 +463,7 @@ public class LevelEditor : MonoBehaviour
                 obj.name = tileInfo[0];
                 obj.transform.SetParent(GetLayerObject(position.z).transform);
             }
-
+            fs.Close();
         }
         catch (Exception e)
         {
