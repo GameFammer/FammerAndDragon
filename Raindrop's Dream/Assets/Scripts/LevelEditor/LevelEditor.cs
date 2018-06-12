@@ -10,14 +10,22 @@ public class LevelEditor : MonoBehaviour
 {
     public static LevelEditor instance = null;
     /*UI*/
+    [SerializeField, HeaderAttribute("预制体")]
     public GameObject tileButton;//tile按钮预制体
     public GameObject levelButton;//已有关卡按钮
+
+    [SerializeField, HeaderAttribute("Panel")]
+    public GameObject leftToolPanel;//左
+    public GameObject rightTilePanel;//右
+    public GameObject downLevelPanel;//下
     //Left
+    [SerializeField, HeaderAttribute("左侧工具栏")]
     public GameObject layerOneButton;//图层按钮
     public GameObject layerTwoButton;
     public GameObject layerThreeButton;
     public GameObject hideOtherToggle;//隐藏其它图层
     //Right
+    [SerializeField, HeaderAttribute("右侧素材栏")]
     public GameObject bgScrollView;//用于切页
     public GameObject phcScrollView;
     public GameObject pncScrollView;
@@ -41,11 +49,15 @@ public class LevelEditor : MonoBehaviour
 
     public GameObject nowTileImage;//当前tile图标
     //Up
+    [SerializeField, HeaderAttribute("顶部功能栏")]
+    public GameObject hideUIToggle;//隐藏UI按钮
     public GameObject levelNameInputField;//关卡名输入框
     public GameObject makerNameInputField;//关卡制作者输入框
     public GameObject saveButton;//保存按钮
     //Down
+    [SerializeField, HeaderAttribute("底部关卡栏")]
     public GameObject LevelPanel;//已有level面板
+
     /*Data*/
     private Dictionary<int, GameObject> tilePrefabs;//Tile预制体
     private int nowTileId;//当前选中TileID
@@ -82,6 +94,7 @@ public class LevelEditor : MonoBehaviour
     private const int MAX_LAYERS = 5;
 
     /*自动保存*/
+    [SerializeField, HeaderAttribute("自动保存时间间隔")]
     public float saveSpan;//自动保存时间间隔
     private float lastSaveTime;//上次保存时间
     void Awake()
@@ -101,14 +114,15 @@ public class LevelEditor : MonoBehaviour
         nowLevelId = -1;
         tilePrefabs = new Dictionary<int, GameObject>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        //初始化工具栏
-        InitToolbars();
         //初始化Tile预制体
         InitTilePrefabs();
+        InitUpFunButtons();
+        //初始化工具栏
+        InitLeftToolButtons();
         //初始化Tile选择按钮
-        InitTileButtons();
-        //初始化已有Level列表
-        InitLevelList();
+        InitRightTileButtons();
+        //初始化已有Level列表按钮
+        InitDownLevelButtons();
 
     }
 
@@ -172,14 +186,17 @@ public class LevelEditor : MonoBehaviour
     }
 
     /*各种初始化*/
+    void InitUpFunButtons()
+    {
+        hideUIToggle.GetComponent<Toggle>().onValueChanged.AddListener((_isOn) => HideUIPanel(hideUIToggle.GetComponent<Toggle>().isOn));
+    }
     //初始化工具栏
-    void InitToolbars()
+    void InitLeftToolButtons()
     {
         layerOneButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-1));
         layerTwoButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-2));
         layerThreeButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-3));
-
-        hideOtherToggle.GetComponent<Toggle>().onValueChanged.AddListener((isOn) => HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn));
+        hideOtherToggle.GetComponent<Toggle>().onValueChanged.AddListener((_isOn) => HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn));
     }
     //加载TilePrefabs
     void InitTilePrefabs()
@@ -192,7 +209,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
     //初始化TileButton
-    void InitTileButtons()
+    void InitRightTileButtons()
     {
         //分页按钮
         backgroundPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_BACKGROUND); });
@@ -228,7 +245,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
     //初始化已有Level列表
-    void InitLevelList()
+    void InitDownLevelButtons()
     {
         foreach (int key in PublicDataManager.instance.GetLevelTableKeys())
         {
@@ -241,10 +258,26 @@ public class LevelEditor : MonoBehaviour
     }
 
     /*各种按钮响应函数*/
-    //隐藏其它图层按钮
-    void HideOtherLayer(bool isOn)
+    //隐藏左右下UI按钮
+    void HideUIPanel(bool _isOn)
     {
-        if (isOn)
+        if(_isOn)
+        {
+            leftToolPanel.SetActive(false);
+            rightTilePanel.SetActive(false);
+            downLevelPanel.SetActive(false);
+        }
+        else
+        {
+            leftToolPanel.SetActive(true);
+            rightTilePanel.SetActive(true);
+            downLevelPanel.SetActive(true);
+        }
+    }
+    //隐藏其它图层按钮
+    void HideOtherLayer(bool _isOn)
+    {
+        if (_isOn)
         {
             layerOne.SetActive(false);
             layerTwo.SetActive(false);
