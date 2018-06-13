@@ -108,10 +108,7 @@ public class LevelEditor : MonoBehaviour
     }
     // Use this for initialization
     void Start()
-    {
-        nowLayer = -3;
-        nowTileId = -1;
-        nowLevelId = -1;
+    {   
         tilePrefabs = new Dictionary<int, GameObject>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         //初始化Tile预制体
@@ -123,7 +120,9 @@ public class LevelEditor : MonoBehaviour
         InitRightTileButtons();
         //初始化已有Level列表按钮
         InitDownLevelButtons();
-
+        nowLayer = -3;
+        nowTileId = -1;
+        nowLevelId = -1;
     }
 
     // Update is called once per frame
@@ -418,9 +417,9 @@ public class LevelEditor : MonoBehaviour
         }
         if (nowLevelId < 0)
         {
-            nowLevelId = PublicDataManager.instance.GetLevelTableCount() + 1;
+            nowLevelId = PublicDataManager.instance.GetLevelTableMaxKey() + 1;
         }
-        //文件夹路径：/Level/User/作者名/地图名文件夹
+        //文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
 #if UNITY_IOS || UNITY_ANDROID      
         string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" +  makerName;
 #elif UNITY_STANDALONE_WIN
@@ -432,7 +431,7 @@ public class LevelEditor : MonoBehaviour
             {
                 Directory.CreateDirectory(saveDirPath);
             }
-            FileStream fs = new FileStream(saveDirPath + "\\" + levelName + ".level", FileMode.Create);
+            FileStream fs = new FileStream(saveDirPath + "\\" + levelName +"#" + nowLevelId.ToString()+ ".level", FileMode.Create);
             StreamWriter writer = new StreamWriter(fs);
             writer.WriteLine(nowLevelId);
             writer.WriteLine(levelName);

@@ -3,13 +3,12 @@
   *Version:1.0
   *Date:  2018-5-29
   *Description: 存储CSV表数据，方便使用
-  *Changes:
+  *Changes:2018-6-13  LevelTable改为从文件目录加载，放弃CSV
 **********************************************************************************/
 
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 using UnityEngine;
 
@@ -51,11 +50,12 @@ public class PublicDataManager : MonoBehaviour
     }
     private void InitCsv()
     {
-        //在这初始化每个CSV表
+        //在这初始化每个Dictionary
         /*level*/
-        InitFromCsv<LevelTable>(ref levelTable, "LevelTable.csv");
-        InitLevelFromFile(ref levelTable);
+        InitLevelFromFile(ref levelTable, "Dev");
+        InitLevelFromFile(ref levelTable, "User");
 
+        /*prefab*/
         InitFromCsv<TilePrefabTable>(ref tilePrefabTable, "TilePrefabTable.csv");
 
     }
@@ -64,14 +64,15 @@ public class PublicDataManager : MonoBehaviour
     {
         _dataTable = LoadCsvData<T>(_fileName);
     }
-    //初始化玩家自定义关卡(Level)
-    private void InitLevelFromFile(ref Dictionary<int, LevelTable> _dataTable)
+    //从文件初始化关卡信息(Level)
+    private void InitLevelFromFile(ref Dictionary<int, LevelTable> _dataTable,string _path)
     {
-        string url = PublicDataManager.DATA_PATH + "\\Level\\User";
-        //ID为当前最后一个+1
-        int id = levelTable.Count + 1;
-
-        if (!Directory.Exists(url))
+        if(_dataTable == null)
+        {
+            _dataTable = new Dictionary<int, LevelTable>();
+        }
+        string allPath = DATA_PATH + "\\Level\\" + _path;
+        if (!Directory.Exists(allPath))
         {
             //文件读取失败
         }
@@ -79,7 +80,7 @@ public class PublicDataManager : MonoBehaviour
         {
             try
             {
-                DirectoryInfo makerPath = new DirectoryInfo(url);
+                DirectoryInfo makerPath = new DirectoryInfo(allPath);
                 foreach(DirectoryInfo maker in makerPath.GetDirectories())
                 {
                     
@@ -88,36 +89,16 @@ public class PublicDataManager : MonoBehaviour
                         if(level.Extension==".level")
                         {
                             LevelTable t = new LevelTable();
-                            t.ID = id;
+                            t.ID = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
                             //maker、level名在最后
                             t.LevelName = level.Name.Split('.')[0];
                             t.MakerName = maker.Name;
-                            t.LevelFilePath = "User\\" + t.MakerName + '\\' + t.LevelName;
+                            t.LevelFilePath = _path+"\\"+ t.MakerName + "\\" + t.LevelName;
                             levelTable.Add(t.ID, t);
-                            id++;
                         }
                        
                     }
                 }
-                /*   foreach (string pathOnMaker in Directory.GetDirectories(url))
-                   {
-                       string[] makerNameSplit = pathOnMaker.Split('\\');
-                       foreach (string pathOnLevel in Directory.GetFiles(pathOnMaker))
-                       {
-                           string[] levelNamerSplit = pathOnLevel.Split('\\');
-                           LevelTable t = new LevelTable();
-                           t.ID = id;
-                           //maker、level名在最后
-                           t.LevelName = levelNamerSplit[levelNamerSplit.Length-1];   
-                           t.MakerName = makerNameSplit[makerNameSplit.Length - 1];
-                           t.LevelFilePath = "User\\"+t.MakerName + '\\' + t.LevelName;
-                           levelTable.Add(t.ID, t);
-                           id++;
-                       }
-
-
-                   }*/
-
             }
             catch (Exception e)
             {
@@ -165,9 +146,17 @@ public class PublicDataManager : MonoBehaviour
     {
         return levelTable.Keys;
     }
-    public int GetLevelTableCount()
+    public int GetLevelTableMaxKey()
     {
-        return levelTable.Count;
+        int maxKey = 0;
+        foreach(int key in levelTable.Keys)
+        {
+            if(key>maxKey)
+            {
+                maxKey = key;
+            }
+        }
+        return maxKey;
     }
     public string GetLevelName(int _ID)
     {
