@@ -20,12 +20,13 @@ public class PublicDataManager : MonoBehaviour
     {
         get
         {
-#if UNITY_IOS || UNITY_ANDROID
-            return Application.persistentDataPath;
-
-#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             return Application.streamingAssetsPath;
-#endif
+//#if UNITY_IOS || UNITY_ANDROID
+//            return Application.persistentDataPath;
+
+//#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+//            return Application.streamingAssetsPath;
+//#endif
         }
     }
     private Dictionary<int, LevelTable> levelTable;
@@ -102,7 +103,7 @@ public class PublicDataManager : MonoBehaviour
             }
             catch (Exception e)
             {
-
+                throw e;
             }
 
         }

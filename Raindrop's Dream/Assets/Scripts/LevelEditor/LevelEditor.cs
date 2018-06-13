@@ -386,10 +386,10 @@ public class LevelEditor : MonoBehaviour
     {
         switch (_layer)
         {
-            case -1: return layerOne; break;
-            case -2: return layerTwo; break;
-            case -3: return layerThree; break;
-            default: return layerThree; break;
+            case -1: return layerOne;
+            case -2: return layerTwo;
+            case -3: return layerThree;
+            default: return layerThree; 
         }
     }
     /*各种判断*/
@@ -419,12 +419,13 @@ public class LevelEditor : MonoBehaviour
         {
             nowLevelId = PublicDataManager.instance.GetLevelTableMaxKey() + 1;
         }
-        //文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
-#if UNITY_IOS || UNITY_ANDROID      
-        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" +  makerName;
-#elif UNITY_STANDALONE_WIN
+//        //文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
+//#if UNITY_IOS || UNITY_ANDROID      
+//        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" +  makerName;
+//#elif UNITY_STANDALONE_WIN
+//        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" + makerName;
+//#endif
         string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" + makerName;
-#endif
         try
         {
             if (!Directory.Exists(saveDirPath))
@@ -462,7 +463,7 @@ public class LevelEditor : MonoBehaviour
         catch (Exception e)
         {
             //文件写入失败
-
+            throw e;
         }
 
     }
@@ -471,12 +472,13 @@ public class LevelEditor : MonoBehaviour
     {
         try
         {
-#if UNITY_IOS || UNITY_ANDROID
-                FileStream fs = new FileStream(PublicDataManager.DATA_PATH +"\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
+//#if UNITY_IOS || UNITY_ANDROID
+//                FileStream fs = new FileStream(PublicDataManager.DATA_PATH +"\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
 
-#elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+//#elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+//            FileStream fs = new FileStream(PublicDataManager.DATA_PATH + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
+//#endif
             FileStream fs = new FileStream(PublicDataManager.DATA_PATH + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
-#endif
             StreamReader reader = new StreamReader(fs);
             nowLevelId = int.Parse(reader.ReadLine());
             levelNameInputField.GetComponent<InputField>().text = reader.ReadLine();
