@@ -419,12 +419,7 @@ public class LevelEditor : MonoBehaviour
         {
             nowLevelId = PublicDataManager.instance.GetLevelTableMaxKey() + 1;
         }
-//        //文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
-//#if UNITY_IOS || UNITY_ANDROID      
-//        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" +  makerName;
-//#elif UNITY_STANDALONE_WIN
-//        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" + makerName;
-//#endif
+        //文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
         string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" + makerName;
         try
         {
@@ -472,12 +467,6 @@ public class LevelEditor : MonoBehaviour
     {
         try
         {
-//#if UNITY_IOS || UNITY_ANDROID
-//                FileStream fs = new FileStream(PublicDataManager.DATA_PATH +"\\Level\\"+PublicDataManager.instance.GetLevelFilePath(_mapId)+".level", FileMode.Open);
-
-//#elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-//            FileStream fs = new FileStream(PublicDataManager.DATA_PATH + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
-//#endif
             FileStream fs = new FileStream(PublicDataManager.DATA_PATH + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
             StreamReader reader = new StreamReader(fs);
             nowLevelId = int.Parse(reader.ReadLine());
