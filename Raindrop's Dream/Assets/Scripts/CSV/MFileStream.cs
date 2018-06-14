@@ -1,18 +1,18 @@
 ﻿/********************************************************************************* 
   *Author:AICHEN
-  *Version:1.0
+  *Version:2.0
   *Date:  2018-5-29
-  *Description: CSV表读写
-  *Changes:
+  *Description: 各种文件读写
+  *Changes:2018-6-14增加Level文件读写
 **********************************************************************************/
 
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 
-public class CSVFileStream
+public class MFileStream
 {
+    //读取CSV文件
     public static Dictionary<string, Dictionary<string, string>> ReadCsvFile(string _fileName)
     {
         Dictionary<string, Dictionary<string, string>> result = new Dictionary<string, Dictionary<string, string>>();
@@ -40,5 +40,17 @@ public class CSVFileStream
             }
         }
         return result;
+    }
+
+    //读取Level文件
+    public static void ReadLevelFile(int _levelId)
+    {
+
+    }
+    
+    //写入Level文件
+    public static void WriteLevelFile()
+    {
+
     }
 }
