@@ -16,8 +16,9 @@ public class MFileStream
     public static Dictionary<string, Dictionary<string, string>> ReadCsvFile(string _fileName)
     {
         Dictionary<string, Dictionary<string, string>> result = new Dictionary<string, Dictionary<string, string>>();
-        string url = PublicDataManager.DATA_PATH + "\\CSV\\" + _fileName;
-       
+        string url = Application.platform == RuntimePlatform.OSXEditor 
+                                ? url = PublicDataManager.DATA_PATH + "/CSV/" + _fileName 
+                                : PublicDataManager.DATA_PATH + "\\CSV\\" + _fileName;
         string[] fileData = File.ReadAllLines(url);
         if (fileData.Length < 3)
         {
