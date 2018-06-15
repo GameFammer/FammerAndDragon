@@ -115,7 +115,7 @@ public class PublicDataManager : MonoBehaviour
         Dictionary<int, T> dic = new Dictionary<int, T>();
 
         /* 从CSV文件读取数据 */
-        Dictionary<string, Dictionary<string, string>> result = CSVFileStream.ReadCsvFile(_fileName);
+        Dictionary<string, Dictionary<string, string>> result = MFileStream.ReadCsvFile(_fileName);
         /* 遍历每一行数据 */
         foreach (string ID in result.Keys)
         {

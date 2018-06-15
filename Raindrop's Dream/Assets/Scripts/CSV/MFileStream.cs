@@ -42,7 +42,7 @@ public class MFileStream
     }
 
     //读取Level文件
-    public static void ReadLevelFile(int _levelId)
+    public static LevelInfo ReadLevelFile(int _levelId)
     {
 
     }
