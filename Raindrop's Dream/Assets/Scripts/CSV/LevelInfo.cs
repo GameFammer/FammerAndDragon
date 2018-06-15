@@ -8,11 +8,16 @@ public class LevelInfo
     public int levelId;
     public string levelName;
     public string makerName;
-    public List<TileInfo> tileInfo;
+    public List<TileInfo> tiles;
 
     public LevelInfo()
     {
-        tileInfo = new List<TileInfo>();
+        levelId = -1;
+        tiles = new List<TileInfo>();
+    }
+    public bool IsEmpty()
+    {
+        return levelId > 0 ? false : true;
     }
 }
 public class TileInfo

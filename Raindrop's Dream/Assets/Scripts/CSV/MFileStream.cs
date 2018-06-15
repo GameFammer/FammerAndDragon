@@ -6,9 +6,11 @@
   *Changes:2018-6-14增加Level文件读写
 **********************************************************************************/
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class MFileStream
 {
@@ -41,15 +43,109 @@ public class MFileStream
         return result;
     }
 
+    //从文件读取LevelTable
+    public static void ReadLevelTable(ref Dictionary<int, LevelTable> levelTable, string _path)
+    {
+        string allPath = RD.SplitPath(new string[] { PublicDataManager.DATA_PATH, "Level", _path });
+        if (!Directory.Exists(allPath))
+        {
+            //文件读取失败
+        }
+        else
+        {
+            try
+            {
+                DirectoryInfo makerPath = new DirectoryInfo(allPath);
+                foreach (DirectoryInfo maker in makerPath.GetDirectories())
+                {
+
+                    foreach (FileInfo level in maker.GetFiles())
+                    {
+                        if (level.Extension == ".level")
+                        {
+                            LevelTable t = new LevelTable();
+                            t.ID = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
+                            //maker、level名在最后
+                            t.LevelName = level.Name.Split('.')[0];
+                            t.MakerName = maker.Name;
+                            //全路径：../Level/User/作者名/关卡名#关卡ID.level
+                            t.LevelFilePath = RD.SplitPath(new string[] { level.DirectoryName, level.Name });
+                            string imgName = level.Name.Split('.')[0] + ".png";
+                            t.levelImagePath = RD.SplitPath(new string[] { level.DirectoryName, imgName });
+                            levelTable.Add(t.ID, t);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+    }
     //读取Level文件
     public static LevelInfo ReadLevelFile(int _levelId)
     {
+        LevelInfo level = new LevelInfo();
+        try
+        {
+            string url = RD.SplitPath(new string[] { PublicDataManager.instance.GetLevelFilePath(_levelId) });
+            FileStream fs = new FileStream(url, FileMode.Open);
+            StreamReader reader = new StreamReader(fs);
+            level.levelId = int.Parse(reader.ReadLine());
+            level.levelName = reader.ReadLine();
+            level.makerName = reader.ReadLine();
+            string tileInfoLine;//读取的一行
+            string[] tileInfos;//以#分二段
+            string[] posInfo;//position以,分三段
+            while ((tileInfoLine = reader.ReadLine()) != null)
+            {
+                tileInfos = tileInfoLine.Split('#');
 
+                TileInfo tile = new TileInfo();
+                tile.tileId = int.Parse(tileInfos[0]);
+                posInfo = tileInfos[1].Split(',');
+                tile.pos = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
+
+                level.tiles.Add(tile);
+            }
+            reader.Close();
+            fs.Close();
+        }
+        catch (Exception e)
+        {
+
+        }
+        return level;
     }
-    
-    //写入Level文件
-    public static void WriteLevelFile()
-    {
 
+    //写入Level文件,文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
+    public static void WriteLevelFile(LevelInfo _level)
+    {
+        try
+        {
+            string url = RD.SplitPath(new string[] { PublicDataManager.DATA_PATH, "Level", "User", _level.makerName });
+            if (!Directory.Exists(url))
+            {
+                Directory.CreateDirectory(url);
+            }
+            string fileName = _level.levelName + "#" + _level.levelId.ToString() + ".level";
+            FileStream fs = new FileStream(RD.SplitPath(new string[] { url, fileName }), FileMode.Create);
+            StreamWriter writer = new StreamWriter(fs);
+            writer.WriteLine(_level.levelId);
+            writer.WriteLine(_level.levelName);
+            writer.WriteLine(_level.makerName);
+            foreach (TileInfo tile in _level.tiles)
+            {
+                writer.WriteLine(tile.tileId + "#" + tile.pos.x + "," + tile.pos.y + "," + tile.pos.z);
+            }
+            writer.Close();
+            fs.Close();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.ToString());
+        }
     }
 }

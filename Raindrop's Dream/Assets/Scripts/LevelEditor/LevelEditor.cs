@@ -62,8 +62,8 @@ public class LevelEditor : MonoBehaviour
     private Dictionary<int, GameObject> tilePrefabs;//Tile预制体
     private int nowTileId;//当前选中TileID
     private int nowLevelId;//当前编辑关卡ID
-    private string levelName;//当前关卡名称
-    private string makerName;//当前关卡制作者名
+    private string nowLevelName;//当前关卡名称
+    private string nowMakerName;//当前关卡制作者名
 
     /*Object*/
     private Camera mainCamera;//主相机
@@ -108,7 +108,7 @@ public class LevelEditor : MonoBehaviour
     }
     // Use this for initialization
     void Start()
-    {   
+    {
         tilePrefabs = new Dictionary<int, GameObject>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         //初始化Tile预制体
@@ -260,7 +260,7 @@ public class LevelEditor : MonoBehaviour
     //隐藏左右下UI按钮
     void HideUIPanel(bool _isOn)
     {
-        if(_isOn)
+        if (_isOn)
         {
             leftToolPanel.SetActive(false);
             rightTilePanel.SetActive(false);
@@ -332,9 +332,10 @@ public class LevelEditor : MonoBehaviour
             default: break;
         }
     }
+    //切换关卡刷新显示
     void RefreshLevel()
     {
-        for(int i=0;i<layerOne.transform.childCount;i++)
+        for (int i = 0; i < layerOne.transform.childCount; i++)
         {
             Destroy(layerOne.transform.GetChild(i).gameObject);
         }
@@ -389,7 +390,29 @@ public class LevelEditor : MonoBehaviour
             case -1: return layerOne;
             case -2: return layerTwo;
             case -3: return layerThree;
-            default: return layerThree; 
+            default: return layerThree;
+        }
+    }
+    //获取全部tile信息列表
+    List<TileInfo> GetTileInfoList()
+    {
+        List<TileInfo> tiles = new List<TileInfo>();
+        GetLayerTileInfos(ref tiles, layerOne);
+        GetLayerTileInfos(ref tiles, layerTwo);
+        GetLayerTileInfos(ref tiles, layerThree);
+        return tiles;
+    }
+    //获取某层的tile信息
+    void GetLayerTileInfos(ref List<TileInfo> _tile, GameObject _layer)
+    {
+        GameObject obj;
+        for (int i = 0; i < _layer.transform.childCount; i++)
+        {
+            obj = _layer.transform.GetChild(i).gameObject;
+            TileInfo tile = new TileInfo();
+            tile.tileId = int.Parse(obj.name);
+            tile.pos = Vector3Int.RoundToInt(obj.transform.position);
+            _tile.Add(tile);
         }
     }
     /*各种判断*/
@@ -400,17 +423,18 @@ public class LevelEditor : MonoBehaviour
     }
 
     /*读写Level*/
+
     //保存地图
     public void SaveLevel()
     {
-        levelName = levelNameInputField.GetComponent<InputField>().text;
-        if (levelName == null)
+        nowLevelName = levelNameInputField.GetComponent<InputField>().text;
+        if (nowLevelName == null)
         {
             //请输入关卡名
             return;
         }
-        makerName = makerNameInputField.GetComponent<InputField>().text;
-        if (makerName == null)
+        nowMakerName = makerNameInputField.GetComponent<InputField>().text;
+        if (nowMakerName == null)
         {
             //请输入制作者名
             return;
@@ -419,81 +443,32 @@ public class LevelEditor : MonoBehaviour
         {
             nowLevelId = PublicDataManager.instance.GetLevelTableMaxKey() + 1;
         }
-        //文件夹路径：/Level/User/作者名/关卡名#关卡ID.level
-        string saveDirPath = PublicDataManager.DATA_PATH + "\\Level\\User\\" + makerName;
-        try
-        {
-            if (!Directory.Exists(saveDirPath))
-            {
-                Directory.CreateDirectory(saveDirPath);
-            }
-            FileStream fs = new FileStream(saveDirPath + "\\" + levelName +"#" + nowLevelId.ToString()+ ".level", FileMode.Create);
-            StreamWriter writer = new StreamWriter(fs);
-            writer.WriteLine(nowLevelId);
-            writer.WriteLine(levelName);
-            writer.WriteLine(makerName);
-            GameObject obj;
-            for (int i = 0; i < layerOne.transform.childCount; i++)
-            {
-                obj = layerOne.transform.GetChild(i).gameObject;
-                writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
-
-            }
-            for (int i = 0; i < layerTwo.transform.childCount; i++)
-            {
-                obj = layerTwo.transform.GetChild(i).gameObject;
-                writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
-
-            }
-            for (int i = 0; i < layerThree.transform.childCount; i++)
-            {
-                obj = layerThree.transform.GetChild(i).gameObject;
-                writer.WriteLine(obj.name + "#" + Mathf.Round(obj.transform.position.x) + "," + Mathf.Round(obj.transform.position.y) + "," + Mathf.Round(obj.transform.position.z));
-
-            }
-            //关卡封面
-
-            writer.Close();
-        }
-        catch (Exception e)
-        {
-            //文件写入失败
-            throw e;
-        }
+        LevelInfo level = new LevelInfo();
+        level.levelId = nowLevelId;
+        level.levelName = nowLevelName;
+        level.makerName = nowMakerName;
+        //GameObject转换为TileInfo信息
+        level.tiles = GetTileInfoList();
+        MFileStream.WriteLevelFile(level);
 
     }
+
     //从level文件读取Level
-    public void LoadLevel(int _mapId)
+    public void LoadLevel(int _levelId)
     {
-        try
+        LevelInfo level = MFileStream.ReadLevelFile(_levelId);
+        if (!level.IsEmpty())
         {
-            FileStream fs = new FileStream(PublicDataManager.DATA_PATH + "\\Level\\" + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".level", FileMode.Open);
-            StreamReader reader = new StreamReader(fs);
-            nowLevelId = int.Parse(reader.ReadLine());
-            levelNameInputField.GetComponent<InputField>().text = reader.ReadLine();
-            makerNameInputField.GetComponent<InputField>().text = reader.ReadLine();
-            string tileInfoLine;//读取的一行
-            string[] tileInfo;//以#分二段
-            string[] posInfo;//position以,分三段
-            while ((tileInfoLine = reader.ReadLine()) != null)
+            nowLevelId = level.levelId;
+            levelNameInputField.GetComponent<InputField>().text = level.levelName;
+            makerNameInputField.GetComponent<InputField>().text = level.makerName;
+            foreach (TileInfo tile in level.tiles)
             {
-                tileInfo = tileInfoLine.Split('#');
-
-                posInfo = tileInfo[1].Split(',');
-                Vector3Int position = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
-
-                GameObject obj = Instantiate(tilePrefabs[int.Parse(tileInfo[0])], position, Quaternion.identity);
-                obj.name = tileInfo[0];
-                obj.transform.SetParent(GetLayerObject(position.z).transform);
+                GameObject obj = Instantiate(tilePrefabs[tile.tileId], tile.pos, Quaternion.identity);
+                obj.name = tile.tileId.ToString();
+                obj.transform.SetParent(GetLayerObject(tile.pos.z).transform);
             }
-            fs.Close();
         }
-        catch (Exception e)
-        {
-            //读取level文件失败\
-            Debug.Log(e.ToString());
-        }
-
     }
     //读取level封面
     private Sprite LoadLevelImage(int _mapId)
@@ -509,9 +484,9 @@ public class LevelEditor : MonoBehaviour
     //自动保存
     IEnumerator AutoSave()
     {
-        levelName = levelNameInputField.GetComponent<InputField>().text;
-        makerName = makerNameInputField.GetComponent<InputField>().text;
-        if (levelName != null && makerName != null)
+        nowLevelName = levelNameInputField.GetComponent<InputField>().text;
+        nowMakerName = makerNameInputField.GetComponent<InputField>().text;
+        if (nowLevelName != null && nowMakerName != null)
         {
             if (Time.time - lastSaveTime >= saveSpan)
             {

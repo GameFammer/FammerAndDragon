@@ -21,12 +21,12 @@ public class PublicDataManager : MonoBehaviour
         get
         {
             return Application.streamingAssetsPath;
-//#if UNITY_IOS || UNITY_ANDROID
-//            return Application.persistentDataPath;
+            //#if UNITY_IOS || UNITY_ANDROID
+            //            return Application.persistentDataPath;
 
-//#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-//            return Application.streamingAssetsPath;
-//#endif
+            //#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            //            return Application.streamingAssetsPath;
+            //#endif
         }
     }
     private Dictionary<int, LevelTable> levelTable;
@@ -53,8 +53,8 @@ public class PublicDataManager : MonoBehaviour
     {
         //在这初始化每个Dictionary
         /*level*/
-        InitLevelFromFile(ref levelTable, "Dev");
-        InitLevelFromFile(ref levelTable, "User");
+        InitLevelTable(ref levelTable, "Dev");
+        InitLevelTable(ref levelTable, "User");
 
         /*prefab*/
         InitFromCsv<TilePrefabTable>(ref tilePrefabTable, "TilePrefabTable.csv");
@@ -66,47 +66,13 @@ public class PublicDataManager : MonoBehaviour
         _dataTable = LoadCsvData<T>(_fileName);
     }
     //从文件初始化关卡信息(Level)
-    private void InitLevelFromFile(ref Dictionary<int, LevelTable> _dataTable,string _path)
+    private void InitLevelTable(ref Dictionary<int, LevelTable> _levelTable, string _path)
     {
-        if(_dataTable == null)
+        if (_levelTable == null)
         {
-            _dataTable = new Dictionary<int, LevelTable>();
+            _levelTable = new Dictionary<int, LevelTable>();
         }
-        string allPath = DATA_PATH + "\\Level\\" + _path;
-        if (!Directory.Exists(allPath))
-        {
-            //文件读取失败
-        }
-        else
-        {
-            try
-            {
-                DirectoryInfo makerPath = new DirectoryInfo(allPath);
-                foreach(DirectoryInfo maker in makerPath.GetDirectories())
-                {
-                    
-                    foreach(FileInfo level in maker.GetFiles())
-                    {
-                        if(level.Extension==".level")
-                        {
-                            LevelTable t = new LevelTable();
-                            t.ID = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
-                            //maker、level名在最后
-                            t.LevelName = level.Name.Split('.')[0];
-                            t.MakerName = maker.Name;
-                            t.LevelFilePath = _path+"\\"+ t.MakerName + "\\" + t.LevelName;
-                            levelTable.Add(t.ID, t);
-                        }
-                       
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-        }
+        MFileStream.ReadLevelTable(ref _levelTable, _path);
     }
 
     //从CSV表初始化Dictionary
@@ -150,9 +116,9 @@ public class PublicDataManager : MonoBehaviour
     public int GetLevelTableMaxKey()
     {
         int maxKey = 0;
-        foreach(int key in levelTable.Keys)
+        foreach (int key in levelTable.Keys)
         {
-            if(key>maxKey)
+            if (key > maxKey)
             {
                 maxKey = key;
             }
