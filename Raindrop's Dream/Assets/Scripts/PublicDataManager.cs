@@ -77,10 +77,10 @@ public class PublicDataManager : MonoBehaviour
         /* 从CSV文件读取数据 */
         Dictionary<string, Dictionary<string, string>> result = MFileStream.ReadCsvFile(_fileName);
         /* 遍历每一行数据 */
-        foreach (string ID in result.Keys)
+        foreach (string id in result.Keys)
         {
             /* CSV的一行数据 */
-            Dictionary<string, string> datas = result[ID];
+            Dictionary<string, string> datas = result[id];
 
             /* 读取Csv数据对象的属性 */
             PropertyInfo[] props = typeof(T).GetProperties();
@@ -91,17 +91,17 @@ public class PublicDataManager : MonoBehaviour
                 ReflectUtil.PiSetValue<T>(datas[p.Name], p, obj);
             }
 
-            /* 按ID-数据的形式存储 */
-            dic[Convert.ToInt32(ID)] = obj;
+            /* 按id-数据的形式存储 */
+            dic[Convert.ToInt32(id)] = obj;
         }
 
         return dic;
     }
 
     /*Level*/
-    public LevelTable GetLevelTable(int _ID)
+    public LevelTable GetLevelTable(int _id)
     {
-        return levelTable[_ID];
+        return levelTable[_id];
     }
     public Dictionary<int, LevelTable>.KeyCollection GetLevelTableKeys()
     {
@@ -119,13 +119,13 @@ public class PublicDataManager : MonoBehaviour
         }
         return maxKey;
     }
-    public string GetLevelName(int _ID)
+    public string GetLevelName(int _id)
     {
-        return levelTable[_ID].name;
+        return levelTable[_id].name;
     }
-    public string GetLevelFilePath(int _ID)
+    public string GetLevelFilePath(int _id)
     {
-        return levelTable[_ID].filePath;
+        return levelTable[_id].filePath;
     }
 
     /*TilePrefab*/
@@ -133,20 +133,20 @@ public class PublicDataManager : MonoBehaviour
     {
         return tilePrefabTable.Keys;
     }
-    public TilePrefabTable GetTilePrefabTable(int _ID)
+    public TilePrefabTable GetTilePrefabTable(int _id)
     {
-        return tilePrefabTable[_ID];
+        return tilePrefabTable[_id];
     }
-    public string GetTilePrefabName(int _ID)
+    public string GetTilePrefabName(int _id)
     {
-        return tilePrefabTable[_ID].prefabName;
+        return tilePrefabTable[_id].prefabName;
     }
-    public int GetTilePrefabType(int _ID)
+    public int GetTilePrefabType(int _id)
     {
-        return tilePrefabTable[_ID].type;
+        return tilePrefabTable[_id].type;
     }
-    public string GetTilePrefabPath(int _ID)
+    public string GetTilePrefabPath(int _id)
     {
-        return tilePrefabTable[_ID].prefabPath;
+        return tilePrefabTable[_id].prefabPath;
     }
 }
