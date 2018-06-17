@@ -55,24 +55,24 @@ public class MFileStream
         {
             try
             {
-                DirectoryInfo makerPath = new DirectoryInfo(allPath);
-                foreach (DirectoryInfo maker in makerPath.GetDirectories())
+                DirectoryInfo producerPath = new DirectoryInfo(allPath);
+                foreach (DirectoryInfo producer in producerPath.GetDirectories())
                 {
 
-                    foreach (FileInfo level in maker.GetFiles())
+                    foreach (FileInfo level in producer.GetFiles())
                     {
                         if (level.Extension == ".level")
                         {
                             LevelTable t = new LevelTable();
-                            t.ID = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
+                            t.id = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
                             //maker、level名在最后
-                            t.LevelName = level.Name.Split('.')[0];
-                            t.MakerName = maker.Name;
+                            t.name = level.Name.Split('.')[0];
+                            t.producer = producer.Name;
                             //全路径：../Level/User/作者名/关卡名#关卡ID.level
-                            t.LevelFilePath = RD.SplitPath(new string[] { level.DirectoryName, level.Name });
+                            t.filePath = RD.SplitPath(new string[] { level.DirectoryName, level.Name });
                             string imgName = level.Name.Split('.')[0] + ".png";
-                            t.levelImagePath = RD.SplitPath(new string[] { level.DirectoryName, imgName });
-                            levelTable.Add(t.ID, t);
+                            t.imagePath = RD.SplitPath(new string[] { level.DirectoryName, imgName });
+                            levelTable.Add(t.id, t);
                         }
 
                     }
@@ -80,7 +80,7 @@ public class MFileStream
             }
             catch (Exception e)
             {
-
+                Debug.Log(e);
             }
         }
     }
@@ -93,9 +93,9 @@ public class MFileStream
             string url = RD.SplitPath(new string[] { PublicDataManager.instance.GetLevelFilePath(_levelId) });
             FileStream fs = new FileStream(url, FileMode.Open);
             StreamReader reader = new StreamReader(fs);
-            level.levelId = int.Parse(reader.ReadLine());
-            level.levelName = reader.ReadLine();
-            level.makerName = reader.ReadLine();
+            level.id = int.Parse(reader.ReadLine());
+            level.name = reader.ReadLine();
+            level.producer = reader.ReadLine();
             string tileInfoLine;//读取的一行
             string[] tileInfos;//以#分二段
             string[] posInfo;//position以,分三段
@@ -104,7 +104,7 @@ public class MFileStream
                 tileInfos = tileInfoLine.Split('#');
 
                 TileInfo tile = new TileInfo();
-                tile.tileId = int.Parse(tileInfos[0]);
+                tile.id = int.Parse(tileInfos[0]);
                 posInfo = tileInfos[1].Split(',');
                 tile.pos = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
 
@@ -115,7 +115,7 @@ public class MFileStream
         }
         catch (Exception e)
         {
-
+            Debug.Log(e);
         }
         return level;
     }
@@ -125,20 +125,20 @@ public class MFileStream
     {
         try
         {
-            string url = RD.SplitPath(new string[] { PublicDataManager.DATA_PATH, "Level", "User", _level.makerName });
+            string url = RD.SplitPath(new string[] { PublicDataManager.DATA_PATH, "Level", "User", _level.producer });
             if (!Directory.Exists(url))
             {
                 Directory.CreateDirectory(url);
             }
-            string fileName = _level.levelName + "#" + _level.levelId.ToString() + ".level";
+            string fileName = _level.name + "#" + _level.id.ToString() + ".level";
             FileStream fs = new FileStream(RD.SplitPath(new string[] { url, fileName }), FileMode.Create);
             StreamWriter writer = new StreamWriter(fs);
-            writer.WriteLine(_level.levelId);
-            writer.WriteLine(_level.levelName);
-            writer.WriteLine(_level.makerName);
+            writer.WriteLine(_level.id);
+            writer.WriteLine(_level.name);
+            writer.WriteLine(_level.producer);
             foreach (TileInfo tile in _level.tiles)
             {
-                writer.WriteLine(tile.tileId + "#" + tile.pos.x + "," + tile.pos.y + "," + tile.pos.z);
+                writer.WriteLine(tile.id + "#" + tile.pos.x + "," + tile.pos.y + "," + tile.pos.z);
             }
             writer.Close();
             fs.Close();

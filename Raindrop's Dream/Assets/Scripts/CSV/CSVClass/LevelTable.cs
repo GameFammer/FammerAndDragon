@@ -11,8 +11,8 @@ using UnityEngine;
 
 public class LevelTable :CSVTable
 {
-    public string LevelName { get; set; }//关卡名
-    public string MakerName { get; set; }//制作者名
-    public string LevelFilePath { get; set; }//关卡文件路径
-    public string levelImagePath { get; set; }//关卡封面路径
+    public string name { get; set; }//关卡名
+    public string producer { get; set; }//制作者名
+    public string filePath { get; set; }//关卡文件路径
+    public string imagePath { get; set; }//关卡封面路径
 }

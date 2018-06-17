@@ -5,23 +5,18 @@ using UnityEngine;
 public class LevelInfo
 {
 
-    public int levelId;
-    public string levelName;
-    public string makerName;
+    public int id;
+    public string name;
+    public string producer;
     public List<TileInfo> tiles;
 
     public LevelInfo()
     {
-        levelId = -1;
+        id = -1;
         tiles = new List<TileInfo>();
     }
     public bool IsEmpty()
     {
-        return levelId > 0 ? false : true;
+        return id > 0 ? false : true;
     }
-}
-public class TileInfo
-{
-    public int tileId;
-    public Vector3Int pos;
 }

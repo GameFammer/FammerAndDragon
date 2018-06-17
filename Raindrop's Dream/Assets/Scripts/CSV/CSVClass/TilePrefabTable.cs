@@ -11,9 +11,9 @@ using UnityEngine;
 
 public class TilePrefabTable : CSVTable
 {
-    public string TileName { get; set; }//Tile名
-    public int TileType { get; set; }//Tile类别
-    public string MakerName { get; set; }//制作者名
-    public string TilePrefabName { get; set; }//tile预制体名
-    public string TilePrefabPath { get; set; }//tile预制体路径
+    public string name { get; set; }//Tile名
+    public int type { get; set; }//Tile类别
+    public string producer { get; set; }//制作者名
+    public string prefabName { get; set; }//tile预制体名
+    public string prefabPath { get; set; }//tile预制体路径
 }

@@ -20,13 +20,7 @@ public class PublicDataManager : MonoBehaviour
     {
         get
         {
-            return Application.streamingAssetsPath;
-            //#if UNITY_IOS || UNITY_ANDROID
-            //            return Application.persistentDataPath;
-
-            //#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            //            return Application.streamingAssetsPath;
-            //#endif
+            return RD.isOSXEditor ? Application.persistentDataPath : Application.streamingAssetsPath;
         }
     }
     private Dictionary<int, LevelTable> levelTable;
@@ -127,11 +121,11 @@ public class PublicDataManager : MonoBehaviour
     }
     public string GetLevelName(int _ID)
     {
-        return levelTable[_ID].LevelName;
+        return levelTable[_ID].name;
     }
     public string GetLevelFilePath(int _ID)
     {
-        return levelTable[_ID].LevelFilePath;
+        return levelTable[_ID].filePath;
     }
 
     /*TilePrefab*/
@@ -145,14 +139,14 @@ public class PublicDataManager : MonoBehaviour
     }
     public string GetTilePrefabName(int _ID)
     {
-        return tilePrefabTable[_ID].TilePrefabName;
+        return tilePrefabTable[_ID].prefabName;
     }
     public int GetTilePrefabType(int _ID)
     {
-        return tilePrefabTable[_ID].TileType;
+        return tilePrefabTable[_ID].type;
     }
     public string GetTilePrefabPath(int _ID)
     {
-        return tilePrefabTable[_ID].TilePrefabPath;
+        return tilePrefabTable[_ID].prefabPath;
     }
 }

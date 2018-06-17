@@ -12,5 +12,5 @@ using UnityEngine;
 
 public class CSVTable
 {
-    public int ID { get; set; }
+    public int id { get; set; }
 }

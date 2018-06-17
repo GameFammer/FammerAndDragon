@@ -200,7 +200,7 @@ public class LevelEditor : MonoBehaviour
     //加载TilePrefabs
     void InitTilePrefabs()
     {
-        AssetBundle load = AssetBundle.LoadFromFile(PublicDataManager.DATA_PATH + "\\test.obj");
+        AssetBundle load = AssetBundle.LoadFromFile(RD.SplitPath(new string[2] { PublicDataManager.DATA_PATH, "test.obj" }));
         foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
         {
             GameObject prefab = load.LoadAsset<GameObject>(PublicDataManager.instance.GetTilePrefabName(key));
@@ -410,7 +410,7 @@ public class LevelEditor : MonoBehaviour
         {
             obj = _layer.transform.GetChild(i).gameObject;
             TileInfo tile = new TileInfo();
-            tile.tileId = int.Parse(obj.name);
+            tile.id = int.Parse(obj.name);
             tile.pos = Vector3Int.RoundToInt(obj.transform.position);
             _tile.Add(tile);
         }
@@ -444,9 +444,9 @@ public class LevelEditor : MonoBehaviour
             nowLevelId = PublicDataManager.instance.GetLevelTableMaxKey() + 1;
         }
         LevelInfo level = new LevelInfo();
-        level.levelId = nowLevelId;
-        level.levelName = nowLevelName;
-        level.makerName = nowMakerName;
+        level.id = nowLevelId;
+        level.name = nowLevelName;
+        level.producer = nowMakerName;
         //GameObject转换为TileInfo信息
         level.tiles = GetTileInfoList();
         MFileStream.WriteLevelFile(level);
@@ -459,13 +459,13 @@ public class LevelEditor : MonoBehaviour
         LevelInfo level = MFileStream.ReadLevelFile(_levelId);
         if (!level.IsEmpty())
         {
-            nowLevelId = level.levelId;
-            levelNameInputField.GetComponent<InputField>().text = level.levelName;
-            makerNameInputField.GetComponent<InputField>().text = level.makerName;
+            nowLevelId = level.id;
+            levelNameInputField.GetComponent<InputField>().text = level.name;
+            makerNameInputField.GetComponent<InputField>().text = level.producer;
             foreach (TileInfo tile in level.tiles)
             {
-                GameObject obj = Instantiate(tilePrefabs[tile.tileId], tile.pos, Quaternion.identity);
-                obj.name = tile.tileId.ToString();
+                GameObject obj = Instantiate(tilePrefabs[tile.id], tile.pos, Quaternion.identity);
+                obj.name = tile.id.ToString();
                 obj.transform.SetParent(GetLayerObject(tile.pos.z).transform);
             }
         }
