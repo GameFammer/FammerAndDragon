@@ -200,7 +200,7 @@ public class LevelEditor : MonoBehaviour
     //加载TilePrefabs
     void InitTilePrefabs()
     {
-        AssetBundle load = AssetBundle.LoadFromFile(RD.SplitPath(new string[2] { PublicDataManager.DATA_PATH, "test.obj" }));
+        AssetBundle load = AssetBundle.LoadFromFile(RDPlatform.SplitPath(new string[2] { RDPlatform.DATA_PATH, "test.obj" }));
         foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
         {
             GameObject prefab = load.LoadAsset<GameObject>(PublicDataManager.instance.GetTilePrefabName(key));
@@ -449,14 +449,14 @@ public class LevelEditor : MonoBehaviour
         level.producer = nowMakerName;
         //GameObject转换为TileInfo信息
         level.tiles = GetTileInfoList();
-        MFileStream.WriteLevelFile(level);
+        RDFileStream.WriteLevelFile(level);
 
     }
 
     //从level文件读取Level
     public void LoadLevel(int _levelId)
     {
-        LevelInfo level = MFileStream.ReadLevelFile(_levelId);
+        LevelInfo level = RDFileStream.ReadLevelFile(_levelId);
         if (!level.IsEmpty())
         {
             nowLevelId = level.id;
@@ -473,7 +473,7 @@ public class LevelEditor : MonoBehaviour
     //读取level封面
     private Sprite LoadLevelImage(int _mapId)
     {
-        WWW www = new WWW("file:///" + PublicDataManager.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
+        WWW www = new WWW("file:///" + RDPlatform.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
         if (www != null && string.IsNullOrEmpty(www.error))
         {
             return Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);

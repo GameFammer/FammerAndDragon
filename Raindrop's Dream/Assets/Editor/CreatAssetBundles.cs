@@ -5,6 +5,6 @@ public class CreateAssetBundles
     [MenuItem("Assets/Build AssetBundles")]
     static void BuildAllAssetBundles()
     {
-        BuildPipeline.BuildAssetBundles(PublicDataManager.DATA_PATH, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
+        BuildPipeline.BuildAssetBundles(RDPlatform.DATA_PATH, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
     }
 }

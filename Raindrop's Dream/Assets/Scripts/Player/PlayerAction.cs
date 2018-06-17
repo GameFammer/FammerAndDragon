@@ -14,8 +14,8 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour {
   
     public GameObject checkIsGround;//用于判断是否在地面上
-    public GameObject leftShootPos;//左边子弹初始位置
-    public GameObject rightShootPos;//右边子弹初始位置
+    public GameObject leftShootPosition;//左边子弹初始位置
+    public GameObject rightShootPosition;//右边子弹初始位置
 
     public float moveSpeed;//移动速度
     public float maxJumpSpeed;//跳跃最小，最大速度
@@ -118,13 +118,13 @@ public class PlayerAction : MonoBehaviour {
                 //面向右边
                 if (!renderer.flipX)
                 {
-                    bullet.transform.position = rightShootPos.transform.position;
+                    bullet.transform.position = rightShootPosition.transform.position;
                     bullet.GetComponent<SpriteRenderer>().flipX = false;
                 }
                 //面向左边
                 else
                 {
-                    bullet.transform.position = leftShootPos.transform.position;
+                    bullet.transform.position = leftShootPosition.transform.position;
                     //翻转子弹贴图
                     bullet.GetComponent<SpriteRenderer>().flipX = true;
                 }
