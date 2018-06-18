@@ -20,9 +20,9 @@ public class LevelEditor : MonoBehaviour
     public GameObject downLevelPanel;//下
     //Left
     [SerializeField, HeaderAttribute("左侧工具栏")]
-    public GameObject layerOneButton;//图层按钮
-    public GameObject layerTwoButton;
-    public GameObject layerThreeButton;
+    public GameObject layerBackgroundButton;//图层按钮
+    public GameObject layerPlayerButton;
+    public GameObject layerOverPlayerButton;
     public GameObject hideOtherToggle;//隐藏其它图层
     //Right
     [SerializeField, HeaderAttribute("右侧素材栏")]
@@ -68,9 +68,12 @@ public class LevelEditor : MonoBehaviour
     /*Object*/
     private Camera mainCamera;//主相机
 
-    public GameObject layerOne;//Layer1对象
-    public GameObject layerTwo;//Layer2对象
-    public GameObject layerThree;//Layer3对象
+    public GameObject layerBackground;//最底层，例如背景等,对应position.z：4
+    public GameObject layerPlayer;//与主角同层物体，例如平台，敌人，道具等，对应position.z：3
+    public GameObject layerOverPlayer;//遮盖物，例如迷雾等,对应position.z：2
+    private const int LAYER_BACKGROUND = 4;
+    private const int LAYER_PLAYER = 3;
+    private const int LAYER_OVERPLAYER = 2;
 
     private GameObject nowTileObject;//当前选中tile
     /*Mouse*/
@@ -120,7 +123,7 @@ public class LevelEditor : MonoBehaviour
         InitRightTileButtons();
         //初始化已有Level列表按钮
         InitDownLevelButtons();
-        nowLayer = -3;
+        nowLayer = LAYER_PLAYER;//默认Player层
         nowTileId = -1;
         nowLevelId = -1;
     }
@@ -142,7 +145,7 @@ public class LevelEditor : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && IsValidPosition(mousePos))
             {
-                if (FindTileInChild(new Vector3Int(mousePos.x, mousePos.y, nowLayer)) == null)
+                if (FindTileInChild(Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition))) == null)
                 {
                     SetNowTileToTileMap(nowTileId);
                 }
@@ -161,7 +164,7 @@ public class LevelEditor : MonoBehaviour
             mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             if (IsValidPosition(mousePos))
             {
-                GameObject des = FindTileInChild(new Vector3Int(mousePos.x, mousePos.y, nowLayer));
+                GameObject des = FindTileInChild(mousePos);
                 if (des != null)
                 {
                     Destroy(des.gameObject);
@@ -171,9 +174,13 @@ public class LevelEditor : MonoBehaviour
         //鼠标滑轮缩放
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (mainCamera.orthographicSize > 0.5f)
+            if (mainCamera.orthographicSize >= 0.5f)
             {
                 mainCamera.orthographicSize += Input.GetAxis("Mouse ScrollWheel");
+            }
+            else
+            {
+                mainCamera.orthographicSize = 0.5f;
             }
         }
         //未开始运行水平、竖直输入移动地图
@@ -192,9 +199,9 @@ public class LevelEditor : MonoBehaviour
     //初始化工具栏
     void InitLeftToolButtons()
     {
-        layerOneButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-1));
-        layerTwoButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-2));
-        layerThreeButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(-3));
+        layerBackgroundButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(LAYER_BACKGROUND));
+        layerPlayerButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(LAYER_PLAYER));
+        layerOverPlayerButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(LAYER_OVERPLAYER));
         hideOtherToggle.GetComponent<Toggle>().onValueChanged.AddListener((_isOn) => HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn));
     }
     //加载TilePrefabs
@@ -278,16 +285,16 @@ public class LevelEditor : MonoBehaviour
     {
         if (_isOn)
         {
-            layerOne.SetActive(false);
-            layerTwo.SetActive(false);
-            layerThree.SetActive(false);
+            layerBackground.SetActive(false);
+            layerPlayer.SetActive(false);
+            layerOverPlayer.SetActive(false);
             GetLayerObject(nowLayer).SetActive(true);
         }
         else
         {
-            layerOne.SetActive(true);
-            layerTwo.SetActive(true);
-            layerThree.SetActive(true);
+            layerBackground.SetActive(true);
+            layerPlayer.SetActive(true);
+            layerOverPlayer.SetActive(true);
         }
     }
     //保存按钮
@@ -335,36 +342,26 @@ public class LevelEditor : MonoBehaviour
     //切换关卡刷新显示
     void RefreshLevel()
     {
-        for (int i = 0; i < layerOne.transform.childCount; i++)
+        for (int i = 0; i < layerBackground.transform.childCount; i++)
         {
-            Destroy(layerOne.transform.GetChild(i).gameObject);
+            Destroy(layerBackground.transform.GetChild(i).gameObject);
         }
-        for (int i = 0; i < layerTwo.transform.childCount; i++)
+        for (int i = 0; i < layerPlayer.transform.childCount; i++)
         {
-            Destroy(layerTwo.transform.GetChild(i).gameObject);
+            Destroy(layerPlayer.transform.GetChild(i).gameObject);
         }
-        for (int i = 0; i < layerThree.transform.childCount; i++)
+        for (int i = 0; i < layerOverPlayer.transform.childCount; i++)
         {
-            Destroy(layerThree.transform.GetChild(i).gameObject);
+            Destroy(layerOverPlayer.transform.GetChild(i).gameObject);
         }
     }
     /*各种find*/
     //根据图层查找子对象
-    GameObject FindTileInChild(Vector3Int _mpos)
+    GameObject FindTileInChild(Vector3Int _mousePosition)
     {
-        GameObject pos, father;
-        int childCount = 0;
-        childCount = GetLayerObject(_mpos.z).transform.childCount;
-        father = GetLayerObject(_mpos.z);
-        for (int i = 0; i < childCount; i++)
-        {
-            pos = father.transform.GetChild(i).gameObject;
-            if (Vector3Int.RoundToInt(pos.transform.position) == _mpos)
-            {
-                return pos;
-            }
-        }
-        return null;
+        Vector2Int origin = new Vector2Int(_mousePosition.x, _mousePosition.y);
+        RaycastHit2D hitInfo = Physics2D.Raycast(origin, Vector2.zero, 5f, 1 << GetLayerObject(nowLayer).layer);
+        return hitInfo.transform?hitInfo.transform.gameObject:null;
     }
 
     /*各种Set/Get*/
@@ -372,6 +369,8 @@ public class LevelEditor : MonoBehaviour
     void SetNowTileToTileMap(int _ID)
     {
         nowTileObject.transform.SetParent(GetLayerObject(nowLayer).transform);
+        nowTileObject.layer = GetLayerObject(nowLayer).layer;
+
         mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(mousePos.x, mousePos.y, nowLayer), Quaternion.identity);
         nowTileObject.name = _ID.ToString();
@@ -387,19 +386,19 @@ public class LevelEditor : MonoBehaviour
     {
         switch (_layer)
         {
-            case -1: return layerOne;
-            case -2: return layerTwo;
-            case -3: return layerThree;
-            default: return layerThree;
+            case LAYER_BACKGROUND: return layerBackground;
+            case LAYER_PLAYER: return layerPlayer;
+            case LAYER_OVERPLAYER: return layerOverPlayer;
+            default: return layerPlayer;
         }
     }
     //获取全部tile信息列表
     List<TileInfo> GetTileInfoList()
     {
         List<TileInfo> tiles = new List<TileInfo>();
-        GetLayerTileInfos(ref tiles, layerOne);
-        GetLayerTileInfos(ref tiles, layerTwo);
-        GetLayerTileInfos(ref tiles, layerThree);
+        GetLayerTileInfos(ref tiles, layerBackground);
+        GetLayerTileInfos(ref tiles, layerPlayer);
+        GetLayerTileInfos(ref tiles, layerOverPlayer);
         return tiles;
     }
     //获取某层的tile信息
@@ -490,7 +489,7 @@ public class LevelEditor : MonoBehaviour
         {
             if (Time.time - lastSaveTime >= saveSpan)
             {
-                if (layerOne.transform.childCount != 0 || layerTwo.transform.childCount != 0 || layerThree.transform.childCount != 0)
+                if (layerBackground.transform.childCount != 0 || layerPlayer.transform.childCount != 0 || layerOverPlayer.transform.childCount != 0)
                 {
                     SaveLevel();
                 }

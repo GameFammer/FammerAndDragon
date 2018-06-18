@@ -188,7 +188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.26620832, y: 0.8792233}
   m_AnchorMax: {x: 0.7361863, y: 1}
-  m_AnchoredPosition: {x: -1.999939, y: 1.7999268}
+  m_AnchoredPosition: {x: -1.999939, y: 1.7998047}
   m_SizeDelta: {x: 1.5999756, y: -6.199997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25436888
@@ -866,7 +866,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &172503840
@@ -901,7 +901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &172503842
@@ -1919,7 +1919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &399028470
@@ -2377,7 +2377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &613891859
@@ -2740,8 +2740,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 756018234}
-  m_Layer: 0
-  m_Name: Layer1
+  m_Layer: 8
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2754,7 +2754,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 756018233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 320269606}
@@ -2836,7 +2836,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 292800790}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3963,7 +3963,7 @@ GameObject:
   - component: {fileID: 1080558813}
   - component: {fileID: 1080558812}
   m_Layer: 5
-  m_Name: LayerOneButton
+  m_Name: LayerBackgroundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3985,7 +3985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.108228505, y: 0.1884716}
   m_AnchorMax: {x: 0.28088576, y: 0.27173296}
-  m_AnchoredPosition: {x: 1.5, y: 2.7000732}
+  m_AnchoredPosition: {x: 1.5, y: 2.6999512}
   m_SizeDelta: {x: -1, y: 0.3999939}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1080558812
@@ -4536,9 +4536,9 @@ MonoBehaviour:
   leftToolPanel: {fileID: 129753312}
   rightTilePanel: {fileID: 1208752167}
   downLevelPanel: {fileID: 2106541241}
-  layerOneButton: {fileID: 1080558810}
-  layerTwoButton: {fileID: 1507401541}
-  layerThreeButton: {fileID: 1880152000}
+  layerBackgroundButton: {fileID: 1080558810}
+  layerPlayerButton: {fileID: 1507401541}
+  layerOverPlayerButton: {fileID: 1880152000}
   hideOtherToggle: {fileID: 1456643656}
   bgScrollView: {fileID: 49860654}
   phcScrollView: {fileID: 1611801917}
@@ -4564,9 +4564,9 @@ MonoBehaviour:
   makerNameInputField: {fileID: 1805270710}
   saveButton: {fileID: 675130643}
   LevelPanel: {fileID: 1400793279}
-  layerOne: {fileID: 756018233}
-  layerTwo: {fileID: 1926310885}
-  layerThree: {fileID: 1444357337}
+  layerBackground: {fileID: 756018233}
+  layerPlayer: {fileID: 1926310885}
+  layerOverPlayer: {fileID: 1444357337}
   saveSpan: 600
 --- !u!4 &1259042142
 Transform:
@@ -4768,7 +4768,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 100756985}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4860,7 +4860,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.2029986
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4883,7 +4883,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1385966828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 3.5, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5032,7 +5032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.0000121593475, y: 0}
+  m_AnchoredPosition: {x: -0.000073194504, y: 0}
   m_SizeDelta: {x: 0, y: -0.000030518}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1400793281
@@ -5079,8 +5079,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1444357338}
-  m_Layer: 0
-  m_Name: Layer3
+  m_Layer: 10
+  m_Name: OverPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5093,7 +5093,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1444357337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 320269606}
@@ -5562,7 +5562,7 @@ GameObject:
   - component: {fileID: 1507401544}
   - component: {fileID: 1507401543}
   m_Layer: 5
-  m_Name: LayerTwoButton
+  m_Name: LayerPlayerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5584,7 +5584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41613352, y: 0.1884716}
   m_AnchorMax: {x: 0.5837715, y: 0.27173296}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 2.7000732}
+  m_AnchoredPosition: {x: 0.0000076293945, y: 2.6999512}
   m_SizeDelta: {x: 1, y: 0.3999939}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1507401543
@@ -5818,7 +5818,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 272273276}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5934,7 +5934,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 261522349}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6419,7 +6419,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 997454982}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6527,7 +6527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1783085599
@@ -6680,7 +6680,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2044773715}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6829,7 +6829,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.13900001}
   m_AnchorMax: {x: 1, y: 0.41428947}
-  m_AnchoredPosition: {x: -250, y: -0.9999542}
+  m_AnchoredPosition: {x: -250, y: -0.9999695}
   m_SizeDelta: {x: 160, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1805270712
@@ -6940,7 +6940,7 @@ GameObject:
   - component: {fileID: 1880152003}
   - component: {fileID: 1880152002}
   m_Layer: 5
-  m_Name: 'LayerThreeButton '
+  m_Name: 'LayerOverPlayerButton '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6962,7 +6962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.716362, y: 0.1884716}
   m_AnchorMax: {x: 0.88900006, y: 0.27173296}
-  m_AnchoredPosition: {x: -0.49998474, y: 2.7000732}
+  m_AnchoredPosition: {x: -0.49998474, y: 2.6999512}
   m_SizeDelta: {x: -1, y: 0.3999939}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1880152002
@@ -7260,8 +7260,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1926310886}
-  m_Layer: 0
-  m_Name: Layer2
+  m_Layer: 9
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7274,7 +7274,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1926310885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 320269606}
@@ -7567,7 +7567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2044773714
@@ -7884,7 +7884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.26329878}
-  m_AnchoredPosition: {x: -0.010009766, y: -5.9001465}
+  m_AnchoredPosition: {x: -0.010009766, y: -5.9003906}
   m_SizeDelta: {x: -0.1800003, y: -11.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2106541243

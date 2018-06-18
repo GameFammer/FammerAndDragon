@@ -17,14 +17,14 @@ public class RDPlatform
     public static bool isWindowsEditor = Application.platform == RuntimePlatform.WindowsEditor;
 
     //拼接路径
-    public static string SplitPath(string[] paths){
+    public static string SplitPath(string[] _paths){
 
         string splitCharacter = isOSXEditor ? "/" : "\\";
 
-        string path = paths[0];
+        string path = _paths[0];
 
-        for (var i = 1; i < paths.Length; i++){
-            path += splitCharacter + paths[i];
+        for (var i = 1; i < _paths.Length; i++){
+            path += splitCharacter + _paths[i];
         }
 
         return path;

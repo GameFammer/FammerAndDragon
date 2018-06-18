@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - Enemy
-  - BreakEnable
-  - 
+  - Background
+  - Player
+  - OverPlayer
   - 
   - 
   - 

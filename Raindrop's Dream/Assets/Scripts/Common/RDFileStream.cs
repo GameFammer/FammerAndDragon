@@ -42,7 +42,7 @@ public class RDFileStream
     }
 
     //从文件读取LevelTable
-    public static void ReadLevelTable(ref Dictionary<int, LevelTable> levelTable, string _path)
+    public static void ReadLevelTable(ref Dictionary<int, LevelTable> _levelTable, string _path)
     {
         string allPath = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "Level", _path });
         if (!Directory.Exists(allPath))
@@ -70,7 +70,7 @@ public class RDFileStream
                             t.filePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, level.Name });
                             string imgName = level.Name.Split('.')[0] + ".png";
                             t.imagePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, imgName });
-                            levelTable.Add(t.id, t);
+                            _levelTable.Add(t.id, t);
                         }
 
                     }
