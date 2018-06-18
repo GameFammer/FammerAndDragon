@@ -12,9 +12,22 @@ public class RDPlatform
             return RDPlatform.isOSXEditor ? Application.persistentDataPath : Application.streamingAssetsPath;
         }
     }
-    public static bool isOSXEditor = Application.platform == RuntimePlatform.OSXEditor;
 
-    public static bool isWindowsEditor = Application.platform == RuntimePlatform.WindowsEditor;
+    public static bool isOSXEditor
+    {
+        get
+        {
+            return Application.platform == RuntimePlatform.OSXEditor;
+        }
+    }
+
+    public static bool isWindowsEditor
+    {
+        get
+        {
+            return Application.platform == RuntimePlatform.WindowsEditor;
+        }
+    }
 
     //拼接路径
     public static string SplitPath(string[] _paths){
