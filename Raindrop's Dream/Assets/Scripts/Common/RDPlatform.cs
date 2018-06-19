@@ -9,7 +9,7 @@ public class RDPlatform
     {
         get
         {
-            return RDPlatform.isOSXEditor ? Application.persistentDataPath : Application.streamingAssetsPath;
+            return Application.streamingAssetsPath;
         }
     }
 
