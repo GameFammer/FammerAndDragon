@@ -195,6 +195,7 @@ public class LevelEditor : MonoBehaviour
     void InitUpFunButtons()
     {
         hideUIToggle.GetComponent<Toggle>().onValueChanged.AddListener((_isOn) => HideUIPanel(hideUIToggle.GetComponent<Toggle>().isOn));
+        saveButton.GetComponent<Button>().onClick.AddListener(() => OnSaveButtonClick());
     }
     //初始化工具栏
     void InitLeftToolButtons()
@@ -301,7 +302,6 @@ public class LevelEditor : MonoBehaviour
     void OnSaveButtonClick()
     {
         SaveLevel();
-        //
     }
     //tile按钮
     void OnTileButtonClick(int _ID)
@@ -361,7 +361,7 @@ public class LevelEditor : MonoBehaviour
     {
         Vector2Int origin = new Vector2Int(_mousePosition.x, _mousePosition.y);
         RaycastHit2D hitInfo = Physics2D.Raycast(origin, Vector2.zero, 5f, 1 << GetLayerObject(nowLayer).layer);
-        return hitInfo.transform?hitInfo.transform.gameObject:null;
+        return hitInfo.transform ? hitInfo.transform.gameObject : null;
     }
 
     /*各种Set/Get*/

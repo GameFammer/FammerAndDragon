@@ -5,7 +5,7 @@
 **********************************************************************************/
 
 using System;
-using System.Collections;
+using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -40,7 +40,42 @@ public class RDFileStream
         }
         return result;
     }
+    public static void WriteCsvFile(string _fileName, CSVTable[] _rowObject)
+    {
+        try
+        {
+            string url = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "CSV", _fileName });
+            FileStream fs = new FileStream(url, FileMode.Append);
+            StreamWriter writer = new StreamWriter(fs);
+            foreach (CSVTable tableRow in _rowObject)
+            {
+                PropertyInfo[] props = tableRow.GetType().GetProperties();
+                string row = null;
+                for (int i = 0; i < props.Length; i++)
+                {
+                    if (i != props.Length - 1)
+                    {
+                        row = row + props[i].GetValue(tableRow, null).ToString() + ",";
+                    }
+                    else
+                    {
+                        row = row + props[i].GetValue(tableRow, null).ToString();
+                    }
+                }
+                if (row != null)
+                {
+                    writer.WriteLine(row);
+                }
+            }
 
+            writer.Close();
+            fs.Close();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
     //从文件读取LevelTable
     public static void ReadLevelTable(ref Dictionary<int, LevelTable> _levelTable, string _path)
     {
