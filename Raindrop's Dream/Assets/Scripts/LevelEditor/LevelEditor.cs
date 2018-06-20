@@ -449,6 +449,9 @@ public class LevelEditor : MonoBehaviour
         //GameObject转换为TileInfo信息
         level.tiles = GetTileInfoList();
         RDFileStream.WriteLevelFile(level);
+        //存取封面
+
+        //写入CSV
 
     }
 
