@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitEffect {
-    public virtual void Show()
-    {
-
-    }
+public abstract class HitAction:MonoBehaviour{
+    public abstract void Hit();
 }

@@ -1,8 +1,8 @@
-id,type,name,producer,prefabName,prefabPath
-Comment,"TileÀà±ğ£¨0£º±³¾°Í¼£¬1£º¿ÉÅö×²µØĞÎ×é³É£¬2£º²»¿ÉÅö×²µØĞÎ×é³É£¬3£ºµÀ¾ß£¬4:NPC,5£ºµĞÈË",Ãû³Æ,×÷ÕßÃû,TilePrefabÃû,TilePrefabÂ·¾¶(´ò°üºó°üËùÔÚÂ·¾¶£©
-0,1,ÂÌ×©,AICHEN,green,\\prefab
-1,1,ºì×©,AICHEN,red,\\prefab
-2,2,»Æ×©,±ı×Ó,yellow,\\prefab
-3,3,À¶×©,ÍÃ×Ó,blue,\\prefab
-4,4,test1,123,test1,\\prefab
-5,5,test2,123,test2,\\prefab
+id,type,name,producer,description,prefabName,prefabPath
+Comment,"Tileç±»åˆ«ï¼ˆ0ï¼šèƒŒæ™¯å›¾ï¼Œ1ï¼šå¯ç¢°æ’åœ°å½¢ç»„æˆï¼Œ2ï¼šä¸å¯ç¢°æ’åœ°å½¢ç»„æˆï¼Œ3ï¼šé“å…·ï¼Œ4:NPC,5ï¼šæ•Œäºº",åç§°,ä½œè€…å,æè¿°,TilePrefabå,TilePrefabè·¯å¾„(æ‰“åŒ…ååŒ…æ‰€åœ¨è·¯å¾„ï¼‰
+0,1,ç»¿ç –,AICHEN,,green,
+1,1,çº¢ç –,AICHEN,,red,
+2,2,é»„ç –,é¥¼å­,,yellow,
+3,3,è“ç –,å…”å­,,blue,
+4,4,test1,123,,test1,
+5,5,test2,123,,test2,

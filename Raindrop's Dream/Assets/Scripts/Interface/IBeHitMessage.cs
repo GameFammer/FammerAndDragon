@@ -11,5 +11,5 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public interface IBeHitMessage :IEventSystemHandler {
-    void BeHit(float _damage,HitEffect _type);
+    void BeHit(float _damage,HitEffect _effect);
 }

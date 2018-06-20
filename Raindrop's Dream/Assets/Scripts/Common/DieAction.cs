@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitEffect {
-    public virtual void Show()
-    {
-
-    }
+public abstract class DieAction
+{
+    public abstract void Die();
 }
