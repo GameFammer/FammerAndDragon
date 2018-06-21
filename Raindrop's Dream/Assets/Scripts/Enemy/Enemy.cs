@@ -10,7 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour,IBeHitMessage {
+public class Enemy : MonoBehaviour, IBeHitMessage
+{
 
     public float hp;//生命值
     public float moveSpeed;//移动速度
@@ -20,24 +21,26 @@ public class Enemy : MonoBehaviour,IBeHitMessage {
     public HitAction hitAciton;
     public DieAction dieAction;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
     public void BeHit(float _damage, HitEffect _effect)
     {
         //挨打效果
         _effect.Show();
         hp -= _damage;
-        if (hp<=0)
+        if (hp <= 0)
         {
             //死亡效果
             dieAction.Die();
             //hp空延迟销毁
-            Destroy(this.gameObject,destroyDelay);
+            Destroy(this.gameObject, destroyDelay);
         }
     }
 }

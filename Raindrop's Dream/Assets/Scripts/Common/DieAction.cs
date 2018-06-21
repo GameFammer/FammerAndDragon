@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DieAction
+public abstract class DieAction:MonoBehaviour
 {
     public abstract void Die();
 }

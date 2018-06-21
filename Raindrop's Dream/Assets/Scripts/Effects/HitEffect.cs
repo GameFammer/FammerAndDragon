@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitEffect {
+public class HitEffect : MonoBehaviour
+{
     public virtual void Show()
     {
 

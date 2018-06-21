@@ -71,7 +71,7 @@ public class RDFileStream
             writer.Close();
             fs.Close();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
 
         }

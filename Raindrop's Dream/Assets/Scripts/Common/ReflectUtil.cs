@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System;
-public class ReflectUtil {
+public class ReflectUtil
+{
 
     //给属性赋值
     public static void PiSetValue<T>(string value, PropertyInfo pi, T obj)

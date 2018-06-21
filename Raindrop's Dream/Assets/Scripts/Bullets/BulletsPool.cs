@@ -10,11 +10,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletsPool : MonoBehaviour {
+public class BulletsPool : MonoBehaviour
+{
 
     public static BulletsPool playerBulletsPool = null;//单例
     public GameObject bulletObj;//子弹prefab
-    public int poolInitSize=5;//池初始大小
+    public int poolInitSize = 5;//池初始大小
     public bool isLockPoolSize = false;//是否锁定池大小
 
     private List<GameObject> bullets;//子弹列表
@@ -30,21 +31,21 @@ public class BulletsPool : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         //初始化List
         bullets = new List<GameObject>();
-        for(int i=0;i<poolInitSize;i++)
+        for (int i = 0; i < poolInitSize; i++)
         {
             GameObject obj = Instantiate(bulletObj);
             obj.SetActive(false);
             bullets.Add(obj);
         }
-	}
-	public GameObject GetBullet()
+    }
+    public GameObject GetBullet()
     {
         //从当前位置开始遍历
-        for(int i=0;i<bullets.Count;i++)
+        for (int i = 0; i < bullets.Count; i++)
         {
             int index = (currentIndex + i) % bullets.Count;
             //找到未被激活的返回
