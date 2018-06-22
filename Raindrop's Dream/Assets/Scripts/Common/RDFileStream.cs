@@ -73,7 +73,7 @@ public class RDFileStream
         }
         catch (Exception e)
         {
-
+   
         }
     }
     //从文件读取LevelTable
@@ -113,7 +113,7 @@ public class RDFileStream
             }
             catch (Exception e)
             {
-                Debug.Log(e);
+               // RDLog.Log(e);
             }
         }
     }

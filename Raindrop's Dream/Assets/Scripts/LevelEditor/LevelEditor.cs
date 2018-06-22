@@ -126,6 +126,7 @@ public class LevelEditor : MonoBehaviour
         nowLayer = LAYER_PLAYER;//默认Player层
         nowTileId = -1;
         nowLevelId = -1;
+        Debug.Log(2222222222222);
     }
 
     // Update is called once per frame

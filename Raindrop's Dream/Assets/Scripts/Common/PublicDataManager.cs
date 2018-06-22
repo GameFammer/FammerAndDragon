@@ -25,14 +25,20 @@ public class PublicDataManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+    
+    void OnEnable()
+    {
         //初始化Ini
         InitIni();
         //初始化CSV
         InitCsv();
+      
     }
     private void InitIni()
     {
-
+        
+      //  RDLog.Log("111111111", LogType.Error);
     }
     private void InitCsv()
     {
@@ -49,6 +55,7 @@ public class PublicDataManager : MonoBehaviour
     private void InitFromCsv<T>(ref Dictionary<int, T> _dataTable, string _fileName)
     {
         _dataTable = LoadCsvData<T>(_fileName);
+     
     }
     //从文件初始化关卡信息(Level)
     private void InitLevelTable(ref Dictionary<int, LevelTable> _levelTable, string _path)

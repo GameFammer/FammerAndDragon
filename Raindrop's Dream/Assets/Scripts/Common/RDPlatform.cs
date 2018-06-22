@@ -13,6 +13,13 @@ public class RDPlatform
         }
     }
 
+    public static string LOG_PATH
+    {
+        get 
+        {
+            return Application.streamingAssetsPath;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        }
+    }
     public static bool isOSXEditor
     {
         get
