@@ -33,7 +33,7 @@ public class BulletsPool : MonoBehaviour
     }
 
     // Use this for initialization
-    public void init(GameObject[] _bulletObjs)
+    public void Init(GameObject[] _bulletObjs)
     {
         //初始化子弹列表
         foreach(GameObject bullet in _bulletObjs)
