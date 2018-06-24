@@ -181,4 +181,16 @@ public class RDFileStream
             Debug.Log(e.ToString());
         }
     }
+
+    public static GameObject[] GetPrefabsByNames(string[] _names)
+    {
+        //TODO
+        return new GameObject[0];
+    }
+
+    public static GameObject[] GetPrefabsByIds(string[] _ids)
+    {
+        //TODO
+        return new GameObject[0];
+    }
 }
