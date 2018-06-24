@@ -38,22 +38,9 @@ public class BulletsPool : MonoBehaviour
         //初始化子弹列表
         foreach(GameObject bullet in _bulletObjs)
         {
+            //将该子弹加入子弹字典
             bulletDictionary.Add(bullet.tag, bullet); 
-            initOneTypeBulletsByOneBullet(bullet);
-        }
-    }
-
-    private void initOneTypeBulletsByOneBullet(GameObject _bullet)
-    {
-        bullets.Add(_bullet.tag, new List<GameObject>());
-        currentIndexs.Add(_bullet.tag, 0);
-
-        //初始化List
-        for (int i = 0; i < poolInitSize; i++)
-        {
-            GameObject bullet = Instantiate(_bullet);
-            bullet.SetActive(false);
-            bullets[_bullet.tag].Add(bullet);
+            InitOneTypeBulletsByTag(bullet.tag);
         }
     }
 
@@ -69,6 +56,7 @@ public class BulletsPool : MonoBehaviour
             {
                 //当前位置后移
                 currentIndexs[_bulletTag] = (index + 1) % bullets[_bulletTag].Count;
+                //返回当前找到的可用子弹
                 return bullets[_bulletTag][currentIndexs[_bulletTag]];
             }
         }
@@ -76,12 +64,35 @@ public class BulletsPool : MonoBehaviour
         //池中子弹都已经被使用，若没有锁定对象池大小，则创建子弹并添加到对象池中。
         if (!isLockPoolSize)
         {
-            GameObject bullet = bulletDictionary[_bulletTag];
-            bullets[_bulletTag].Add(bullet);
-            return bullet;
+            AddBulletToBulletsByTag(_bulletTag);
+            //返回刚才添加的最后一枚子弹
+            return bullets[_bulletTag][bullets[_bulletTag].Count - 1];
         }
 
         //无可用子弹且锁定对象池大小，返回空
         return null;
+    }
+
+    //初始化该子弹对应的子弹池
+    private void InitOneTypeBulletsByTag(string _bulletTag)
+    {
+        //创建该类型子弹的子弹池
+        bullets.Add(_bulletTag, new List<GameObject>());
+        //记录该类型子弹池已使用子弹的编号
+        currentIndexs.Add(_bulletTag, 0);
+
+        //初始化该类型子弹的子弹池
+        for (int i = 0; i < poolInitSize; i++)
+        {
+            AddBulletToBulletsByTag(_bulletTag);
+        }
+    }
+
+    //给该类型子弹池加入一个子弹
+    private void AddBulletToBulletsByTag(string _bulletTag)
+    {
+        GameObject bullet = bulletDictionary[_bulletTag];
+        bullet.SetActive(false);
+        bullets[_bulletTag].Add(bullet);
     }
 }
