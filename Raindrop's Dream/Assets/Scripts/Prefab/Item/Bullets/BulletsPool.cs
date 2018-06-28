@@ -36,10 +36,10 @@ public class BulletsPool : MonoBehaviour
     public void Init(GameObject[] _bulletObjs)
     {
         //初始化子弹列表
-        foreach(GameObject bullet in _bulletObjs)
+        foreach (GameObject bullet in _bulletObjs)
         {
             //将该子弹加入子弹字典
-            bulletDictionary.Add(bullet.tag, bullet); 
+            bulletDictionary.Add(bullet.tag, bullet);
             InitOneTypeBulletsByTag(bullet.tag);
         }
     }
@@ -91,7 +91,7 @@ public class BulletsPool : MonoBehaviour
     //给该类型子弹池加入一个子弹
     private void AddBulletToBulletsByTag(string _bulletTag)
     {
-        GameObject bullet = bulletDictionary[_bulletTag];
+        GameObject bullet = Instantiate(bulletDictionary[_bulletTag]);
         bullet.SetActive(false);
         bullets[_bulletTag].Add(bullet);
     }
