@@ -1,9 +1,7 @@
 ﻿/********************************************************************************* 
   *Author:AICHEN
-  *Version:1.1
   *Date:  2018-4-25
   *Description: palyer move,jump,shoot
-  *Changes:4-25增加二段跳
 **********************************************************************************/
 
 
@@ -112,7 +110,7 @@ public class PlayerAction : MonoBehaviour {
         if(Input.GetButton("Fire1") && Time.time>nextShootTime)
         {
             //从子弹池中获取子弹
-            GameObject bullet = BulletsPool.bulletsPool.GetBullet();
+            GameObject bullet = BulletsPool.instance.GetBulletByTag("Test");
             if(bullet != null)
             {
                 //面向右边

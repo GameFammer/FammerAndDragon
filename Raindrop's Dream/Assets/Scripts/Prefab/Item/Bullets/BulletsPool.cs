@@ -13,7 +13,7 @@ using UnityEngine;
 public class BulletsPool : MonoBehaviour
 {
 
-    public static BulletsPool bulletsPool = null;//单例
+    public static BulletsPool instance = null;//单例
     public GameObject[] bulletObjs;//子弹prefab
     public int poolInitSize = 5;//池初始大小
     public bool isLockPoolSize = false;//是否锁定池大小
@@ -28,7 +28,7 @@ public class BulletsPool : MonoBehaviour
     private void Awake()
     {
         //单例模式
-        bulletsPool = this;
+        instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
