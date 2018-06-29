@@ -13,7 +13,7 @@ using UnityEngine.EventSystems;
 public class Bullet : MonoBehaviour
 {
 
-    public float damage;//伤害
+    public int damage;//伤害
     public float speed;//速度
     public float activeTime;//存在时间
 
@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
     {
 
         //子弹移动
-        moveAction.Move(speed);
+        moveAction.Move(speed); 
         //射线检测碰撞
         hitAciton.Hit(damage, hitEffect);
     }

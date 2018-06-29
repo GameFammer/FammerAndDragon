@@ -20,7 +20,7 @@ public class BulletSingleHit : HitAction
         //记录位置
         prePos = (Vector2)this.transform.position;
     }
-    public override void Hit(float _damage, HitEffect _hitEffect)
+    public override void Hit(int _damage, HitEffect _hitEffect)
     {
         //计算方向
         Vector2 dir = (prePos + rb2d.velocity * Time.deltaTime) - prePos;

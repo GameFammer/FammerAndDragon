@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour, IBeHitMessage
     {
 
     }
-    public void BeHit(float _damage, HitEffect _effect)
+    public void BeHit(int _damage, HitEffect _effect)
     {
         //挨打效果
         _effect.Show();

@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -10,7 +8,7 @@ public class LevelEditor : MonoBehaviour
 {
     public static LevelEditor instance = null;
     /*UI*/
-    [SerializeField, HeaderAttribute("预制体")]
+    [Header("预制体")]
     public GameObject tileButton;//tile按钮预制体
     public GameObject levelButton;//已有关卡按钮
 
@@ -19,13 +17,13 @@ public class LevelEditor : MonoBehaviour
     public GameObject rightTilePanel;//右
     public GameObject downLevelPanel;//下
     //Left
-    [SerializeField, HeaderAttribute("左侧工具栏")]
+    [Header("左侧工具栏")]
     public GameObject layerBackgroundButton;//图层按钮
     public GameObject layerPlayerButton;
     public GameObject layerOverPlayerButton;
     public GameObject hideOtherToggle;//隐藏其它图层
     //Right
-    [SerializeField, HeaderAttribute("右侧素材栏")]
+    [Header("右侧素材栏")]
     public GameObject bgScrollView;//用于切页
     public GameObject phcScrollView;
     public GameObject pncScrollView;
@@ -49,13 +47,13 @@ public class LevelEditor : MonoBehaviour
 
     public GameObject nowTileImage;//当前tile图标
     //Up
-    [SerializeField, HeaderAttribute("顶部功能栏")]
+    [Header("顶部功能栏")]
     public GameObject hideUIToggle;//隐藏UI按钮
     public GameObject levelNameInputField;//关卡名输入框
     public GameObject makerNameInputField;//关卡制作者输入框
     public GameObject saveButton;//保存按钮
     //Down
-    [SerializeField, HeaderAttribute("底部关卡栏")]
+    [Header("底部关卡栏")]
     public GameObject LevelPanel;//已有level面板
 
     /*Data*/
@@ -97,7 +95,7 @@ public class LevelEditor : MonoBehaviour
     private const int MAX_LAYERS = 5;
 
     /*自动保存*/
-    [SerializeField, HeaderAttribute("自动保存时间间隔")]
+    [Header("自动保存时间间隔")]
     public float saveSpan;//自动保存时间间隔
     private float lastSaveTime;//上次保存时间
     void Awake()
@@ -126,7 +124,6 @@ public class LevelEditor : MonoBehaviour
         nowLayer = LAYER_PLAYER;//默认Player层
         nowTileId = -1;
         nowLevelId = -1;
-        Debug.Log(2222222222222);
     }
 
     // Update is called once per frame
