@@ -14,6 +14,7 @@ public class PublicDataManager : MonoBehaviour
 {
     //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance = null;
+    private Dictionary<int, ItemTable> itemTable;
     private Dictionary<int, LevelTable> levelTable;
     private Dictionary<int, TilePrefabTable> tilePrefabTable;
     void Awake()
@@ -49,6 +50,8 @@ public class PublicDataManager : MonoBehaviour
 
         /*prefab*/
         InitFromCsv<TilePrefabTable>(ref tilePrefabTable, "TilePrefabTable.csv");
+
+        InitFromCsv<ItemTable>(ref itemTable, "ItemTable.csv");
 
     }
     //初始化CSV表
@@ -146,5 +149,23 @@ public class PublicDataManager : MonoBehaviour
     public string GetTilePrefabPath(int _id)
     {
         return tilePrefabTable[_id].prefabPath;
+    }
+
+
+    public Dictionary<string, int> GetPotionRecoveryValue(string[] _names)
+    {
+        Dictionary<string, int> recoveryValues = new Dictionary<string, int>();
+
+        foreach(string _name in _names){
+            recoveryValues.Add(_name, GetPotionRecoveryValue(_name));
+        }
+
+        return recoveryValues;
+    }
+
+    public int GetPotionRecoveryValue(string _name){
+        //TODO
+        int value = 10;
+        return value;
     }
 }
