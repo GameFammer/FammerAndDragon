@@ -10,16 +10,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAction : MonoBehaviour {
+    private PlayerProperties properties;
   
     public GameObject checkIsGround;//用于判断是否在地面上
     public GameObject leftShootPosition;//左边子弹初始位置
     public GameObject rightShootPosition;//右边子弹初始位置
-
-    public float moveSpeed;//移动速度
-    public float maxJumpSpeed;//跳跃最小，最大速度
-    public float maxJumpTime = 1f;//最长跳跃时间
-    public float shootSpan;//射击间隔
-    public bool canDoubleJump = false;//是否解锁二段跳
 
     private Rigidbody2D rb2d;//刚体
     private Animator animator;//动画控制器
@@ -35,7 +30,9 @@ public class PlayerAction : MonoBehaviour {
 
 
     void Start ()
-    {   
+    {
+        properties = this.gameObject.GetComponent<PlayerProperties>();
+
         //获取组件
         rb2d = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
@@ -58,7 +55,7 @@ public class PlayerAction : MonoBehaviour {
     {
         if (_h != 0)
         {
-            rb2d.velocity= new Vector2(_h * moveSpeed, rb2d.velocity.y);
+            rb2d.velocity= new Vector2(_h * properties.moveSpeed, rb2d.velocity.y);
             if (_h > 0)
                 renderer.flipX = false;
             if (_h < 0)
@@ -91,7 +88,7 @@ public class PlayerAction : MonoBehaviour {
         else
         {
             //二段跳
-            if(canDoubleJump)
+            if(properties.canDoubleJump)
             {
                 if (Input.GetButtonDown("Jump") && !isDoubleJump)
                 {
@@ -128,7 +125,7 @@ public class PlayerAction : MonoBehaviour {
                 }
 
                 bullet.SetActive(true);
-                nextShootTime= Time.time + shootSpan;
+                nextShootTime= Time.time + properties.shootSpan;
             }
         }
     }
@@ -137,13 +134,14 @@ public class PlayerAction : MonoBehaviour {
     IEnumerator JumpRoutine()
     {
         float timer = 0f;
-        while (Input.GetButton("Jump")&& timer <maxJumpTime)
+        while (Input.GetButton("Jump")&& timer <properties.maxJumpTime)
         {
 
-            jumpSpeed = Mathf.Lerp(maxJumpSpeed, 0f, timer / maxJumpTime);
+            jumpSpeed = Mathf.Lerp(properties.maxJumpSpeed, 0f, timer / properties.maxJumpTime);
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
             timer += Time.deltaTime;
             yield return null;
         }
     }
+
 }
