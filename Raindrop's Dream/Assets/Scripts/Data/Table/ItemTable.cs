@@ -12,4 +12,5 @@ public class ItemTable:CSVTable
     public string description { get; set; }//描述
     public string prefabName { get; set; }//tile预制体名
     public string prefabPath { get; set; }//tile预制体路径
+    public int value { get; set; }//属性
 }
