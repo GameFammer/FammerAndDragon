@@ -207,7 +207,7 @@ public class LevelEditor : MonoBehaviour
     void InitTilePrefabs()
     {
         AssetBundle load = AssetBundle.LoadFromFile(RDPlatform.SplitPath(new string[2] { RDPlatform.DATA_PATH, "test.obj" }));
-        foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
+        foreach (int key in PublicDataManager.instance.GetTilePrefabModelKeys())
         {
             GameObject prefab = load.LoadAsset<GameObject>(PublicDataManager.instance.GetTilePrefabName(key));
             tilePrefabs.Add(key, prefab);
@@ -224,7 +224,7 @@ public class LevelEditor : MonoBehaviour
         npcPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_NPC); });
         enemyPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_ENEMY); });
 
-        foreach (int key in PublicDataManager.instance.GetTilePrefabTableKeys())
+        foreach (int key in PublicDataManager.instance.GetTilePrefabModelKeys())
         {
 
             GameObject btn = null;
@@ -252,7 +252,7 @@ public class LevelEditor : MonoBehaviour
     //初始化已有Level列表
     void InitDownLevelButtons()
     {
-        foreach (int key in PublicDataManager.instance.GetLevelTableKeys())
+        foreach (int key in PublicDataManager.instance.GetLevelModelKeys())
         {
             GameObject btn = Instantiate(levelButton, LevelPanel.transform);
             btn.name = PublicDataManager.instance.GetLevelName(key);
@@ -438,7 +438,7 @@ public class LevelEditor : MonoBehaviour
         }
         if (nowLevelId < 0)
         {
-            nowLevelId = PublicDataManager.instance.GetLevelTableMaxKey() + 1;
+            nowLevelId = PublicDataManager.instance.GetLevelModelMaxKey() + 1;
         }
         LevelInfo level = new LevelInfo();
         level.id = nowLevelId;

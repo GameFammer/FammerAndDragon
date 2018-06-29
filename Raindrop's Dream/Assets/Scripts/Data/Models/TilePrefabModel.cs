@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TilePrefabTable : CSVTable
+public class TilePrefabModel : CSVModel
 {
     public string name { get; set; }//Tile名
     public int type { get; set; }//Tile类别

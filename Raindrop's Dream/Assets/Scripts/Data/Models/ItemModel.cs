@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemTable:CSVTable
+public class ItemModel:CSVModel
 {
     public string name { get; set; }//名字
     public string type { get; set; }//类型

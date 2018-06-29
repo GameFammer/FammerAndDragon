@@ -40,14 +40,14 @@ public class RDFileStream
         }
         return result;
     }
-    public static void WriteCsvFile(string _fileName, CSVTable[] _rowObject)
+    public static void WriteCsvFile(string _fileName, CSVModel[] _rowObject)
     {
         try
         {
             string url = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "CSV", _fileName });
             FileStream fs = new FileStream(url, FileMode.Append);
             StreamWriter writer = new StreamWriter(fs);
-            foreach (CSVTable tableRow in _rowObject)
+            foreach (CSVModel tableRow in _rowObject)
             {
                 PropertyInfo[] props = tableRow.GetType().GetProperties();
                 string row = null;
@@ -77,7 +77,7 @@ public class RDFileStream
         }
     }
     //从文件读取LevelTable
-    public static void ReadLevelTable(ref Dictionary<int, LevelTable> _levelTable, string _path)
+    public static void ReadLevelTable(ref Dictionary<int, LevelModel> _levelModel, string _path)
     {
         string allPath = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "Level", _path });
         if (!Directory.Exists(allPath))
@@ -96,7 +96,7 @@ public class RDFileStream
                     {
                         if (level.Extension == ".level")
                         {
-                            LevelTable t = new LevelTable();
+                            LevelModel t = new LevelModel();
                             t.id = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
                             //maker、level名在最后
                             t.name = level.Name.Split('.')[0];
@@ -105,7 +105,7 @@ public class RDFileStream
                             t.filePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, level.Name });
                             string imgName = level.Name.Split('.')[0] + ".png";
                             t.imagePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, imgName });
-                            _levelTable.Add(t.id, t);
+                            _levelModel.Add(t.id, t);
                         }
 
                     }

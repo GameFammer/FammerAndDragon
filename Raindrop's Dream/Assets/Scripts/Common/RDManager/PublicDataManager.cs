@@ -14,9 +14,9 @@ public class PublicDataManager : MonoBehaviour
 {
     //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance = null;
-    private Dictionary<int, ItemTable> itemTable;
-    private Dictionary<int, LevelTable> levelTable;
-    private Dictionary<int, TilePrefabTable> tilePrefabTable;
+    private Dictionary<int, ItemModel> itemModel;
+    private Dictionary<int, LevelModel> levelModel;
+    private Dictionary<int, TilePrefabModel> tilePrefabModel;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -45,29 +45,29 @@ public class PublicDataManager : MonoBehaviour
     {
         //在这初始化每个Dictionary
         /*level*/
-        InitLevelTable(ref levelTable, "Dev");
-        InitLevelTable(ref levelTable, "User");
+        InitLevelModel(ref levelModel, "Dev");
+        InitLevelModel(ref levelModel, "User");
 
         /*prefab*/
-        InitFromCsv<TilePrefabTable>(ref tilePrefabTable, "TilePrefabTable.csv");
+        InitFromCsv<TilePrefabModel>(ref tilePrefabModel, "TilePrefabModel.csv");
 
-        InitFromCsv<ItemTable>(ref itemTable, "ItemTable.csv");
+        InitFromCsv<ItemModel>(ref itemModel, "ItemModel.csv");
 
     }
     //初始化CSV表
-    private void InitFromCsv<T>(ref Dictionary<int, T> _dataTable, string _fileName)
+    private void InitFromCsv<T>(ref Dictionary<int, T> _dataModel, string _fileName)
     {
-        _dataTable = LoadCsvData<T>(_fileName);
+        _dataModel = LoadCsvData<T>(_fileName);
      
     }
     //从文件初始化关卡信息(Level)
-    private void InitLevelTable(ref Dictionary<int, LevelTable> _levelTable, string _path)
+    private void InitLevelModel(ref Dictionary<int, LevelModel> _levelModel, string _path)
     {
-        if (_levelTable == null)
+        if (_levelModel == null)
         {
-            _levelTable = new Dictionary<int, LevelTable>();
+            _levelModel = new Dictionary<int, LevelModel>();
         }
-        RDFileStream.ReadLevelTable(ref _levelTable, _path);
+        RDFileStream.ReadLevelTable(ref _levelModel, _path);
     }
 
     //从CSV表初始化Dictionary
@@ -100,18 +100,18 @@ public class PublicDataManager : MonoBehaviour
     }
 
     /*Level*/
-    public LevelTable GetLevelTable(int _id)
+    public LevelModel GetLevelModel(int _id)
     {
-        return levelTable[_id];
+        return levelModel[_id];
     }
-    public Dictionary<int, LevelTable>.KeyCollection GetLevelTableKeys()
+    public Dictionary<int, LevelModel>.KeyCollection GetLevelModelKeys()
     {
-        return levelTable.Keys;
+        return levelModel.Keys;
     }
-    public int GetLevelTableMaxKey()
+    public int GetLevelModelMaxKey()
     {
         int maxKey = 0;
-        foreach (int key in levelTable.Keys)
+        foreach (int key in levelModel.Keys)
         {
             if (key > maxKey)
             {
@@ -122,33 +122,33 @@ public class PublicDataManager : MonoBehaviour
     }
     public string GetLevelName(int _id)
     {
-        return levelTable[_id].name;
+        return levelModel[_id].name;
     }
     public string GetLevelFilePath(int _id)
     {
-        return levelTable[_id].filePath;
+        return levelModel[_id].filePath;
     }
 
     /*TilePrefab*/
-    public Dictionary<int, TilePrefabTable>.KeyCollection GetTilePrefabTableKeys()
+    public Dictionary<int, TilePrefabModel>.KeyCollection GetTilePrefabModelKeys()
     {
-        return tilePrefabTable.Keys;
+        return tilePrefabModel.Keys;
     }
-    public TilePrefabTable GetTilePrefabTable(int _id)
+    public TilePrefabModel GetTilePrefabModel(int _id)
     {
-        return tilePrefabTable[_id];
+        return tilePrefabModel[_id];
     }
     public string GetTilePrefabName(int _id)
     {
-        return tilePrefabTable[_id].prefabName;
+        return tilePrefabModel[_id].prefabName;
     }
     public int GetTilePrefabType(int _id)
     {
-        return tilePrefabTable[_id].type;
+        return tilePrefabModel[_id].type;
     }
     public string GetTilePrefabPath(int _id)
     {
-        return tilePrefabTable[_id].prefabPath;
+        return tilePrefabModel[_id].prefabPath;
     }
 
 

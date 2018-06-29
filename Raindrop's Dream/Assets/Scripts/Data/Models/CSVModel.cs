@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CSVTable
+public class CSVModel
 {
     public int id { get; set; }
 }

@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelTable :CSVTable
+public class LevelModel :CSVModel
 {
     public string name { get; set; }//关卡名
     public string producer { get; set; }//制作者名
