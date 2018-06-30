@@ -9,6 +9,8 @@ public class DestructiblePlatform : MonoBehaviour, IBeHitMessage
     public int maxHp;
     [Header("生命值一半一下对应Sprite")]
     public Sprite helfHpSprite;
+    [Header("破坏销毁延迟")]
+    public float destroyDelay;
 
     private int halfHp;
     private int hp;
@@ -44,6 +46,7 @@ public class DestructiblePlatform : MonoBehaviour, IBeHitMessage
         if(hp<=0)
         {
             animator.SetBool("Broken", true);
+            Destroy(gameObject, destroyDelay);
         }
     }
 }

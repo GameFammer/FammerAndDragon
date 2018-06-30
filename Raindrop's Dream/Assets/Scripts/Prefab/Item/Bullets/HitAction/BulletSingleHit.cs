@@ -27,7 +27,7 @@ public class BulletSingleHit : HitAction
         //计算射线距离
         rayDistance = (rb2d.velocity * Time.deltaTime).magnitude;
         //获取第一次碰撞
-        hitInfo2d = Physics2D.Raycast(prePos, dir, rayDistance, 1 << 8 | 1 << 9);
+        hitInfo2d = Physics2D.Raycast(prePos, dir, rayDistance);
         if (hitInfo2d.collider != null)
         {
             //事件

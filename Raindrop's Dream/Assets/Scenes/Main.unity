@@ -2984,16 +2984,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpMaxValue: 0
   hpCurrentValue: 0
-  moveSpeed: 0
+  moveSpeed: 2
   maxJumpSpeed: 0
   maxJumpTime: 1
-  shootSpan: 0
+  shootSpan: 1
   canDoubleJump: 0
 --- !u!1 &1756203945 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1064464880409572, guid: 6291a83cd784e4bc2a4827aa4d090694,
     type: 2}
   m_PrefabInternal: {fileID: 1711121532}
+--- !u!1 &1766023433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1766023435}
+  - component: {fileID: 1766023434}
+  m_Layer: 0
+  m_Name: bulletsPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1766023434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766023433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5c06e8a00074883a8ab58947808e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletObjs:
+  - {fileID: 1963492098997126, guid: 61cb94e1e017ffd409528400c62e3c89, type: 2}
+  poolInitSize: 5
+  isLockPoolSize: 0
+--- !u!4 &1766023435
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766023433}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.5289013, y: -1.7965897, z: 0.171875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805437108 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1991437348167746, guid: 6291a83cd784e4bc2a4827aa4d090694,

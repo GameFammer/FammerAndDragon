@@ -31,7 +31,11 @@ public class BulletsPool : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
+    //测试代码
+    private void Start()
+    {
+        Init(bulletObjs);
+    }
     // Use this for initialization
     public void Init(GameObject[] _bulletObjs)
     {
