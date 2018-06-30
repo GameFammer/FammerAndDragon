@@ -13,4 +13,7 @@ public class PlayerProperties: MonoBehaviour{
     public float shootSpan;//射击间隔
     public bool canDoubleJump = false;//是否解锁二段跳
 
+    public int itemsMaxAmount = 5;
+    public Dictionary<string, GameObject> items = new Dictionary<string, GameObject>();//道具列表
+
 }
