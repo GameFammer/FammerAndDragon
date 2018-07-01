@@ -11,10 +11,12 @@ public class Item : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //没有拥有者的道具首先会被捡起，否则调用该道具的使用效果
-        if(!hasOwner){
+        if(!hasOwner)
+        {
             SetOwner(collision);
         }
-        else{
+        else
+        {
             Effect(collision);
         }
     }
@@ -22,7 +24,15 @@ public class Item : MonoBehaviour {
     //为道具指定拥有者
     public void SetOwner(Collider2D _collision)
     {
-        if(_collision.gameObject.name == "player"){
+        if (_collision.gameObject.name != "player")
+        {
+            return;
+        }
+
+        var playerProperties = _collision.gameObject.GetComponent<PlayerProperties>();
+
+        if(playerProperties.items.Count < playerProperties.itemsMaxAmount)
+        {
             hasOwner = true;
             owner = _collision.gameObject;
             //将道具添加到目标的道具列表里
