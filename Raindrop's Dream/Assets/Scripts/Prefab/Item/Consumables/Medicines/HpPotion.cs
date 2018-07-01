@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HpPotion : Consumable {
-    
-    private int recoveryValue;
 
-    void Start()
-    {
-        recoveryValue = PublicDataManager.instance.GetPotionRecoveryValue(gameObject.name);
-    }
+    private int recoveryValue = 10;
 
     public void Use()
     {

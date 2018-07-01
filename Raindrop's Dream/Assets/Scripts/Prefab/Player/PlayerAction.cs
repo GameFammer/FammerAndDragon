@@ -31,12 +31,12 @@ public class PlayerAction : MonoBehaviour {
 
     void Start ()
     {
-        properties = this.gameObject.GetComponent<PlayerProperties>();
 
         //获取组件
         rb2d = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
         renderer = this.GetComponent<SpriteRenderer>();
+        properties = this.gameObject.GetComponent<PlayerProperties>();//玩家属性
     }
 	
 	
@@ -143,5 +143,4 @@ public class PlayerAction : MonoBehaviour {
             yield return null;
         }
     }
-
 }

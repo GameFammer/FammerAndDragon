@@ -150,22 +150,4 @@ public class PublicDataManager : MonoBehaviour
     {
         return tilePrefabModel[_id].prefabPath;
     }
-
-
-    public Dictionary<string, int> GetPotionRecoveryValue(string[] _names)
-    {
-        Dictionary<string, int> recoveryValues = new Dictionary<string, int>();
-
-        foreach(string _name in _names){
-            recoveryValues.Add(_name, GetPotionRecoveryValue(_name));
-        }
-
-        return recoveryValues;
-    }
-
-    public int GetPotionRecoveryValue(string _name){
-        //TODO
-        int value = 10;
-        return value;
-    }
 }
