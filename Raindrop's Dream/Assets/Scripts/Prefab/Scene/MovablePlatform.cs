@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/********************************************************************************* 
+  *Author:AICHEN
+  *Date:  2018-6-30
+  *Description: 可移动平台，需要RigidBoday 2D
+**********************************************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

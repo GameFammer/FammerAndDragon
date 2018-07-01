@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************* 
+  *Author:AICHEN
+  *Date:  2018-6-30
+  *Description: 可破坏物体，需要Collider 2D、销毁动画
+**********************************************************************************/
 using UnityEngine;
 
 public class DestructiblePlatform : MonoBehaviour, IBeHitMessage
@@ -24,12 +26,6 @@ public class DestructiblePlatform : MonoBehaviour, IBeHitMessage
 
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         animator = gameObject.GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     public void BeHit(int _damage, HitEffect _effect)
     {
