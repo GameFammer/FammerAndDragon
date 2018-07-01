@@ -44,8 +44,8 @@ public class BulletsPool : MonoBehaviour
         foreach (GameObject bullet in _bulletObjs)
         {
             //将该子弹加入子弹字典
-            bulletDictionary.Add(bullet.tag, bullet);
-            InitOneTypeBulletsByName(bullet.tag);
+            bulletDictionary.Add(bullet.name, bullet);
+            InitOneTypeBulletsByName(bullet.name);
         }
     }
 
