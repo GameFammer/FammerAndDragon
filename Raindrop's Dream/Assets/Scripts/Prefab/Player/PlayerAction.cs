@@ -107,7 +107,7 @@ public class PlayerAction : MonoBehaviour {
         if(Input.GetButton("Fire1") && Time.time>nextShootTime)
         {
             //从子弹池中获取子弹
-            GameObject bullet = BulletsPool.instance.GetBulletByTag("Test");
+            GameObject bullet = BulletsPool.instance.GetBulletByName("Test");
             if(bullet != null)
             {
                 //面向右边
