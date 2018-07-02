@@ -8,7 +8,7 @@ public class Item : MonoBehaviour {
 
     public GameObject owner;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         //没有拥有者的道具首先会被捡起，否则调用该道具的使用效果
         if(!hasOwner)

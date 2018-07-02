@@ -18,11 +18,11 @@ public class Shoe : Equipment {
 
         if (playerProperties.equipments.ContainsKey("Shoe"))
         {
-            playerProperties.equipments["Shoe"] = this.gameObject;
+            playerProperties.equipments["Shoe"] = this.gameObject.name;
         }
         else
         {
-            playerProperties.equipments.Add("Shoe", this.gameObject);
+            playerProperties.equipments.Add("Shoe", this.gameObject.name);
         }
 
         playerProperties.moveSpeed = playerProperties.moveBasicSpeed + quickeningValue;

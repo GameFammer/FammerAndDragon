@@ -2,4 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipment : Item { }
+public class Equipment : Item {
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+}

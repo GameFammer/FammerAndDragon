@@ -17,6 +17,6 @@ public class PlayerProperties: MonoBehaviour{
     public int itemsMaxAmount = 5;
     public Dictionary<string, GameObject> items = new Dictionary<string, GameObject>();
 
-    //装备列表 { "装备位置" ，装备}
-    public Dictionary<string, GameObject> equipments = new Dictionary<string, GameObject>();
+    //装备列表 { "装备位置" ，"装备名"}
+    public Dictionary<string, string> equipments = new Dictionary<string, string>();
 }

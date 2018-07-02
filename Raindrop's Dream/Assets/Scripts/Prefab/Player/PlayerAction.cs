@@ -106,26 +106,35 @@ public class PlayerAction : MonoBehaviour {
     {
         if(Input.GetButton("Fire1") && Time.time>nextShootTime)
         {
-            //从子弹池中获取子弹
-            GameObject bullet = BulletsPool.instance.GetBulletByName("Test");
-            if(bullet != null)
+            properties = this.gameObject.GetComponent<PlayerProperties>();
+            string bulletName = properties.equipments["Weapon"];
+            try
             {
-                //面向右边
-                if (!renderer.flipX)
+                //从子弹池中获取子弹
+                GameObject bullet = BulletsPool.instance.GetBulletByName(bulletName);
+                if (bullet != null)
                 {
-                    bullet.transform.position = rightShootPosition.transform.position;
-                    bullet.GetComponent<SpriteRenderer>().flipX = false;
-                }
-                //面向左边
-                else
-                {
-                    bullet.transform.position = leftShootPosition.transform.position;
-                    //翻转子弹贴图
-                    bullet.GetComponent<SpriteRenderer>().flipX = true;
-                }
+                    //面向右边
+                    if (!renderer.flipX)
+                    {
+                        bullet.transform.position = rightShootPosition.transform.position;
+                        bullet.GetComponent<SpriteRenderer>().flipX = false;
+                    }
+                    //面向左边
+                    else
+                    {
+                        bullet.transform.position = leftShootPosition.transform.position;
+                        //翻转子弹贴图
+                        bullet.GetComponent<SpriteRenderer>().flipX = true;
+                    }
 
-                bullet.SetActive(true);
-                nextShootTime= Time.time + properties.shootSpan;
+                    bullet.SetActive(true);
+                    nextShootTime = Time.time + properties.shootSpan;
+                }
+            }
+            catch(Exception e)
+            {
+                
             }
         }
     }

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Weapon : Equipment
 {
+    public GameObject bullet;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        SetOwner(collision);
+        Destroy();
+    }
 
     public void SetOwner(Collider2D _collision)
     {
@@ -16,11 +23,11 @@ public class Weapon : Equipment
 
         if (playerProperties.equipments.ContainsKey("Weapon"))
         {
-            playerProperties.equipments["Weapon"] = this.gameObject;
+            playerProperties.equipments["Weapon"] = bullet.name;
         }
         else
         {
-            playerProperties.equipments.Add("Weapon", this.gameObject);
+            playerProperties.equipments.Add("Weapon", bullet.name);
         }
     }
 }
