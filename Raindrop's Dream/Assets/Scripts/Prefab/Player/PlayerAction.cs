@@ -6,7 +6,7 @@
 
 
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerAction : MonoBehaviour {
@@ -31,14 +31,12 @@ public class PlayerAction : MonoBehaviour {
 
     void Start ()
     {
-
         //获取组件
         rb2d = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
         renderer = this.GetComponent<SpriteRenderer>();
         properties = this.gameObject.GetComponent<PlayerProperties>();//玩家属性
     }
-	
 	
 	void FixedUpdate ()
     {
@@ -104,6 +102,7 @@ public class PlayerAction : MonoBehaviour {
     //射击
     void Shoot()
     {
+
         if(Input.GetButton("Fire1") && Time.time>nextShootTime)
         {
             properties = this.gameObject.GetComponent<PlayerProperties>();

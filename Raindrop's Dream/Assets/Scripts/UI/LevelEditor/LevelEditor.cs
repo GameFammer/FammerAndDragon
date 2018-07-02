@@ -123,7 +123,7 @@ public class LevelEditor : MonoBehaviour
         InitDownLevelButtons();
         nowLayer = LAYER_PLAYER;//默认Player层
         nowTileId = -1;
-        nowLevelId = -1;
+        nowLevelId = -1;     
     }
 
     // Update is called once per frame
