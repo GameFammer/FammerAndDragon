@@ -3289,7 +3289,7 @@ MonoBehaviour:
   moveSpeed: 5
   maxJumpSpeed: 5
   maxJumpTime: 3
-  shootSpan: 1
+  shootSpan: 0.2
   canDoubleJump: 0
   itemsMaxAmount: 5
 --- !u!4 &1711121540 stripped

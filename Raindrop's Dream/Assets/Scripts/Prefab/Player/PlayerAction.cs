@@ -132,10 +132,7 @@ public class PlayerAction : MonoBehaviour {
                     nextShootTime = Time.time + properties.shootSpan;
                 }
             }
-            catch(Exception e)
-            {
-                
-            }
+            finally{ }
         }
     }
 
