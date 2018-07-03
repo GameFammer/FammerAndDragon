@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1900147140536616}
+  m_IsPrefabParent: 1
+--- !u!1 &1900147140536616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4039634796167320}
+  - component: {fileID: 114141673139247558}
+  m_Layer: 0
+  m_Name: BulletsPool
+  m_TagString: BulletPool
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4039634796167320
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1900147140536616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.5289013, y: -1.7965897, z: 0.171875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114141673139247558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1900147140536616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5c06e8a00074883a8ab58947808e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletObjs:
+  - {fileID: 1655880385472224, guid: 44cf629cddca2421bb5d98626e9ae8a1, type: 2}
+  - {fileID: 1743806396408572, guid: 5b1533080b184407aa9d760627608e24, type: 2}
+  - {fileID: 1928456988961126, guid: 80c458ad8aaac4afba3614732d8cbb41, type: 2}
+  - {fileID: 1717249681315270, guid: 3096255eec44e4d12b267e5428fe7a87, type: 2}
+  poolInitSize: 5
+  isLockPoolSize: 0
