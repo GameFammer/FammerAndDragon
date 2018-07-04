@@ -1,0 +1,35 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace RDUI
+{ 
+    public enum PageType
+    {
+        HUD,//游戏内UI，如血量
+        Page,//页面UI，如设置界面
+        Float,//浮动消息,如Boss技能提示
+        PopUp//弹出窗口，如MessageBox
+    }
+    public enum PageStatus
+    {
+        Active,//正在显示
+        DeActive//未显示
+    }
+    public class BasePage : MonoBehaviour
+    {
+        public PageType pageType;//页面类型
+        public PageStatus pageStatus;//页面状态
+        //打开
+        public virtual void Open()
+        {
+            gameObject.SetActive(true);
+        }
+        //关闭
+        public virtual void Close()
+        {
+            gameObject.SetActive(false);
+        }
+    }
+}
+
