@@ -1,8 +1,0 @@
-id,type,name,producer,description,prefabName,prefabPath
-Comment,"Tile类别（0：背景图，1：可碰撞地形组成，2：不可碰撞地形组成，3：道具，4:NPC,5：敌人",名称,作者名,描述,TilePrefab名,TilePrefab路径(打包后包所在路径）
-0,1,绿砖,AICHEN,,green,
-1,1,红砖,AICHEN,,red,
-2,2,黄砖,饼子,,yellow,
-3,3,蓝砖,兔子,,blue,
-4,4,test1,123,,test1,
-5,5,test2,123,,test2,

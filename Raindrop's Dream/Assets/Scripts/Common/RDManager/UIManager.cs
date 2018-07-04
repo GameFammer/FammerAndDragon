@@ -39,6 +39,7 @@ namespace RDUI
         //根据场景加载Page
         public void LoadPage(string _sceneName)
         {
+            UIGameConnect.RemoveAllListener();
             pages.Clear();
         }
         //打开Page
@@ -51,7 +52,11 @@ namespace RDUI
         {
             pages[_pageName].Close();
         }
-
+        //获取Page
+        public BasePage GetPage(string _pageName)
+        {
+            return pages[_pageName];
+        }
     }
 }
 
