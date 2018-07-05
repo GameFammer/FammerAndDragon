@@ -107,7 +107,6 @@ public class PlayerAction : MonoBehaviour {
 
         if(Input.GetButton("Fire1") && Time.time>nextShootTime)
         {
-            properties = this.gameObject.GetComponent<PlayerProperties>();
             string bulletName = properties.equipments["Weapon"];
             try
             {
