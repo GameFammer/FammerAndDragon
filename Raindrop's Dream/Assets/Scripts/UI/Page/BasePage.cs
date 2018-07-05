@@ -20,15 +20,33 @@ namespace RDUI
     {
         public PageType pageType;//页面类型
         public PageStatus pageStatus;//页面状态
+        protected UIMessageDelegate messageDelegate;
         //打开
         public virtual void Open()
         {
+            pageStatus = PageStatus.Active;
             gameObject.SetActive(true);
         }
         //关闭
         public virtual void Close()
         {
+            pageStatus = PageStatus.DeActive;
             gameObject.SetActive(false);
+        }
+        public virtual bool IsOpen()
+        {
+            if(pageStatus==PageStatus.Active)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public virtual UIMessageDelegate GetDelegate()
+        {
+            return messageDelegate;
         }
     }
 }

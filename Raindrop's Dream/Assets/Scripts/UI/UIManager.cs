@@ -15,6 +15,9 @@ namespace RDUI
         private GameObject uiPage;
         private GameObject uiat;
         private GameObject uiPopUp;
+
+        public BasePage health;
+        private UIDelegateBind uiDelegateBind;
         void Awake()
         {
             if (instance == null)
@@ -23,12 +26,13 @@ namespace RDUI
                 Destroy(gameObject);
 
             pages = new Dictionary<string, BasePage>();
+            uiDelegateBind = new UIDelegateBind();
             DontDestroyOnLoad(gameObject);
         }
         // Use this for initialization
         void Start()
         {
-
+            
         }
 
         // Update is called once per frame
@@ -39,7 +43,6 @@ namespace RDUI
         //根据场景加载Page
         public void LoadPage(string _sceneName)
         {
-            UIGameConnect.RemoveAllListener();
             pages.Clear();
         }
         //打开Page

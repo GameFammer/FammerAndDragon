@@ -36,6 +36,7 @@ public class PlayerAction : MonoBehaviour {
         animator = this.GetComponent<Animator>();
         renderer = this.GetComponent<SpriteRenderer>();
         properties = this.gameObject.GetComponent<PlayerProperties>();//玩家属性
+    
     }
 	
 	void FixedUpdate ()
@@ -68,6 +69,7 @@ public class PlayerAction : MonoBehaviour {
     //跳跃
     void Jump()
     {
+        properties.HpLimitValue += 1;
         //在地面上
         if (isOnGround)
         {    

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using RDUI;
 public class PlayerProperties: MonoBehaviour{
-    
+    [SerializeField]
+    private int hpLimitValue;//血量上限增加最大值
     public int hpMaxValue;//最大血量
     public int hpCurrentValue;//当前血量
     public float moveBasicSpeed = 2;//基础移动速度
