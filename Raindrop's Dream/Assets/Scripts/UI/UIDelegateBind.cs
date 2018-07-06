@@ -8,7 +8,7 @@ namespace RDUI
     }
     public delegate void UIMessageDelegate(object _args);
 
-    public class UIDelegateBind
+    public class UIDelegateManager
     {
         public static Dictionary<UIMessageType, UIMessageDelegate> messageDelegates = new Dictionary<UIMessageType, UIMessageDelegate>();
         public static void NotifyUI(UIMessageType _messageType, int _value)
@@ -21,7 +21,7 @@ namespace RDUI
                 }
             }
         }
-        public void AddListener(UIMessageType _messageType, UIMessageDelegate _handler)
+        public static void AddObserver(UIMessageType _messageType, UIMessageDelegate _handler)
         {
             if (!messageDelegates.ContainsKey(_messageType))
             {
@@ -29,14 +29,14 @@ namespace RDUI
             }
             messageDelegates[_messageType] += _handler;
         }
-        public void RemoveListener(UIMessageType _messageType, UIMessageDelegate _handler)
+        public static void RemoveObserver(UIMessageType _messageType, UIMessageDelegate _handler)
         {
             if (messageDelegates.ContainsKey(_messageType))
             {
                 messageDelegates[_messageType] -= _handler;
             }
         }
-        public void RemoveAllListener()
+        public static void RemoveAllObserver()
         {
             messageDelegates.Clear();
         }

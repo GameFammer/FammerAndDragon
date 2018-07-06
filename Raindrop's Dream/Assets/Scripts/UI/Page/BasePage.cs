@@ -20,7 +20,6 @@ namespace RDUI
     {
         public PageType pageType;//页面类型
         public PageStatus pageStatus;//页面状态
-        protected UIMessageDelegate messageDelegate;
         //打开
         public virtual void Open()
         {
@@ -43,10 +42,6 @@ namespace RDUI
             {
                 return false;
             }
-        }
-        public virtual UIMessageDelegate GetDelegate()
-        {
-            return messageDelegate;
         }
     }
 }

@@ -8,7 +8,7 @@
 using System.Collections;
 using System;
 using UnityEngine;
-
+using RDUI;
 public class PlayerAction : MonoBehaviour {
     private PlayerProperties properties;
   
@@ -69,7 +69,6 @@ public class PlayerAction : MonoBehaviour {
     //跳跃
     void Jump()
     {
-        properties.HpLimitValue += 1;
         //在地面上
         if (isOnGround)
         {    
@@ -79,6 +78,8 @@ public class PlayerAction : MonoBehaviour {
             //按下跳跃键
             if (Input.GetButtonDown("Jump"))
             {
+                //test
+                properties.hpLimitValue += 1;
                 //播放跳跃动画（暂时没有）
 
                 //开启协程控制速度

@@ -11,7 +11,7 @@ namespace RDUI
         // Use this for initialization
         void Start()
         {
-            messageDelegate += OnHealthChange;
+            UIDelegateManager.AddObserver(UIMessageType.Updata_HealthUI, OnHealthChange);
         }
 
         // Update is called once per frame
@@ -21,7 +21,8 @@ namespace RDUI
         }
         public void OnHealthChange(object _health)
         {
-          
+            //test
+            healthMask.GetComponent<RectTransform>().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, 16*(int)_health);
         }
     }
 }

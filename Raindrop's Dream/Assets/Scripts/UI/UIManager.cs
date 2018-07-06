@@ -17,7 +17,6 @@ namespace RDUI
         private GameObject uiPopUp;
 
         public BasePage health;
-        private UIDelegateBind uiDelegateBind;
         void Awake()
         {
             if (instance == null)
@@ -26,7 +25,6 @@ namespace RDUI
                 Destroy(gameObject);
 
             pages = new Dictionary<string, BasePage>();
-            uiDelegateBind = new UIDelegateBind();
             DontDestroyOnLoad(gameObject);
         }
         // Use this for initialization
