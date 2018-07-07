@@ -4,7 +4,24 @@ using UnityEngine;
 using RDUI;
 public class PlayerProperties: MonoBehaviour{
 
-    public int hpLimitValue
+    public const int HP_MaxLimit_Value = 8;//血量上限最大值
+    [SerializeField]
+    private int hpMaxValue;//血量上限
+    public int HpMaxValue
+    {
+        get
+        {
+            return hpMaxValue;
+        }
+        set
+        {
+            hpMaxValue = value;
+            UIDelegateManager.NotifyUI(UIMessageType.Updata_HpMax, hpMaxValue);
+        }
+    }
+    [SerializeField]
+    private int hpCurrentValue;//当前血量
+    public int HpCurrentValue
     {
         get
         {
@@ -13,12 +30,9 @@ public class PlayerProperties: MonoBehaviour{
         set
         {
             hpCurrentValue = value;
-            UIDelegateManager.NotifyUI(UIMessageType.Updata_HealthUI, hpCurrentValue);
+            UIDelegateManager.NotifyUI(UIMessageType.Updata_Hp, hpCurrentValue);
         }
     }
-    //血量上限增加最大值
-    public int hpMaxValue;//最大血量
-    public int hpCurrentValue;//当前血量
     public float moveBasicSpeed = 2;//基础移动速度
     public float moveSpeed = 2;//移动速度
     public float maxJumpSpeed;//跳跃最小，最大速度

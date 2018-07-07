@@ -10,7 +10,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
-    private bool isCreatCorridor = false;
     void Awake()
     {
         if (instance == null)

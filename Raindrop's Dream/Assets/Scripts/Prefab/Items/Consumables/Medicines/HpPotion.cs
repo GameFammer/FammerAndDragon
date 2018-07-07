@@ -8,10 +8,10 @@ public class HpPotion : Consumable {
 
     public void Use()
     {
-        int currentValue = this.owner.GetComponent<PlayerProperties>().hpCurrentValue;
-        int maxValue = this.owner.GetComponent<PlayerProperties>().hpMaxValue;
+        int currentValue = this.owner.GetComponent<PlayerProperties>().HpCurrentValue;
+        int maxValue = this.owner.GetComponent<PlayerProperties>().HpMaxValue;
 
-        this.owner.GetComponent<PlayerProperties>().hpCurrentValue =
+        this.owner.GetComponent<PlayerProperties>().HpCurrentValue =
             currentValue + recoveryValue > maxValue ? maxValue : currentValue + recoveryValue;
 
         Destroy(this.gameObject, 1);

@@ -4,7 +4,8 @@ namespace RDUI
 {
     public enum UIMessageType
     {
-        Updata_HealthUI
+        Updata_Hp,
+        Updata_HpMax
     }
     public delegate void UIMessageDelegate(object _args);
 

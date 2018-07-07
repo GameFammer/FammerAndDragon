@@ -48,6 +48,28 @@ public class PlayerAction : MonoBehaviour {
         Move(moveHorizontal);
         Jump();
         Shoot();
+
+        //test
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            if(properties.HpCurrentValue>0)
+             properties.HpCurrentValue -= 1;
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (properties.HpCurrentValue < properties.HpMaxValue)
+                properties.HpCurrentValue += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (properties.HpMaxValue < PlayerProperties.HP_MaxLimit_Value)
+                properties.HpMaxValue += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            if (properties.HpMaxValue >0)
+                properties.HpMaxValue-= 1;
+        }
     }
     //移动
     void Move(float _h)
@@ -78,8 +100,6 @@ public class PlayerAction : MonoBehaviour {
             //按下跳跃键
             if (Input.GetButtonDown("Jump"))
             {
-                //test
-                properties.hpLimitValue += 1;
                 //播放跳跃动画（暂时没有）
 
                 //开启协程控制速度
