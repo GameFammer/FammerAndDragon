@@ -16,6 +16,7 @@ public class PlayerProperties: MonoBehaviour{
         set
         {
             hpMaxValue = value;
+            hpCurrentValue = hpMaxValue; //提升血上限时恢复到满血
             UIDelegateManager.NotifyUI(UIMessageType.Updata_HpMax, hpMaxValue);
         }
     }

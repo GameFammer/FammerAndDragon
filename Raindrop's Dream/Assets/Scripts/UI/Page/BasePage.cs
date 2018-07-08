@@ -19,7 +19,7 @@ namespace RDUI
     public class BasePage : MonoBehaviour
     {
         public PageType pageType;//页面类型
-        public PageStatus pageStatus;//页面状态
+        public PageStatus pageStatus=PageStatus.DeActive;//页面状态
         //打开
         public virtual void Open()
         {

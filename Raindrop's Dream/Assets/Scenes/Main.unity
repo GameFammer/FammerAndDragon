@@ -475,10 +475,10 @@ RectTransform:
   m_Father: {fileID: 1249176839}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 256, y: 32}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 230.1642, y: -27.999989}
+  m_SizeDelta: {x: 460, y: 57.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &296068494
 MonoBehaviour:
@@ -2794,7 +2794,7 @@ GameObject:
   - component: {fileID: 1249176841}
   - component: {fileID: 1249176840}
   m_Layer: 5
-  m_Name: healthPanel
+  m_Name: hpPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2814,10 +2814,10 @@ RectTransform:
   m_Father: {fileID: 954653451}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5185536, y: 0.74342304}
-  m_AnchorMax: {x: 0.92078567, y: 0.94778854}
-  m_AnchoredPosition: {x: -0.2999878, y: 0.099998474}
-  m_SizeDelta: {x: -3, y: -4.75}
+  m_AnchorMin: {x: 0.27778557, y: 0.61636555}
+  m_AnchorMax: {x: 1, y: 0.94778854}
+  m_AnchoredPosition: {x: 0.61499786, y: 0.060001373}
+  m_SizeDelta: {x: -1.2299957, y: -0.12000084}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1249176840
 MonoBehaviour:
@@ -2831,14 +2831,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3396,8 +3396,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 256, y: 32}
+  m_AnchoredPosition: {x: 1.0313, y: -0.89996}
+  m_SizeDelta: {x: 461.81, y: 57.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1393399578
 MonoBehaviour:

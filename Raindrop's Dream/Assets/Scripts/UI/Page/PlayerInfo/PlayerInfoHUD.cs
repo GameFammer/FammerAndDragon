@@ -17,7 +17,7 @@ namespace RDUI
         void Start()
         {
             //获取每格血高度
-            hpTextureHeight = HpBarImage.sprite.textureRect.size.y;
+            hpTextureHeight = HpBarImage.rectTransform.sizeDelta.y;
             //获取Player当前血量上限
             playerHpMax = GameObject.Find("Player").GetComponent<PlayerProperties>().HpMaxValue;
             //根据Player血量初始化

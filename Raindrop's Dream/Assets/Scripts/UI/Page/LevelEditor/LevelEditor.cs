@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using RDUI;
 
-public class LevelEditor : MonoBehaviour
+public class LevelEditor : BasePage
 {
     public static LevelEditor instance = null;
     /*UI*/
@@ -18,10 +19,10 @@ public class LevelEditor : MonoBehaviour
     public GameObject downLevelPanel;//下
     //Left
     [Header("左侧工具栏")]
-    public GameObject layerBackgroundButton;//图层按钮
-    public GameObject layerPlayerButton;
-    public GameObject layerOverPlayerButton;
-    public GameObject hideOtherToggle;//隐藏其它图层
+    public Button layerBackgroundButton;//图层按钮
+    public Button layerPlayerButton;
+    public Button layerOverPlayerButton;
+    public Toggle hideOtherToggle;//隐藏其它图层
     //Right
     [Header("右侧素材栏")]
     public GameObject bgScrollView;//用于切页
@@ -38,20 +39,20 @@ public class LevelEditor : MonoBehaviour
     public GameObject npcPage;
     public GameObject enemyPage;
 
-    public GameObject backgroundPageBtn;//背景tile分页按钮
-    public GameObject platformHasColliderPageBtn;//可碰撞地形组成分页按钮
-    public GameObject platformNoColliderPageBtn;//不可碰撞地形组成分页按钮
-    public GameObject itemsPageBtn;//道具分页按钮
-    public GameObject npcPageBtn;//NPC分页按钮
-    public GameObject enemyPageBtn;//enemy分页按钮
+    public Button backgroundPageBtn;//背景tile分页按钮
+    public Button platformHasColliderPageBtn;//可碰撞地形组成分页按钮
+    public Button platformNoColliderPageBtn;//不可碰撞地形组成分页按钮
+    public Button itemsPageBtn;//道具分页按钮
+    public Button npcPageBtn;//NPC分页按钮
+    public Button enemyPageBtn;//enemy分页按钮
 
-    public GameObject nowTileImage;//当前tile图标
+    public Image nowTileImage;//当前tile图标
     //Up
     [Header("顶部功能栏")]
-    public GameObject hideUIToggle;//隐藏UI按钮
-    public GameObject levelNameInputField;//关卡名输入框
-    public GameObject makerNameInputField;//关卡制作者输入框
-    public GameObject saveButton;//保存按钮
+    public Toggle hideUIToggle;//隐藏UI按钮
+    public InputField levelNameInputField;//关卡名输入框
+    public InputField makerNameInputField;//关卡制作者输入框
+    public Button saveButton;//保存按钮
     //Down
     [Header("底部关卡栏")]
     public GameObject LevelPanel;//已有level面板
@@ -65,7 +66,7 @@ public class LevelEditor : MonoBehaviour
 
     /*Object*/
     private Camera mainCamera;//主相机
-
+    [Header("层级父对象")]
     public GameObject layerBackground;//最底层，例如背景等,对应position.z：4
     public GameObject layerPlayer;//与主角同层物体，例如平台，敌人，道具等，对应position.z：3
     public GameObject layerOverPlayer;//遮盖物，例如迷雾等,对应position.z：2
@@ -192,16 +193,16 @@ public class LevelEditor : MonoBehaviour
     /*各种初始化*/
     void InitUpFunButtons()
     {
-        hideUIToggle.GetComponent<Toggle>().onValueChanged.AddListener((_isOn) => HideUIPanel(hideUIToggle.GetComponent<Toggle>().isOn));
-        saveButton.GetComponent<Button>().onClick.AddListener(() => OnSaveButtonClick());
+        hideUIToggle.onValueChanged.AddListener((_isOn) => HideUIPanel(hideUIToggle.GetComponent<Toggle>().isOn));
+        saveButton.onClick.AddListener(() => OnSaveButtonClick());
     }
     //初始化工具栏
     void InitLeftToolButtons()
     {
-        layerBackgroundButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(LAYER_BACKGROUND));
-        layerPlayerButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(LAYER_PLAYER));
-        layerOverPlayerButton.GetComponent<Button>().onClick.AddListener(() => SetNowLayer(LAYER_OVERPLAYER));
-        hideOtherToggle.GetComponent<Toggle>().onValueChanged.AddListener((_isOn) => HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn));
+        layerBackgroundButton.onClick.AddListener(() => SetNowLayer(LAYER_BACKGROUND));
+        layerPlayerButton.onClick.AddListener(() => SetNowLayer(LAYER_PLAYER));
+        layerOverPlayerButton.onClick.AddListener(() => SetNowLayer(LAYER_OVERPLAYER));
+        hideOtherToggle.onValueChanged.AddListener((_isOn) => HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn));
     }
     //加载TilePrefabs
     void InitTilePrefabs()
@@ -217,12 +218,12 @@ public class LevelEditor : MonoBehaviour
     void InitRightTileButtons()
     {
         //分页按钮
-        backgroundPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_BACKGROUND); });
-        platformHasColliderPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_PLATFORMHASCOLLIDER); });
-        platformNoColliderPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_PLATFORMNOCOLLIDER); });
-        itemsPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_ITEM); });
-        npcPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_NPC); });
-        enemyPageBtn.GetComponent<Button>().onClick.AddListener(() => { SwitchTilePanel(TILE_ENEMY); });
+        backgroundPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_BACKGROUND); });
+        platformHasColliderPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_PLATFORMHASCOLLIDER); });
+        platformNoColliderPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_PLATFORMNOCOLLIDER); });
+        itemsPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_ITEM); });
+        npcPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_NPC); });
+        enemyPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_ENEMY); });
 
         foreach (int key in PublicDataManager.instance.GetTilePrefabModelKeys())
         {
@@ -311,7 +312,7 @@ public class LevelEditor : MonoBehaviour
         //设置当前ID
         nowTileId = _ID;
         //设置当前选中Tile图标
-        nowTileImage.GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
+        nowTileImage.sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
         //创建tile
         mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(mousePos.x, mousePos.y, nowLayer), Quaternion.identity);
@@ -424,13 +425,13 @@ public class LevelEditor : MonoBehaviour
     //保存地图
     public void SaveLevel()
     {
-        nowLevelName = levelNameInputField.GetComponent<InputField>().text;
+        nowLevelName = levelNameInputField.text;
         if (nowLevelName == null)
         {
             //请输入关卡名
             return;
         }
-        nowMakerName = makerNameInputField.GetComponent<InputField>().text;
+        nowMakerName = makerNameInputField.text;
         if (nowMakerName == null)
         {
             //请输入制作者名
@@ -484,8 +485,8 @@ public class LevelEditor : MonoBehaviour
     //自动保存
     IEnumerator AutoSave()
     {
-        nowLevelName = levelNameInputField.GetComponent<InputField>().text;
-        nowMakerName = makerNameInputField.GetComponent<InputField>().text;
+        nowLevelName = levelNameInputField.text;
+        nowMakerName = makerNameInputField.text;
         if (nowLevelName != null && nowMakerName != null)
         {
             if (Time.time - lastSaveTime >= saveSpan)

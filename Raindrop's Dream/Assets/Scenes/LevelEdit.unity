@@ -940,7 +940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &172503840
@@ -975,7 +975,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &172503842
@@ -1993,7 +1993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &399028470
@@ -2452,7 +2452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &613891859
@@ -2900,7 +2900,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 292800790}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4594,16 +4594,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0605ec6397ee164a8ef07ad339a54d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pageType: 0
+  pageStatus: 1
   tileButton: {fileID: 1580036358922306, guid: 74dead7f528a4d8488cc24b1f3a38609, type: 2}
   levelButton: {fileID: 1974497378275188, guid: f830f0441e634da48aaab121a05c8932,
     type: 2}
   leftToolPanel: {fileID: 129753312}
   rightTilePanel: {fileID: 1208752167}
   downLevelPanel: {fileID: 2106541241}
-  layerBackgroundButton: {fileID: 1080558810}
-  layerPlayerButton: {fileID: 1507401541}
-  layerOverPlayerButton: {fileID: 1880152000}
-  hideOtherToggle: {fileID: 1456643656}
+  layerBackgroundButton: {fileID: 1080558812}
+  layerPlayerButton: {fileID: 1507401543}
+  layerOverPlayerButton: {fileID: 1880152002}
+  hideOtherToggle: {fileID: 1456643658}
   bgScrollView: {fileID: 49860654}
   phcScrollView: {fileID: 1611801917}
   pncScrollView: {fileID: 1907339274}
@@ -4616,17 +4618,17 @@ MonoBehaviour:
   itemsPage: {fileID: 398959670}
   npcPage: {fileID: 589732058}
   enemyPage: {fileID: 1765221166}
-  backgroundPageBtn: {fileID: 1495558145}
-  platformHasColliderPageBtn: {fileID: 1314597221}
-  platformNoColliderPageBtn: {fileID: 1400009120}
-  itemsPageBtn: {fileID: 989594145}
-  npcPageBtn: {fileID: 1880699565}
-  enemyPageBtn: {fileID: 1503696546}
-  nowTileImage: {fileID: 867021852}
-  hideUIToggle: {fileID: 1510157103}
-  levelNameInputField: {fileID: 1003607188}
-  makerNameInputField: {fileID: 1805270710}
-  saveButton: {fileID: 675130643}
+  backgroundPageBtn: {fileID: 1495558147}
+  platformHasColliderPageBtn: {fileID: 1314597223}
+  platformNoColliderPageBtn: {fileID: 1400009122}
+  itemsPageBtn: {fileID: 989594147}
+  npcPageBtn: {fileID: 1880699567}
+  enemyPageBtn: {fileID: 1503696548}
+  nowTileImage: {fileID: 867021854}
+  hideUIToggle: {fileID: 1510157105}
+  levelNameInputField: {fileID: 1003607190}
+  makerNameInputField: {fileID: 1805270712}
+  saveButton: {fileID: 675130645}
   LevelPanel: {fileID: 1400793279}
   layerBackground: {fileID: 756018233}
   layerPlayer: {fileID: 1926310885}
@@ -4832,7 +4834,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 100756985}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5993,7 +5995,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 272273276}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6109,7 +6111,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 261522349}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6594,7 +6596,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 997454982}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6702,7 +6704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1783085599
@@ -6855,7 +6857,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2044773715}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7742,7 +7744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2044773714
