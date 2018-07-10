@@ -40,6 +40,7 @@ public class RDFileStream
         }
         return result;
     }
+    //写入CSV文件
     public static void WriteCsvFile(string _fileName, CSVModel[] _rowObject)
     {
         try
@@ -50,16 +51,19 @@ public class RDFileStream
             foreach (CSVModel tableRow in _rowObject)
             {
                 PropertyInfo[] props = tableRow.GetType().GetProperties();
-                string row = null;
-                for (int i = 0; i < props.Length; i++)
+                //ID在props最后一个，先处理
+                string row = props[props.Length-1].GetValue(tableRow, null) == null ? "" : props[props.Length - 1].GetValue(tableRow, null).ToString()+",";
+                for (int i = 0; i < props.Length-1; i++)
                 {
-                    if (i != props.Length - 1)
+                    if (i != props.Length - 2)
                     {
-                        row = row + props[i].GetValue(tableRow, null).ToString() + ",";
+                        string info = props[i].GetValue(tableRow, null) == null ? "" : props[i].GetValue(tableRow, null).ToString();
+                        row = row + info+ ",";
                     }
                     else
                     {
-                        row = row + props[i].GetValue(tableRow, null).ToString();
+                        string info = props[i].GetValue(tableRow, null) == null ? "" : props[i].GetValue(tableRow, null).ToString();
+                        row = row+ info;
                     }
                 }
                 if (row != null)
@@ -73,7 +77,7 @@ public class RDFileStream
         }
         catch (Exception e)
         {
-   
+
         }
     }
     //从文件读取LevelTable
@@ -113,7 +117,7 @@ public class RDFileStream
             }
             catch (Exception e)
             {
-               // RDLog.Log(e);
+                // RDLog.Log(e);
             }
         }
     }
@@ -192,5 +196,34 @@ public class RDFileStream
     {
         //TODO
         return new GameObject[0];
+    }
+    public static Dictionary<string, AssetBundle> ReadAllAssestBudle()
+    {    
+        string path = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "AssestBundles" });
+        Dictionary<string, AssetBundle> assets = new Dictionary<string, AssetBundle>();
+        if (!Directory.Exists(path))
+        {
+            //Assest读取失败
+            return assets;
+        }
+        else
+        {
+            try
+            {
+                DirectoryInfo directory = new DirectoryInfo(path);
+                FileInfo[] file = directory.GetFiles();
+                for (int i = 0; i < file.Length; i++)
+                {
+                    AssetBundle assetBundle = AssetBundle.LoadFromFile(RDPlatform.SplitPath(new string[4] { RDPlatform.DATA_PATH, "AssestBundles", file[i].Name,".package" }));
+                    assets.Add(file[i].Name, assetBundle);
+                }
+          
+            }
+            catch (Exception e)
+            {
+
+            }
+            return assets;
+        }
     }
 }

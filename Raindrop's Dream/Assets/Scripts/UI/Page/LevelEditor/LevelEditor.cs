@@ -207,10 +207,11 @@ public class LevelEditor : BasePage
     //加载TilePrefabs
     void InitTilePrefabs()
     {
-        AssetBundle load = AssetBundle.LoadFromFile(RDPlatform.SplitPath(new string[2] { RDPlatform.DATA_PATH, "test.obj" }));
-        foreach (int key in PublicDataManager.instance.GetTilePrefabModelKeys())
+        Dictionary<string,AssetBundle> assest = RDFileStream.ReadAllAssestBudle();
+        foreach (int key in PublicDataManager.instance.GetSceneTileModelKeys())
         {
-            GameObject prefab = load.LoadAsset<GameObject>(PublicDataManager.instance.GetTilePrefabName(key));
+            string levelType = PublicDataManager.instance.GetSceneTileLevelType(key);
+            GameObject prefab = assest[levelType].LoadAsset<GameObject>(PublicDataManager.instance.GetSceneTileName(key));
             tilePrefabs.Add(key, prefab);
         }
     }
@@ -225,12 +226,12 @@ public class LevelEditor : BasePage
         npcPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_NPC); });
         enemyPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_ENEMY); });
 
-        foreach (int key in PublicDataManager.instance.GetTilePrefabModelKeys())
+        foreach (int key in PublicDataManager.instance.GetSceneTileModelKeys())
         {
 
             GameObject btn = null;
             //创建按钮绑定点击函数,根据Tpye加到不同的分页下
-            switch (PublicDataManager.instance.GetTilePrefabType(key))
+            switch (PublicDataManager.instance.GetSceneTileType(key))
             {
                 case TILE_BACKGROUND: btn = Instantiate(tileButton, backgroundPage.transform); break;
                 case TILE_PLATFORMHASCOLLIDER: btn = Instantiate(tileButton, platformHasColliderPage.transform); break;
@@ -242,7 +243,7 @@ public class LevelEditor : BasePage
             }
             if (btn != null)
             {
-                btn.GetComponent<Button>().name = PublicDataManager.instance.GetTilePrefabName(key);
+                btn.GetComponent<Button>().name = PublicDataManager.instance.GetSceneTileName(key);
                 btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
                 btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
             }

@@ -8,13 +8,13 @@ namespace RDUI
     {
 
         public static UIManager instance = null;
-        private Dictionary<string, BasePage> pages;//缓存Page,根据场景加载
+        private Dictionary<string, BasePage> pages;//缓存Page,根据场景加载:{"页面名"，"页面对象"}
         //不同层级对应父对象
-        private GameObject canvas;
-        private GameObject uiHUD;
-        private GameObject uiPage;
-        private GameObject uiat;
-        private GameObject uiPopUp;
+        private Transform canvas;
+        private Transform uiHUD;
+        private Transform uiPage;
+        private Transform uiFloat;
+        private Transform uiPopUp;
 
         public BasePage health;
         void Awake()
@@ -26,17 +26,17 @@ namespace RDUI
 
             pages = new Dictionary<string, BasePage>();
             DontDestroyOnLoad(gameObject);
+
         }
         // Use this for initialization
         void Start()
         {
-            
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-
+            canvas = GameObject.Find("Canvas").transform;
+            uiHUD = canvas.transform.Find("HUD");
+            uiPage = canvas.transform.Find("Page");
+            uiFloat = canvas.transform.Find("Float");
+            uiPopUp = canvas.transform.Find("PopUP");
         }
         //根据场景加载Page
         public void LoadPage(string _sceneName)

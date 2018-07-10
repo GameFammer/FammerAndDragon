@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace RDUI
-{ 
+{
     public enum PageType
     {
         HUD,//游戏内UI，如血量
@@ -19,7 +19,19 @@ namespace RDUI
     public class BasePage : MonoBehaviour
     {
         public PageType pageType;//页面类型
-        public PageStatus pageStatus=PageStatus.DeActive;//页面状态
+        public PageStatus pageStatus = PageStatus.DeActive;//页面状态
+        void Start()
+        {
+            Init();
+        }
+        //初始化
+        protected virtual void Init()
+        {
+            if (pageStatus == PageStatus.DeActive)
+            {
+                gameObject.SetActive(false);
+            }
+        }
         //打开
         public virtual void Open()
         {
@@ -34,7 +46,7 @@ namespace RDUI
         }
         public virtual bool IsOpen()
         {
-            if(pageStatus==PageStatus.Active)
+            if (pageStatus == PageStatus.Active)
             {
                 return true;
             }

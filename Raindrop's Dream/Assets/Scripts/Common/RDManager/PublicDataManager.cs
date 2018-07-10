@@ -15,7 +15,7 @@ public class PublicDataManager : MonoBehaviour
     public static PublicDataManager instance = null;
     private Dictionary<int, ItemModel> itemModel;
     private Dictionary<int, LevelModel> levelModel;
-    private Dictionary<int, TilePrefabModel> tilePrefabModel;
+    private Dictionary<int, SceneTileModel> sceneTileModel;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -25,15 +25,10 @@ public class PublicDataManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-    
-    void OnEnable()
-    {
         //初始化Ini
         InitIni();
         //初始化CSV
         InitCsv();
-      
     }
     private void InitIni()
     {
@@ -48,7 +43,7 @@ public class PublicDataManager : MonoBehaviour
         InitLevelModel(ref levelModel, "User");
 
         /*prefab*/
-        InitFromCsv<TilePrefabModel>(ref tilePrefabModel, "TilePrefabModel.csv");
+        InitFromCsv<SceneTileModel>(ref sceneTileModel, "SceneTileModel.csv");
 
         InitFromCsv<ItemModel>(ref itemModel, "ItemModel.csv");
 
@@ -128,25 +123,26 @@ public class PublicDataManager : MonoBehaviour
         return levelModel[_id].filePath;
     }
 
-    /*TilePrefab*/
-    public Dictionary<int, TilePrefabModel>.KeyCollection GetTilePrefabModelKeys()
+    /*SceneTile*/
+    public Dictionary<int, SceneTileModel>.KeyCollection GetSceneTileModelKeys()
     {
-        return tilePrefabModel.Keys;
+        return sceneTileModel.Keys;
     }
-    public TilePrefabModel GetTilePrefabModel(int _id)
+    public SceneTileModel SceneTileModel(int _id)
     {
-        return tilePrefabModel[_id];
+        return sceneTileModel[_id];
     }
-    public string GetTilePrefabName(int _id)
+    public string GetSceneTileName(int _id)
     {
-        return tilePrefabModel[_id].prefabName;
+        return sceneTileModel[_id].name;
     }
-    public int GetTilePrefabType(int _id)
+    public int GetSceneTileType(int _id)
     {
-        return tilePrefabModel[_id].type;
+        return sceneTileModel[_id].type;
     }
-    public string GetTilePrefabPath(int _id)
+    public string GetSceneTileLevelType(int _id)
     {
-        return tilePrefabModel[_id].prefabPath;
+        return sceneTileModel[_id].levelType;
     }
+
 }

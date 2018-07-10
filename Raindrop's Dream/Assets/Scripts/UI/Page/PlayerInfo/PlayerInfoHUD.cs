@@ -14,25 +14,20 @@ namespace RDUI
         private float hpTextureHeight;//每格Hp贴图高度，要求每格Hp贴图为正方形
         private int playerHpMax;//玩家当前血量上限
         // Use this for initialization
-        void Start()
+        protected override void Init()
         {
+            base.Init();
             //获取每格血高度
             hpTextureHeight = HpBarImage.rectTransform.sizeDelta.y;
             //获取Player当前血量上限
             playerHpMax = GameObject.Find("Player").GetComponent<PlayerProperties>().HpMaxValue;
             //根据Player血量初始化
-            HpBarImage.fillAmount=(float)playerHpMax/ (float)PlayerProperties.HP_MaxLimit_Value;
+            HpBarImage.fillAmount = (float)playerHpMax / (float)PlayerProperties.HP_MaxLimit_Value;
             HpEmptyBarImage.fillAmount = 0;
-            HpEmptyBarImage.rectTransform.localPosition = new Vector3((playerHpMax - PlayerProperties.HP_MaxLimit_Value) * hpTextureHeight,0,0);
+            HpEmptyBarImage.rectTransform.localPosition = new Vector3((playerHpMax - PlayerProperties.HP_MaxLimit_Value) * hpTextureHeight, 0, 0);
             //绑定回调
             UIDelegateManager.AddObserver(UIMessageType.Updata_HpMax, OnHpMaxChange);
             UIDelegateManager.AddObserver(UIMessageType.Updata_Hp, OnHpChange);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
         //生命值上限改变,自动回满血
         public void OnHpMaxChange(object _hpMaxLimit)
