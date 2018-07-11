@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 50113330490053254}
   m_Layer: 0
   m_Name: BombBullet
-  m_TagString: Bullet
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,12 +151,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d9682774137da4f72ae76fd8afc35ead, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4023db3f606a14db5aa88114abdddc69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.92, y: 1.3}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

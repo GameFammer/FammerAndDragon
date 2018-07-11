@@ -52,18 +52,18 @@ public class RDFileStream
             {
                 PropertyInfo[] props = tableRow.GetType().GetProperties();
                 //ID在props最后一个，先处理
-                string row = props[props.Length-1].GetValue(tableRow, null) == null ? "" : props[props.Length - 1].GetValue(tableRow, null).ToString()+",";
-                for (int i = 0; i < props.Length-1; i++)
+                string row = props[props.Length - 1].GetValue(tableRow, null) == null ? "" : props[props.Length - 1].GetValue(tableRow, null).ToString() + ",";
+                for (int i = 0; i < props.Length - 1; i++)
                 {
                     if (i != props.Length - 2)
                     {
                         string info = props[i].GetValue(tableRow, null) == null ? "" : props[i].GetValue(tableRow, null).ToString();
-                        row = row + info+ ",";
+                        row = row + info + ",";
                     }
                     else
                     {
                         string info = props[i].GetValue(tableRow, null) == null ? "" : props[i].GetValue(tableRow, null).ToString();
-                        row = row+ info;
+                        row = row + info;
                     }
                 }
                 if (row != null)
@@ -198,7 +198,7 @@ public class RDFileStream
         return new GameObject[0];
     }
     public static Dictionary<string, AssetBundle> ReadAllAssestBudle()
-    {    
+    {
         string path = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "AssestBundles" });
         Dictionary<string, AssetBundle> assets = new Dictionary<string, AssetBundle>();
         if (!Directory.Exists(path))
@@ -212,12 +212,16 @@ public class RDFileStream
             {
                 DirectoryInfo directory = new DirectoryInfo(path);
                 FileInfo[] file = directory.GetFiles();
+
                 for (int i = 0; i < file.Length; i++)
                 {
-                    AssetBundle assetBundle = AssetBundle.LoadFromFile(RDPlatform.SplitPath(new string[4] { RDPlatform.DATA_PATH, "AssestBundles", file[i].Name,".package" }));
-                    assets.Add(file[i].Name, assetBundle);
+                    if (file[i].Extension==".package")
+                    {
+                        AssetBundle assetBundle = AssetBundle.LoadFromFile(file[i].FullName);
+                        assets.Add(file[i].Name.Split('.')[0], assetBundle);
+                    }                     
                 }
-          
+
             }
             catch (Exception e)
             {

@@ -21,7 +21,7 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
             assestPathList.Clear();
             AssetBundleBuild assetBundle = new AssetBundleBuild();
             //以关卡类型命名
-            assetBundle.assetBundleName = levelTheme.name;
+            assetBundle.assetBundleName = levelTheme.name+".package";
 
             if (levelTheme.gameObject.activeSelf)
             {
@@ -45,7 +45,7 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
                         SceneTileModel row = new SceneTileModel();
                         row.id = lastId + 1;
                         row.name = tile.name;
-                        row.type = tile.gameObject.isStatic ? 0 : 1;
+                        row.type = tile.gameObject.isStatic ? 1 : 2;
                         row.levelType = levelTheme.name;
                         sceneTileModelList.Add(row);
                         //更新最后一个id
@@ -59,12 +59,17 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
                     assestBuildMap.Add(assetBundle);
                 }
             }
+            
+        }
+        if(sceneTileModelList.Count>0)
+        {
             RDFileStream.WriteCsvFile("SceneTile.csv", sceneTileModelList.ToArray());
             sceneTileModelList.Clear();
-        }            //AssestBundle路径:StreamingAssets/AssestBundles
-        BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath + "/AssestBundles", assestBuildMap.ToArray(), BuildAssetBundleOptions.None, RDPlatform.isOSXEditor ? BuildTarget.StandaloneOSX : BuildTarget.StandaloneWindows);
-
-
-
+        }
+        if(assestBuildMap.Count>0)
+        {
+            //AssestBundle路径:StreamingAssets/AssestBundles
+            BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath + "/AssestBundles", assestBuildMap.ToArray(), BuildAssetBundleOptions.None, RDPlatform.isOSXEditor ? BuildTarget.StandaloneOSX : BuildTarget.StandaloneWindows);
+        }
     }
 }

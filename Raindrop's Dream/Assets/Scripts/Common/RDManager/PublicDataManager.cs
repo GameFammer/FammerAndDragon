@@ -43,9 +43,9 @@ public class PublicDataManager : MonoBehaviour
         InitLevelModel(ref levelModel, "User");
 
         /*prefab*/
-        InitFromCsv<SceneTileModel>(ref sceneTileModel, "SceneTileModel.csv");
+        InitFromCsv<SceneTileModel>(ref sceneTileModel, "SceneTile.csv");
 
-        InitFromCsv<ItemModel>(ref itemModel, "ItemModel.csv");
+        InitFromCsv<ItemModel>(ref itemModel, "Item.csv");
 
     }
     //初始化CSV表

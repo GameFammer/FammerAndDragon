@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class HitEffect : MonoBehaviour
 {
-    public virtual void Show()
+    public virtual void Show(GameObject _victim)
     {
-
     }
 }

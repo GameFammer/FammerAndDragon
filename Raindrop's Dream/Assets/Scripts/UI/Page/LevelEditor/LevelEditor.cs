@@ -25,23 +25,21 @@ public class LevelEditor : BasePage
     public Toggle hideOtherToggle;//隐藏其它图层
     //Right
     [Header("右侧素材栏")]
-    public GameObject bgScrollView;//用于切页
-    public GameObject phcScrollView;
-    public GameObject pncScrollView;
+    public GameObject staticScrollView;//用于切页
+    public GameObject functionScrollView;
     public GameObject itemScrollView;
     public GameObject npcScrollView;
     public GameObject enemyScrollView;
 
-    public GameObject backgroundPage;//用于设置tileButton父对象
-    public GameObject platformHasColliderPage;
-    public GameObject platformNoColliderPage;
+    //用于设置tileButton父对象
+    public GameObject staticPage;
+    public GameObject functionPage;
     public GameObject itemsPage;
     public GameObject npcPage;
     public GameObject enemyPage;
 
-    public Button backgroundPageBtn;//背景tile分页按钮
-    public Button platformHasColliderPageBtn;//可碰撞地形组成分页按钮
-    public Button platformNoColliderPageBtn;//不可碰撞地形组成分页按钮
+    public Button staticPageBtn;//静止地形Tile分页按钮
+    public Button functionPageBtn;//功能性地形Tile分页按钮
     public Button itemsPageBtn;//道具分页按钮
     public Button npcPageBtn;//NPC分页按钮
     public Button enemyPageBtn;//enemy分页按钮
@@ -83,9 +81,8 @@ public class LevelEditor : BasePage
     private bool isPlaying;//是否开始测试运行
 
     /*TileType*/
-    private const int TILE_BACKGROUND = 0;
-    private const int TILE_PLATFORMHASCOLLIDER = 1;
-    private const int TILE_PLATFORMNOCOLLIDER = 2;
+    private const int TILE_STATIC = 1;
+    private const int TILE_FUNCTION = 2;
     private const int TILE_ITEM = 3;
     private const int TILE_NPC = 4;
     private const int TILE_ENEMY = 5;
@@ -191,12 +188,14 @@ public class LevelEditor : BasePage
     }
 
     /*各种初始化*/
+
+    //初始化顶部功能栏
     void InitUpFunButtons()
     {
         hideUIToggle.onValueChanged.AddListener((_isOn) => HideUIPanel(hideUIToggle.GetComponent<Toggle>().isOn));
         saveButton.onClick.AddListener(() => OnSaveButtonClick());
     }
-    //初始化工具栏
+    //初始化左侧工具栏
     void InitLeftToolButtons()
     {
         layerBackgroundButton.onClick.AddListener(() => SetNowLayer(LAYER_BACKGROUND));
@@ -219,13 +218,13 @@ public class LevelEditor : BasePage
     void InitRightTileButtons()
     {
         //分页按钮
-        backgroundPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_BACKGROUND); });
-        platformHasColliderPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_PLATFORMHASCOLLIDER); });
-        platformNoColliderPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_PLATFORMNOCOLLIDER); });
+        staticPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_STATIC); });
+        functionPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_FUNCTION); });
         itemsPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_ITEM); });
         npcPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_NPC); });
         enemyPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_ENEMY); });
 
+        //SceneTile
         foreach (int key in PublicDataManager.instance.GetSceneTileModelKeys())
         {
 
@@ -233,13 +232,9 @@ public class LevelEditor : BasePage
             //创建按钮绑定点击函数,根据Tpye加到不同的分页下
             switch (PublicDataManager.instance.GetSceneTileType(key))
             {
-                case TILE_BACKGROUND: btn = Instantiate(tileButton, backgroundPage.transform); break;
-                case TILE_PLATFORMHASCOLLIDER: btn = Instantiate(tileButton, platformHasColliderPage.transform); break;
-                case TILE_PLATFORMNOCOLLIDER: btn = Instantiate(tileButton, platformNoColliderPage.transform); break;
-                case TILE_ITEM: btn = Instantiate(tileButton, itemsPage.transform); break;
-                case TILE_NPC: btn = Instantiate(tileButton, npcPage.transform); break;
-                case TILE_ENEMY: btn = Instantiate(tileButton, enemyPage.transform); break;
-                default: break;
+                case TILE_STATIC: btn = Instantiate(tileButton, staticPage.transform); break;
+                case TILE_FUNCTION: btn = Instantiate(tileButton, functionPage.transform); break;
+                default : btn = Instantiate(tileButton, staticPage.transform); break;
             }
             if (btn != null)
             {
@@ -247,9 +242,10 @@ public class LevelEditor : BasePage
                 btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
                 btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
             }
-            //初始显示背景分页
-            SwitchTilePanel(TILE_BACKGROUND);
         }
+        
+        //初始显示背景分页
+        SwitchTilePanel(TILE_STATIC);
     }
     //初始化已有Level列表
     void InitDownLevelButtons()
@@ -322,17 +318,15 @@ public class LevelEditor : BasePage
     //切换tile分页
     void SwitchTilePanel(int _panelType)
     {
-        bgScrollView.SetActive(false);
-        phcScrollView.SetActive(false);
-        pncScrollView.SetActive(false);
+        staticScrollView.SetActive(false);
+        functionScrollView.SetActive(false);
         itemScrollView.SetActive(false);
         npcScrollView.SetActive(false);
         enemyScrollView.SetActive(false);
         switch (_panelType)
         {
-            case TILE_BACKGROUND: bgScrollView.SetActive(true); break;
-            case TILE_PLATFORMHASCOLLIDER: phcScrollView.SetActive(true); break;
-            case TILE_PLATFORMNOCOLLIDER: pncScrollView.SetActive(true); break;
+            case TILE_STATIC: staticScrollView.SetActive(true); break;
+            case TILE_FUNCTION: functionScrollView.SetActive(true); break;
             case TILE_ITEM: itemScrollView.SetActive(true); break;
             case TILE_NPC: npcScrollView.SetActive(true); break;
             case TILE_ENEMY: enemyScrollView.SetActive(true); break;

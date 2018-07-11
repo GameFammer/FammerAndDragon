@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 61715415683710602}
   m_Layer: 0
   m_Name: GrumeWeapon
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

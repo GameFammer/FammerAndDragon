@@ -9,7 +9,7 @@ using System.Collections;
 using System;
 using UnityEngine;
 using RDUI;
-public class PlayerAction : MonoBehaviour {
+public class PlayerAction : MonoBehaviour,IBeHitMessage {
     private PlayerProperties properties;
   
     public GameObject checkIsGround;//用于判断是否在地面上
@@ -170,4 +170,14 @@ public class PlayerAction : MonoBehaviour {
             yield return null;
         }
     }
+
+    public void BeHit(int _damage, HitEffect _effect)
+    {
+        _effect.Show(this.gameObject);
+        if (properties.HpCurrentValue > 0)
+        {
+            properties.HpCurrentValue -= _damage;
+        }
+    }
 }
+

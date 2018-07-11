@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour, IBeHitMessage
     public void BeHit(int _damage, HitEffect _effect)
     {
         //挨打效果
-        _effect.Show();
+        _effect.Show(this.gameObject);
         hp -= _damage;
         if (hp <= 0)
         {

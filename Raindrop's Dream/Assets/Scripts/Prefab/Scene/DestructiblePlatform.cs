@@ -29,7 +29,7 @@ public class DestructiblePlatform : MonoBehaviour, IBeHitMessage
     }
     public void BeHit(int _damage, HitEffect _effect)
     {
-        _effect.Show();
+        _effect.Show(this.gameObject);
         hp -= _damage;
         //半血一下更换贴图
         if (hp <= halfHp)
