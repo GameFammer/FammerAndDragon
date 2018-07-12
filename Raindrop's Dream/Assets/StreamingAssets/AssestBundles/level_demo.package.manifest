@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2118588116
+CRC: 164276532
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fa4a890e65495f5af0edcbd5a79863c8
+    Hash: cd1fb669e20c8517e969eb742dbf5901
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 7b1a0197b616a2a041ac2353a48c401a
+    Hash: fa5b69c6b78554a1996e8e343881b926
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -19,35 +19,28 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
 - Class: 60
   Script: {instanceID: 0}
 - Class: 61
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3680edb12ba6f7a4ebcec5eda9589bb0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0e6bc074d27c3f5449ebfe6e5ce9a3a3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8aee13357c05a3941a0ed44110453380, type: 3}
+- Class: 115
   Script: {instanceID: 0}
 - Class: 212
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Prefabs/Scene/Level_Demo/tundraCliffRight.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikesTopAlt2.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikesTopAlt.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraMid.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraCenter.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraCenter_rounded.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikesBottom.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraHillLeft.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikeTop.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundra.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraHillRight.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikesTop.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraHalf.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraCliffLeftAlt.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikesBottomAlt2.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraRight.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraHillLeft2.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraLeft.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraCliffRightAlt.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraCliffLeft.prefab
-- Assets/Prefabs/Scene/Level_Demo/spikesBottomAlt.prefab
-- Assets/Prefabs/Scene/Level_Demo/tundraHillRight2.prefab
+- Assets/Prefabs/Scene/level_demo/platform_move_vertical.prefab
+- Assets/Prefabs/Scene/level_demo/spikes_demo_down.prefab
+- Assets/Prefabs/Scene/level_demo/platform_move_horizontal.prefab
+- Assets/Prefabs/Scene/level_demo/platform_demo.prefab
+- Assets/Prefabs/Scene/level_demo/spikes_demo_up.prefab
 Dependencies: []
