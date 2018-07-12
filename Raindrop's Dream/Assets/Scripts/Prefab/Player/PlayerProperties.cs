@@ -39,6 +39,7 @@ public class PlayerProperties: MonoBehaviour{
     public float maxJumpSpeed;//跳跃最小，最大速度
     public float maxJumpTime = 1f;//最长跳跃时间
     public float shootSpan;//射击间隔
+    public float invincibleTime;
     public bool canDoubleJump = false;//是否解锁二段跳
 
     //道具列表
