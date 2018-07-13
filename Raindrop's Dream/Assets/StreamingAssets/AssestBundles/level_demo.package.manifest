@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 164276532
+CRC: 2926500246
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cd1fb669e20c8517e969eb742dbf5901
+    Hash: 7449f6ab7851c99307d03c987ba9fe69
   TypeTreeHash:
     serializedVersion: 2
     Hash: fa5b69c6b78554a1996e8e343881b926
@@ -38,9 +38,9 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Prefabs/Scene/level_demo/platform_move_vertical.prefab
-- Assets/Prefabs/Scene/level_demo/spikes_demo_down.prefab
-- Assets/Prefabs/Scene/level_demo/platform_move_horizontal.prefab
-- Assets/Prefabs/Scene/level_demo/platform_demo.prefab
-- Assets/Prefabs/Scene/level_demo/spikes_demo_up.prefab
+- Assets/Prefabs/Scene/Level_Demo/platform_move_vertical.prefab
+- Assets/Prefabs/Scene/Level_Demo/spikes_demo_down.prefab
+- Assets/Prefabs/Scene/Level_Demo/platform_move_horizontal.prefab
+- Assets/Prefabs/Scene/Level_Demo/platform_demo.prefab
+- Assets/Prefabs/Scene/Level_Demo/spikes_demo_up.prefab
 Dependencies: []

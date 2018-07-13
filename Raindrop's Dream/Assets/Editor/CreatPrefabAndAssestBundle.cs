@@ -70,6 +70,7 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
         {
             //AssestBundle路径:StreamingAssets/AssestBundles
             BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath + "/AssestBundles", assestBuildMap.ToArray(), BuildAssetBundleOptions.None, RDPlatform.isOSXEditor ? BuildTarget.StandaloneOSX : BuildTarget.StandaloneWindows);
+            Debug.Log("Success");
         }
     }
 }

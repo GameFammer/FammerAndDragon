@@ -142,8 +142,8 @@ public class RDFileStream
 
                 TileInfo tile = new TileInfo();
                 tile.id = int.Parse(tileInfos[0]);
-                posInfo = tileInfos[1].Split(',');
-                tile.pos = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
+                posInfo = tileInfos[1].Split(','); 
+                tile.tileObjcet.transform.position = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
 
                 level.tiles.Add(tile);
             }
@@ -175,7 +175,9 @@ public class RDFileStream
             writer.WriteLine(_level.producer);
             foreach (TileInfo tile in _level.tiles)
             {
-                writer.WriteLine(tile.id + "#" + tile.pos.x + "," + tile.pos.y + "," + tile.pos.z);
+                int x = Mathf.RoundToInt(tile.tileObjcet.transform.position.x);
+                int y = Mathf.RoundToInt(tile.tileObjcet.transform.position.y);
+                writer.WriteLine(tile.id + "#" + x + "," + y + "," + tile.tileObjcet.layer);
             }
             writer.Close();
             fs.Close();
@@ -197,6 +199,7 @@ public class RDFileStream
         //TODO
         return new GameObject[0];
     }
+    //加载所有AssestBudle
     public static Dictionary<string, AssetBundle> ReadAllAssestBudle()
     {
         string path = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "AssestBundles" });

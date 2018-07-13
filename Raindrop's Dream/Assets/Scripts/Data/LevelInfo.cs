@@ -17,6 +17,6 @@ public class LevelInfo
     }
     public bool IsEmpty()
     {
-        return id > 0 ? false : true;
+        return tiles.Count> 0 ? false : true;
     }
 }
