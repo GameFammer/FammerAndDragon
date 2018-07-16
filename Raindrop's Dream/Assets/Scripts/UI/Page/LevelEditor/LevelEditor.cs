@@ -288,7 +288,10 @@ public class LevelEditor : BasePage
             if (btn != null)
             {
                 btn.GetComponent<Button>().name = PublicDataManager.instance.GetSceneTileName(key);
-                btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
+                if(tilePrefabs[key].GetComponent<SpriteRenderer>())
+                {
+                    btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
+                }            
                 btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
             }
         }

@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RDUI;
+public enum PlayerStatus
+{
+    Player_Normal,
+    Player_CanntJump,
+    Player_CanntMove,
+    Player_Weightlessness //失重
+}
 public class PlayerProperties: MonoBehaviour{
 
+    public PlayerStatus status= PlayerStatus.Player_Normal;
     public const int HP_MaxLimit_Value = 8;//血量上限最大值
     [SerializeField]
     private int hpMaxValue;//血量上限
@@ -36,6 +44,7 @@ public class PlayerProperties: MonoBehaviour{
     }
     public float moveBasicSpeed = 2;//基础移动速度
     public float moveSpeed = 2;//移动速度
+    public float gravityScale = 4f;
     public float maxJumpSpeed;//跳跃最小，最大速度
     public float maxJumpTime = 1f;//最长跳跃时间
     public float shootSpan;//射击间隔

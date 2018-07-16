@@ -46,6 +46,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
 
     void FixedUpdate()
     {
+        ApplyStatus();
         //获取水平输入
         moveHorizontal = Input.GetAxis("Horizontal");
         //判断是否位于地面
@@ -76,22 +77,35 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
                 properties.HpMaxValue -= 1;
         }
     }
+    //应用状态效果
+    void ApplyStatus()
+    {
+        switch(properties.status)
+        {
+            case PlayerStatus.Player_Normal:rb2d.gravityScale = properties.gravityScale; break;
+            case PlayerStatus.Player_Weightlessness:rb2d.gravityScale = 0; break;
+            default:break;
+        }
+    }
     //移动
     void Move(float _h)
     {
-        if (_h != 0)
+        if(properties.status<= PlayerStatus.Player_CanntMove)
         {
-            rb2d.velocity = new Vector2(_h * properties.moveSpeed, rb2d.velocity.y);
-            if (_h > 0)
-                renderer.flipX = false;
-            if (_h < 0)
-                renderer.flipX = true;
-            animator.SetBool("isWalk", true);
-        }
-        else
-        {
-            animator.SetBool("isWalk", false);
-        }
+            if (_h != 0)
+            {
+                rb2d.velocity = new Vector2(_h * properties.moveSpeed, rb2d.velocity.y);
+                if (_h > 0)
+                    renderer.flipX = false;
+                if (_h < 0)
+                    renderer.flipX = true;
+                animator.SetBool("isWalk", true);
+            }
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+        }      
     }
     //跳跃,受伤状态不能跳跃
     void Jump()
@@ -182,7 +196,12 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
             yield return null;
         }
     }
-
+    //改变状态
+    public void ChangeStatus(PlayerStatus _status)
+    {
+        properties.status = _status;
+    }
+    //被攻击
     public void BeHit(int _damage, HitEffect _effect)
     {
         if (properties.HpCurrentValue > 0 && !isDamaged)

@@ -250,10 +250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71eea89b3d024d0396b517d34c0f602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: 0
   hpMaxValue: 1000
   hpCurrentValue: 1000
   moveBasicSpeed: 3
   moveSpeed: 5
+  gravityScale: 4
   maxJumpSpeed: 10
   maxJumpTime: 0.7
   shootSpan: 0.5
