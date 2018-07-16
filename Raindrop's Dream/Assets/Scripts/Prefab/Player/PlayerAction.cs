@@ -136,9 +136,9 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
 
         if (Input.GetButton("Fire1") && Time.time > nextShootTime)
         {
-            string bulletName = properties.equipments["Weapon"];
             try
             {
+                string bulletName = properties.equipments["Weapon"];
                 //从子弹池中获取子弹
                 GameObject bullet = BulletsPool.instance.GetBulletByName(bulletName);
                 if (bullet != null)

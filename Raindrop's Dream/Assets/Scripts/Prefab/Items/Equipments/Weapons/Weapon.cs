@@ -14,7 +14,7 @@ public class Weapon : Equipment
 
     public void SetOwner(Collider2D _collision)
     {
-        if (_collision.gameObject.name != "player")
+        if (_collision.gameObject.name != "Player")
         {
             return;
         }
