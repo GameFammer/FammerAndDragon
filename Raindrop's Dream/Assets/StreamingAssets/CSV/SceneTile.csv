@@ -5,3 +5,5 @@ comment,prefab名,Static:1;Function:2;Item:3;Npc:4;enemy:5,制作者名,描述,对应关卡
 3,platform_move_horizontal,2,,,level_demo
 4,platform_move_vertical,2,,,level_demo
 5,spikes_demo_up,2,,,level_demo
+6,wind_down,2,,,level_demo
+7,wind_vortex,2,,,level_demo

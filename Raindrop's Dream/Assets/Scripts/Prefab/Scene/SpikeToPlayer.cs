@@ -8,11 +8,11 @@ public class SpikeToPlayer : MonoBehaviour
     public int damage;
     public HitEffect hitEffect;
     
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnTriggerEnter2D(Collider2D _collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (_collider.gameObject.tag == "Player")
         {
-            ExecuteEvents.Execute<IBeHitMessage>(collider.gameObject, null, (x, y) => x.BeHit(damage, hitEffect));
+            ExecuteEvents.Execute<IBeHitMessage>(_collider.gameObject, null, (x, y) => x.BeHit(damage, hitEffect));
         }
     }
 }

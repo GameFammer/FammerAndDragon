@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2926500246
+CRC: 3547011080
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7449f6ab7851c99307d03c987ba9fe69
+    Hash: 8f72206e60b71d0c7ab604e255c8cd2e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fa5b69c6b78554a1996e8e343881b926
+    Hash: ce49c6bf0da4195f0e4ea5a66451abe6
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,22 +25,34 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 61
   Script: {instanceID: 0}
+- Class: 62
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 3680edb12ba6f7a4ebcec5eda9589bb0, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 0e6bc074d27c3f5449ebfe6e5ce9a3a3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 8aee13357c05a3941a0ed44110453380, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 803f250ecbf57c9408145fff58c63d39, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 35a8846cabd9f41478edadb827ab1afd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 594abe11a571a0b4eb8711a3e468c751, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
+- Class: 249
+  Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/Scene/Level_Demo/platform_move_vertical.prefab
 - Assets/Prefabs/Scene/Level_Demo/spikes_demo_down.prefab
+- Assets/Prefabs/Scene/Level_Demo/wind_vortex.prefab
 - Assets/Prefabs/Scene/Level_Demo/platform_move_horizontal.prefab
 - Assets/Prefabs/Scene/Level_Demo/platform_demo.prefab
+- Assets/Prefabs/Scene/Level_Demo/wind_down.prefab
 - Assets/Prefabs/Scene/Level_Demo/spikes_demo_up.prefab
 Dependencies: []
