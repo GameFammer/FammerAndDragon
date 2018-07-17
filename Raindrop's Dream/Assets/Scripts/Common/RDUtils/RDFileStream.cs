@@ -134,16 +134,18 @@ public class RDFileStream
             level.name = reader.ReadLine();
             level.producer = reader.ReadLine();
             string tileInfoLine;//读取的一行
-            string[] tileInfos;//以#分二段
-            string[] posInfo;//position以,分三段
             while ((tileInfoLine = reader.ReadLine()) != null)
             {
-                tileInfos = tileInfoLine.Split('#');
+                string[] tileInfos = tileInfoLine.Split('#');//以#分5段
 
                 TileInfo tile = new TileInfo();
-                tile.id = int.Parse(tileInfos[0]);
-                posInfo = tileInfos[1].Split(','); 
-                tile.tileObjcet.transform.position = new Vector3Int(int.Parse(posInfo[0]), int.Parse(posInfo[1]), int.Parse(posInfo[2]));
+                tile.id = int.Parse(tileInfos[0]); //position以,分2段
+                string[] posInfo = tileInfos[1].Split(','); 
+                tile.position = new Vector3(float.Parse(posInfo[0]), float.Parse(posInfo[1]),0);
+                tile.rotation = new Quaternion(0f, 0f, float.Parse(tileInfos[2]), 0f);
+                string[] scaleInfo = tileInfos[3].Split(',');
+                tile.scale = new Vector3(float.Parse(scaleInfo[0]), float.Parse(scaleInfo[1]), 0f);
+                tile.layer = int.Parse(tileInfos[4]);
 
                 level.tiles.Add(tile);
             }
@@ -175,9 +177,7 @@ public class RDFileStream
             writer.WriteLine(_level.producer);
             foreach (TileInfo tile in _level.tiles)
             {
-                int x = Mathf.RoundToInt(tile.tileObjcet.transform.position.x);
-                int y = Mathf.RoundToInt(tile.tileObjcet.transform.position.y);
-                writer.WriteLine(tile.id + "#" + x + "," + y + "," + tile.tileObjcet.layer);
+                writer.WriteLine(tile.id + "#" + tile.position.x + "," + tile.position.y + "#" +tile.rotation.z+"#"+tile.scale.x+","+tile.scale.y+"#"+tile.layer);
             }
             writer.Close();
             fs.Close();

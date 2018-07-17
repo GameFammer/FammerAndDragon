@@ -9,7 +9,8 @@ public enum PlayerStatus
     Player_CanntMove,
     Player_Weightlessness //失重
 }
-public class PlayerProperties: MonoBehaviour{
+public class PlayerProperties: PublicProperties
+{
 
     public PlayerStatus status= PlayerStatus.Player_Normal;
     public const int HP_MaxLimit_Value = 8;//血量上限最大值

@@ -5,24 +5,24 @@ using UnityEngine;
 public class TileInfo
 {
     public int id;
-    public GameObject tileObjcet;
+    public bool isEmpty = true;
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+    public int layer;
+    public GameObject tileObjcet = null;
     public TileInfo()
     {
         id = -1;
-        tileObjcet = new GameObject();
     }
-    public TileInfo(int _id, GameObject _tile)
+    public TileInfo(int _id)
     {
         id = _id;
-        tileObjcet = _tile;
-    }
-    public bool isEmpty()
-    {
-        return id < 0 ? true : false;
     }
     public void Reset()
     {
         id = -1;
-        tileObjcet = new GameObject();
+        isEmpty = true;
+        tileObjcet = null;
     }
 }

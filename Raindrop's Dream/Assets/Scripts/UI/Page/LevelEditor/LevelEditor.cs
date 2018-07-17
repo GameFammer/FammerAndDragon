@@ -80,6 +80,9 @@ public class LevelEditor : BasePage
     private Dictionary<int, TileInfo[,]> tileInfos;//存储Tile信息
 
     private GameObject nowTileObject;//当前选中tile
+    private int nowTileObjectWidth;//当前选中tile宽度
+    private int nowTileObjectHeight;//当前选中tile高度
+
     /*Mouse*/
     private Vector3Int mousePos;//鼠标指针位置坐标
     /*图层*/
@@ -95,9 +98,8 @@ public class LevelEditor : BasePage
     private const int TILE_ENEMY = 5;
 
     /*地图大小*/
-    private const int MAX_WIDTH = 100;
+    private const int MAX_WIDTH = 50;
     private const int MAX_HEIGHT = 50;
-    private const int MAX_LAYERS = 5;
 
     /*自动保存*/
     [Header("自动保存时间间隔")]
@@ -141,20 +143,35 @@ public class LevelEditor : BasePage
         if (mousePos != Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
         {
             mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            //长宽超过1并且是偶数增加偏移
             if (nowTileObject != null)
             {
-                nowTileObject.transform.position = new Vector3Int(mousePos.x, mousePos.y, 0);
+                Vector3 pos = mousePos;
+                if (nowTileObjectWidth > 1 && nowTileObjectWidth % 2 == 0)
+                {
+                    pos.x -= 0.5f;
+                }
+                if (nowTileObjectHeight > 1 && nowTileObjectHeight % 2 == 0)
+                {
+                    pos.y -= 0.5f;
+                }
+                nowTileObject.transform.position = new Vector3(pos.x, pos.y, 0);
             }
         }
         //左键点击放置Tile,已经有物体的位置不能放置
         if (nowTileObject != null && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (Input.GetMouseButton(0) && IsValidPosition(mousePos))
+            if (Input.GetMouseButton(0))
             {
-                if (FindTileInChild(Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition))) == null)
+                Vector3 pos = GetTileBottomLetfPosition(nowTileObject,nowTileObjectWidth,nowTileObjectHeight);
+                if (IsValidPosition(pos))
                 {
-                    SetNowTileToTileMap();
+                    if (FindTile(Vector3Int.RoundToInt(pos)) == null)
+                    {
+                        SetNowTileToTileMap(pos);
+                    }
                 }
+
             }
         }
         //右键清除当前选择or橡皮擦
@@ -167,10 +184,10 @@ public class LevelEditor : BasePage
                 nowTileImage.GetComponent<Image>().sprite = null;
                 nowTileId = -1;
             }
-            if (IsValidPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            Vector3Int pos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (IsValidPosition(pos))
             {
-                Vector3Int pos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                GameObject des = FindTileInChild(pos);
+                GameObject des = FindTile(pos);
                 if (des != null)
                 {
                     tileInfos[nowLayer][pos.x, pos.y].Reset();
@@ -288,10 +305,10 @@ public class LevelEditor : BasePage
             if (btn != null)
             {
                 btn.GetComponent<Button>().name = PublicDataManager.instance.GetSceneTileName(key);
-                if(tilePrefabs[key].GetComponent<SpriteRenderer>())
+                if (tilePrefabs[key].GetComponent<SpriteRenderer>())
                 {
                     btn.GetComponent<Image>().sprite = tilePrefabs[key].GetComponent<SpriteRenderer>().sprite;
-                }            
+                }
                 btn.GetComponent<Button>().onClick.AddListener(() => { OnTileButtonClick(key); });
             }
         }
@@ -393,17 +410,7 @@ public class LevelEditor : BasePage
             //设置当前选中Tile图标
             nowTileImage.sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
             //创建tile
-            mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            nowTileObject = Instantiate(tilePrefabs[_ID], new Vector3Int(mousePos.x, mousePos.y, 0), tilePrefabs[_ID].transform.rotation);
-
-            if (nowTileObject.GetComponent<Collider2D>())
-            {
-                nowTileObject.GetComponent<Collider2D>().enabled = false;
-            }
-            if (nowTileObject.GetComponent<Rigidbody2D>())
-            {
-                nowTileObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            }
+            CreatTileObjectOnMousePosition();
         }
     }
     //切换tile分页
@@ -442,9 +449,9 @@ public class LevelEditor : BasePage
     }
     /*各种find*/
     //根据图层查找子对象
-    GameObject FindTileInChild(Vector3Int _mousePosition)
+    GameObject FindTile(Vector3Int _mousePosition)
     {
-        if (tileInfos[nowLayer][_mousePosition.x, _mousePosition.y].isEmpty())
+        if (tileInfos[nowLayer][_mousePosition.x, _mousePosition.y].isEmpty)
         {
             return null;
         }
@@ -456,30 +463,65 @@ public class LevelEditor : BasePage
 
     /*各种Set/Get*/
     //根据当前图层放置tile
-    void SetNowTileToTileMap()
+    void SetNowTileToTileMap(Vector3 _pos)
     {
         if (!isPlaying)
         {
             nowTileObject.transform.SetParent(GetLayerObject(nowLayer).transform);
             nowTileObject.layer = GetLayerObject(nowLayer).layer;
 
-            int x = Mathf.RoundToInt(nowTileObject.transform.position.x);
-            int y = Mathf.RoundToInt(nowTileObject.transform.position.y);
-            Debug.Log(x + " " + y);
-            tileInfos[nowLayer][x, y].id = nowTileId;
-            tileInfos[nowLayer][x, y].tileObjcet = nowTileObject;
+            SetTileInfo(_pos, nowTileId, nowTileObject,nowTileObject.layer);
 
-            mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            nowTileObject = Instantiate(tilePrefabs[nowTileId], new Vector3Int(mousePos.x, mousePos.y, 0), tilePrefabs[nowTileId].transform.rotation);
+            CreatTileObjectOnMousePosition();
+        }
+    }
+    //设置Tile数据
+    void SetTileInfo(Vector3 _BottomLeftPos,int _id,GameObject _tileObject,int _layer)
+    {
+        int x = Mathf.RoundToInt(_BottomLeftPos.x);
+        int y = Mathf.RoundToInt(_BottomLeftPos.y);
 
-            if (nowTileObject.GetComponent<Collider2D>())
-            {
-                nowTileObject.GetComponent<Collider2D>().enabled = false;
-            }
-            if (nowTileObject.GetComponent<Rigidbody2D>())
-            {
-                nowTileObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            }
+        tileInfos[_layer][x, y].id = _id;
+        tileInfos[_layer][x, y].isEmpty = false;
+        tileInfos[_layer][x, y].position = _tileObject.transform.position;
+        tileInfos[_layer][x, y].rotation= _tileObject.transform.rotation;
+        tileInfos[_layer][x, y].scale = _tileObject.transform.localScale;
+        tileInfos[_layer][x, y].tileObjcet = _tileObject;
+        tileInfos[_layer][x, y].layer = _layer;
+
+    }
+    //从鼠标位置创建Tile
+    void CreatTileObjectOnMousePosition()
+    {
+        nowTileObjectWidth = 1;
+        nowTileObjectHeight = 1;
+        mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        nowTileObject = Instantiate(tilePrefabs[nowTileId], new Vector3Int(mousePos.x, mousePos.y, 0), tilePrefabs[nowTileId].transform.rotation);
+        if (nowTileObject.GetComponent<PublicProperties>())
+        {
+            nowTileObjectWidth = nowTileObject.GetComponent<PublicProperties>().width;
+            nowTileObjectHeight = nowTileObject.GetComponent<PublicProperties>().height;
+        }
+        //增加偏移
+        Vector3 pos = mousePos;
+        if (nowTileObjectWidth > 1 && nowTileObjectWidth % 2 == 0)
+        {
+            pos.x -= 0.5f;
+        }
+        if (nowTileObjectHeight > 1 && nowTileObjectHeight % 2 == 0)
+        {
+            pos.y -= 0.5f;
+        }
+        nowTileObject.transform.position = pos;
+
+        //禁用物理组件
+        if (nowTileObject.GetComponent<Collider2D>())
+        {
+            nowTileObject.GetComponent<Collider2D>().enabled = false;
+        }
+        if (nowTileObject.GetComponent<Rigidbody2D>())
+        {
+            nowTileObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
     //设置当前图层
@@ -487,6 +529,36 @@ public class LevelEditor : BasePage
     {
         nowLayer = _layer;
         HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn);
+    }
+    //获取Tile左下角块坐标,需要移除偏移来对应数组下标。
+    Vector3 GetTileBottomLetfPosition(GameObject _tile,int _width,int _height)
+    {
+        Vector3 pos = _tile.transform.position;
+        if (_width > 1)
+        {
+            if (_width % 2 == 0)
+            { 
+                pos.x += 0.5f;
+                pos.x -= _width / 2.0f;
+            }
+            else
+            {
+                pos.x -= (_width - 1) / 2.0f;
+            }
+        }
+        if (_height > 1)
+        {
+            if (_height % 2 == 0)
+            {
+                pos.y += 0.5f;
+                pos.y -= _height / 2.0f;
+            }
+            else
+            {
+                pos.y -= (_height - 1) / 2.0f;
+            }
+        }
+        return pos;
     }
     //获取当前层对象
     GameObject GetLayerObject(int _layer)
@@ -583,12 +655,12 @@ public class LevelEditor : BasePage
         level.id = nowLevelId;
         level.name = nowLevelName;
         level.producer = nowMakerName;
-        //GameObject转换为TileInfo信息
+
         foreach (int key in tileInfos.Keys)
         {
             foreach (TileInfo tile in tileInfos[key])
             {
-                if (!tile.isEmpty())
+                if (!tile.isEmpty)
                 {
                     level.tiles.Add(tile);
                 }
@@ -613,7 +685,7 @@ public class LevelEditor : BasePage
             makerNameInputField.GetComponent<InputField>().text = level.producer;
             foreach (TileInfo tile in level.tiles)
             {
-                GameObject obj = Instantiate(tilePrefabs[tile.id], tile.tileObjcet.transform.position, Quaternion.identity);
+                GameObject obj = Instantiate(tilePrefabs[tile.id], tile.position, tile.rotation);
                 if (obj.GetComponent<Collider2D>())
                 {
                     obj.GetComponent<Collider2D>().enabled = false;
@@ -622,7 +694,14 @@ public class LevelEditor : BasePage
                 {
                     obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                 }
-                obj.transform.SetParent(GetLayerObject(tile.tileObjcet.layer).transform);
+                obj.transform.localScale = tile.scale;
+                obj.transform.SetParent(GetLayerObject(tile.layer).transform);
+                tile.tileObjcet = obj;
+                int width = obj.GetComponent<PublicProperties>().width;
+                int height = obj.GetComponent<PublicProperties>().height;
+                Vector3 pos = GetTileBottomLetfPosition(obj, width, height);
+
+                SetTileInfo(pos, tile.id, obj,tile.layer);
             }
         }
     }
