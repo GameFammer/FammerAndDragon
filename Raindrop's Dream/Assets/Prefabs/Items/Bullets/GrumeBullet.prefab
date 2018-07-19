@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114924740597346676}
   - component: {fileID: 114874625006933104}
   - component: {fileID: 50882019467078466}
+  - component: {fileID: 210115714396029686}
   m_Layer: 0
   m_Name: GrumeBullet
   m_TagString: Item
@@ -116,6 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb7beefecc93a348ab22d0b30a14bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &210115714396029686
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1743806396408572}
+  m_Enabled: 1
+  m_SortingLayerID: -95441781
+  m_SortingLayer: 2
+  m_SortingOrder: 100
 --- !u!212 &212218416414836898
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114857503439536206}
   - component: {fileID: 114231374617433288}
   - component: {fileID: 50113330490053254}
+  - component: {fileID: 210751032886263474}
   m_Layer: 0
   m_Name: BombBullet
   m_TagString: Item
@@ -116,6 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb7beefecc93a348ab22d0b30a14bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &210751032886263474
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1655880385472224}
+  m_Enabled: 1
+  m_SortingLayerID: -95441781
+  m_SortingLayer: 2
+  m_SortingOrder: 100
 --- !u!212 &212225963719154194
 SpriteRenderer:
   m_ObjectHideFlags: 1

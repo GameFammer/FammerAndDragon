@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovablePlatform : MonoBehaviour
+public class MovablePlatform : MonoBehaviour, ISleepWakeUp
 {
     [Header("默认循环移动")]
     public bool isLoop = true;//是否循环移动
@@ -17,10 +17,10 @@ public class MovablePlatform : MonoBehaviour
     [Header("最大移动距离")]
     public float maxDistance;//最大移动距离
     [Header("停留时间")]
-    public float anchorTime;
+    public float anchorTime;//停留时间
     private Rigidbody2D rb2d;
     private Vector2 startPosition;//起始位置
-    private float stopTime;
+    private float stopTime;//刚停止移动的时间
     // Use this for initialization
     void Start()
     {
@@ -47,12 +47,17 @@ public class MovablePlatform : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
-        if (collider.gameObject.tag != "Player"
-         && collider.gameObject.tag != "Enemy"
-         && collider.gameObject.tag != "Item")
+
+        if (Time.time - stopTime >= anchorTime)
         {
-            ChangeSpeed();
+            if (collider.gameObject.tag != "Player"
+            && collider.gameObject.tag != "Enemy"
+            && collider.gameObject.tag != "Item")
+            {
+                ChangeSpeed();
+            }
         }
+
     }
     void ChangeSpeed()
     {
@@ -68,5 +73,15 @@ public class MovablePlatform : MonoBehaviour
         {
             speed = Vector2.zero;
         }
+    }
+
+    public void Sleep()
+    {
+        GetComponent<Rigidbody2D>().simulated = false;
+    }
+
+    public void WakeUp()
+    {
+        GetComponent<Rigidbody2D>().simulated = true;
     }
 }

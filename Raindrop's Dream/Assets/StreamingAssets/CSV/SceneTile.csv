@@ -7,3 +7,7 @@ comment,prefab名,Static:1;Function:2;Item:3;Npc:4;enemy:5,制作者名,描述,对应关卡
 5,spikes_demo_up,2,,,level_demo
 6,wind_vortex,2,,,level_demo
 7,wind_down,2,,,level_demo
+8,windswith_upright,2,,,level_demo
+9,windswith_upleft,2,,,level_demo
+10,nextlevel,2,,,level_demo
+11,LevelEntrance,2,,,level_demo

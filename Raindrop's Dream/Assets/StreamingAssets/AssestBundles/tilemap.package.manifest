@@ -1,0 +1,48 @@
+ManifestFileVersion: 0
+CRC: 4150071079
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3c472aa9311dd7a98ff1b13dbc7b2d09
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f7806154938348ff2e2451dee1b8a9c8
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 62
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: ef6e4709b5ef9cd4eaf2e4ca3542216a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c71eea89b3d024d0396b517d34c0f602, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 210
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Prefabs/Scene/TileMap/Player.prefab
+Dependencies: []

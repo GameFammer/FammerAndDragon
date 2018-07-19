@@ -1,5 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************* 
+  *Author:AICHEN
+  *Date:  2018-6-12
+  *Description: 画面僵直效果
+**********************************************************************************/
+using System.Collections;
 using UnityEngine;
 
 public class StiffEffect : HitEffect

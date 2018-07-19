@@ -58,4 +58,9 @@ public class PlayerProperties: PublicProperties
 
     //装备列表 { "装备位置" ，"装备名"}
     public Dictionary<string, string> equipments = new Dictionary<string, string>();
+
+    void Start()
+    {
+        equipments.Add("Weapon", "WatterBullet");
+    }
 }

@@ -20,7 +20,6 @@ public class Bullet : MonoBehaviour
     public HitEffect hitEffect;
     public MoveAction moveAction;
     public HitAction hitAciton;
-    public DieAction dieAction;
 
     // Use this for initialization
     void Start()

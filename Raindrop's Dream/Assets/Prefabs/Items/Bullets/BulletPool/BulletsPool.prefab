@@ -56,5 +56,5 @@ MonoBehaviour:
   - {fileID: 1743806396408572, guid: 5b1533080b184407aa9d760627608e24, type: 2}
   - {fileID: 1928456988961126, guid: 80c458ad8aaac4afba3614732d8cbb41, type: 2}
   - {fileID: 1717249681315270, guid: 3096255eec44e4d12b267e5428fe7a87, type: 2}
-  poolInitSize: 5
+  poolInitSize: 7
   isLockPoolSize: 0

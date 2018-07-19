@@ -1112,6 +1112,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114141673139247558, guid: e8966b88a52124c10bf2e20b44017086,
+        type: 2}
+      propertyPath: poolInitSize
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e8966b88a52124c10bf2e20b44017086, type: 2}
   m_IsPrefabParent: 0
@@ -3924,10 +3929,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71eea89b3d024d0396b517d34c0f602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 0
+  height: 0
+  status: 0
   hpMaxValue: 3
   hpCurrentValue: 3
   moveBasicSpeed: 5
   moveSpeed: 5
+  gravityScale: 4
   maxJumpSpeed: 5
   maxJumpTime: 3
   shootSpan: 0.2

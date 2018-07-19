@@ -9,7 +9,7 @@ using System.Collections;
 using System;
 using UnityEngine;
 using RDUI;
-public class PlayerAction : MonoBehaviour, IBeHitMessage
+public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
 {
     private PlayerProperties properties;
 
@@ -49,7 +49,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
         ApplyStatus();
         //获取水平输入
         moveHorizontal = Input.GetAxis("Horizontal");
-        //判断是否位于地面
+        //判断是否位于地面/撞头
         isOnGround = Physics2D.Raycast(checkIsGround.transform.position, Vector2.down, groundDistance).collider == null ? false : true;
         isHitHead = Physics2D.Raycast(checkIsHitHead.transform.position, Vector2.up, headDistance).collider == null ? false : true;
         Move(moveHorizontal);
@@ -106,6 +106,13 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
                 animator.SetBool("isWalk", false);
             }
         }      
+        if(properties.status==PlayerStatus.Player_Weightlessness)
+        {
+            if (_h != 0)
+            {
+               
+            }
+        }
     }
     //跳跃,受伤状态不能跳跃
     void Jump()
@@ -212,6 +219,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
             
         }
     }
+    //受伤
     IEnumerator Damaged()
     {
         isDamaged = true;
@@ -222,6 +230,25 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
         isDamaged = false;
         renderer.color = Color.white;
     }
+    //进入下一关
+    public void EnterNextLevel()
+    {
+        GameObject entrannce=GameObject.FindGameObjectWithTag("LevelEntrance");
+        if(entrannce)
+        {
+            transform.position = entrannce.transform.position;
+        }
+    }
 
+    public void Sleep()
+    {
+
+        GetComponent<Rigidbody2D>().simulated = false;
+    }
+
+    public void WakeUp()
+    {
+        GetComponent<Rigidbody2D>().simulated = true;
+    }
 }
 

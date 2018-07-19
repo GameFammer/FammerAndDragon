@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114514753541324442}
   - component: {fileID: 114553708181790834}
   - component: {fileID: 50884942759458296}
+  - component: {fileID: 210060825011774912}
   m_Layer: 0
   m_Name: PoisonBullet
   m_TagString: Item
@@ -116,6 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805a53058950b284e81abbe5d1594745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &210060825011774912
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928456988961126}
+  m_Enabled: 1
+  m_SortingLayerID: -95441781
+  m_SortingLayer: 2
+  m_SortingOrder: 100
 --- !u!212 &212816705531744938
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using RDUI;
+using Cinemachine;
 
 public class LevelEditor : BasePage
 {
@@ -48,7 +49,6 @@ public class LevelEditor : BasePage
     //Up
     [Header("顶部功能栏")]
     public Button playButton;//开始测试按钮
-    public Button pauseButton;//暂停测试按钮
     public Button stopButton;//结束测试按钮
     public Toggle hideUIToggle;//隐藏UI选项
     public InputField levelNameInputField;//关卡名输入框
@@ -67,11 +67,14 @@ public class LevelEditor : BasePage
 
     /*Object*/
     private Camera mainCamera;//主相机
+    public CinemachineVirtualCamera playerCamera;
+    public CinemachineVirtualCamera sceneCamera;
+    public Transform sceneTarget;
     [Header("层级父对象")]
     public GameObject layerBackground;//最底层，例如背景等,对应Sorting Layer:Background
     public GameObject layerPlayer;//与主角同层物体，例如平台，敌人，道具等，对应Sorting Layer:Player
     public GameObject layerOverPlayer;//遮盖物，例如迷雾等,对应Sorting Layer:OverPlayer
-
+    private GameObject player;//主角
     //Layer
     private const int LAYER_BACKGROUND = 8;
     private const int LAYER_PLAYER = 9;
@@ -88,7 +91,7 @@ public class LevelEditor : BasePage
     /*图层*/
     private int nowLayer;
     /*运行*/
-    private bool isPlaying;//是否开始测试运行
+    private bool isPlaying=false;//是否开始测试运行
 
     /*TileType*/
     private const int TILE_STATIC = 1;
@@ -119,6 +122,8 @@ public class LevelEditor : BasePage
     {
         tilePrefabs = new Dictionary<int, GameObject>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerAction>().Sleep();
         //初始化Tile数组
         InitTileInfos();
         //初始化Tile预制体
@@ -134,85 +139,96 @@ public class LevelEditor : BasePage
         nowLayer = LAYER_PLAYER;//默认Player层
         nowTileId = -1;
         nowLevelId = -1;
+
+        //camera
+        sceneCamera.enabled = true;
+        playerCamera.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //跟随鼠标移动，更新Tile位置
-        if (mousePos != Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+        if(!isPlaying)
         {
-            mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            //长宽超过1并且是偶数增加偏移
-            if (nowTileObject != null)
+            if (mousePos != Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
             {
-                Vector3 pos = mousePos;
-                if (nowTileObjectWidth > 1 && nowTileObjectWidth % 2 == 0)
+                mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                if (nowTileObject != null)
                 {
-                    pos.x -= 0.5f;
+                    nowTileObject.transform.position = new Vector3Int(mousePos.x, mousePos.y, 0);
                 }
-                if (nowTileObjectHeight > 1 && nowTileObjectHeight % 2 == 0)
-                {
-                    pos.y -= 0.5f;
-                }
-                nowTileObject.transform.position = new Vector3(pos.x, pos.y, 0);
+                ////长宽超过1并且是偶数增加偏移
+                //if (nowTileObject != null)
+                //{
+                //    Vector3 pos = mousePos;
+                //    if (nowTileObjectWidth > 1 && nowTileObjectWidth % 2 == 0)
+                //    {
+                //        pos.x -= 0.5f;
+                //    }
+                //    if (nowTileObjectHeight > 1 && nowTileObjectHeight % 2 == 0)
+                //    {
+                //        pos.y -= 0.5f;
+                //    }
+                //    nowTileObject.transform.position = new Vector3(pos.x, pos.y, 0);
+                //}
             }
-        }
-        //左键点击放置Tile,已经有物体的位置不能放置
-        if (nowTileObject != null && !EventSystem.current.IsPointerOverGameObject())
-        {
-            if (Input.GetMouseButton(0))
+            //左键点击放置Tile,已经有物体的位置不能放置
+            if (nowTileObject != null && !EventSystem.current.IsPointerOverGameObject())
             {
-                Vector3 pos = GetTileBottomLetfPosition(nowTileObject,nowTileObjectWidth,nowTileObjectHeight);
+                if (Input.GetMouseButton(0))
+                {
+                    //  Vector3 pos = GetTileBottomLetfPosition(nowTileObject,nowTileObjectWidth,nowTileObjectHeight);
+                    if (IsValidPosition(mousePos))
+                    {
+                        if (FindTile(Vector3Int.RoundToInt(mousePos)) == null)
+                        {
+                            SetNowTileToTileMap(mousePos);
+                        }
+                    }
+
+                }
+            }
+            //右键清除当前选择or橡皮擦
+            if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                if (nowTileObject != null)
+                {
+                    Destroy(nowTileObject);
+                    nowTileObject = null;
+                    nowTileImage.GetComponent<Image>().sprite = null;
+                    nowTileId = -1;
+                }
+                Vector3Int pos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 if (IsValidPosition(pos))
                 {
-                    if (FindTile(Vector3Int.RoundToInt(pos)) == null)
+                    GameObject des = FindTile(pos);
+                    if (des != null)
                     {
-                        SetNowTileToTileMap(pos);
+                        tileInfos[nowLayer][pos.x, pos.y].Reset();
+                        Destroy(des.gameObject);
                     }
                 }
-
             }
-        }
-        //右键清除当前选择or橡皮擦
-        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            if (nowTileObject != null)
+            //鼠标滑轮缩放
+            if (Input.GetAxis("Mouse ScrollWheel") != 0 && !EventSystem.current.IsPointerOverGameObject())
             {
-                Destroy(nowTileObject);
-                nowTileObject = null;
-                nowTileImage.GetComponent<Image>().sprite = null;
-                nowTileId = -1;
-            }
-            Vector3Int pos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            if (IsValidPosition(pos))
-            {
-                GameObject des = FindTile(pos);
-                if (des != null)
+                if (sceneCamera.m_Lens.OrthographicSize>= 0.5f)
                 {
-                    tileInfos[nowLayer][pos.x, pos.y].Reset();
-                    Destroy(des.gameObject);
+                    sceneCamera.m_Lens.OrthographicSize += Input.GetAxis("Mouse ScrollWheel");
+                }
+                else
+                {
+                    sceneCamera.m_Lens.OrthographicSize = 0.5f;
                 }
             }
-        }
-        //鼠标滑轮缩放
-        if (Input.GetAxis("Mouse ScrollWheel") != 0 && !EventSystem.current.IsPointerOverGameObject())
-        {
-            if (mainCamera.orthographicSize >= 0.5f)
+            //未开始运行水平、竖直输入移动地图
+            if (!isPlaying && !EventSystem.current.IsPointerOverGameObject())
             {
-                mainCamera.orthographicSize += Input.GetAxis("Mouse ScrollWheel");
+                sceneTarget.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * 5f, Input.GetAxis("Vertical") * Time.deltaTime * 5f, 0);
             }
-            else
-            {
-                mainCamera.orthographicSize = 0.5f;
-            }
-        }
-        //未开始运行水平、竖直输入移动地图
-        if (!isPlaying && !EventSystem.current.IsPointerOverGameObject())
-        {
-            mainCamera.transform.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * 5f, Input.GetAxis("Vertical") * Time.deltaTime * 5f, 0);
-        }
-        StartCoroutine(AutoSave());
+            StartCoroutine(AutoSave());
+        }      
     }
 
     /*各种初始化*/
@@ -364,23 +380,34 @@ public class LevelEditor : BasePage
         }
     }
     //开始测试按钮
-    void OnPlayButtonClick()
+    public void OnPlayButtonClick()
     {
         isPlaying = true;
+        //显示主角
+        player.SetActive(true);
+        player.GetComponent<PlayerAction>().EnterNextLevel();
+        player.GetComponent<PlayerAction>().WakeUp();
         //激活物理组件
         SetAllChildPhysicsActivated(layerBackground.transform);
         SetAllChildPhysicsActivated(layerPlayer.transform);
         SetAllChildPhysicsActivated(layerOverPlayer.transform);
-
+        
         //隐藏UI
         leftToolPanel.SetActive(false);
         rightTilePanel.SetActive(false);
         downLevelPanel.SetActive(false);
+
+        //切换Camera
+        sceneCamera.enabled = false;
+        playerCamera.enabled = true;
     }
     //结束测试按钮
     void OnStopButtonClick()
     {
         isPlaying = false;
+        //隐藏主角
+        player.GetComponent<PlayerAction>().Sleep();
+        player.SetActive(false);
         //冻结物理组件
         SetAllChildPhysicsFrozen(layerBackground.transform);
         SetAllChildPhysicsFrozen(layerPlayer.transform);
@@ -390,6 +417,10 @@ public class LevelEditor : BasePage
         leftToolPanel.SetActive(true);
         rightTilePanel.SetActive(true);
         downLevelPanel.SetActive(true);
+
+        //切换Camera
+        sceneCamera.enabled = true;
+        playerCamera.enabled = false;
     }
     //保存按钮
     void OnSaveButtonClick()
@@ -470,13 +501,13 @@ public class LevelEditor : BasePage
             nowTileObject.transform.SetParent(GetLayerObject(nowLayer).transform);
             nowTileObject.layer = GetLayerObject(nowLayer).layer;
 
-            SetTileInfo(_pos, nowTileId, nowTileObject,nowTileObject.layer);
+            SetTileInfo(_pos, nowTileId, nowTileObject, nowTileObject.layer);
 
             CreatTileObjectOnMousePosition();
         }
     }
     //设置Tile数据
-    void SetTileInfo(Vector3 _BottomLeftPos,int _id,GameObject _tileObject,int _layer)
+    void SetTileInfo(Vector3 _BottomLeftPos, int _id, GameObject _tileObject, int _layer)
     {
         int x = Mathf.RoundToInt(_BottomLeftPos.x);
         int y = Mathf.RoundToInt(_BottomLeftPos.y);
@@ -484,7 +515,7 @@ public class LevelEditor : BasePage
         tileInfos[_layer][x, y].id = _id;
         tileInfos[_layer][x, y].isEmpty = false;
         tileInfos[_layer][x, y].position = _tileObject.transform.position;
-        tileInfos[_layer][x, y].rotation= _tileObject.transform.rotation;
+        tileInfos[_layer][x, y].rotation = _tileObject.transform.rotation;
         tileInfos[_layer][x, y].scale = _tileObject.transform.localScale;
         tileInfos[_layer][x, y].tileObjcet = _tileObject;
         tileInfos[_layer][x, y].layer = _layer;
@@ -502,17 +533,17 @@ public class LevelEditor : BasePage
             nowTileObjectWidth = nowTileObject.GetComponent<PublicProperties>().width;
             nowTileObjectHeight = nowTileObject.GetComponent<PublicProperties>().height;
         }
-        //增加偏移
-        Vector3 pos = mousePos;
-        if (nowTileObjectWidth > 1 && nowTileObjectWidth % 2 == 0)
-        {
-            pos.x -= 0.5f;
-        }
-        if (nowTileObjectHeight > 1 && nowTileObjectHeight % 2 == 0)
-        {
-            pos.y -= 0.5f;
-        }
-        nowTileObject.transform.position = pos;
+        ////增加偏移
+        //Vector3 pos = mousePos;
+        //if (nowTileObjectWidth > 1 && nowTileObjectWidth % 2 == 0)
+        //{
+        //    pos.x -= 0.5f;
+        //}
+        //if (nowTileObjectHeight > 1 && nowTileObjectHeight % 2 == 0)
+        //{
+        //    pos.y -= 0.5f;
+        //}
+        //nowTileObject.transform.position = pos;
 
         //禁用物理组件
         if (nowTileObject.GetComponent<Collider2D>())
@@ -521,7 +552,7 @@ public class LevelEditor : BasePage
         }
         if (nowTileObject.GetComponent<Rigidbody2D>())
         {
-            nowTileObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            nowTileObject.GetComponent<Rigidbody2D>().simulated = false;
         }
     }
     //设置当前图层
@@ -530,36 +561,36 @@ public class LevelEditor : BasePage
         nowLayer = _layer;
         HideOtherLayer(hideOtherToggle.GetComponent<Toggle>().isOn);
     }
-    //获取Tile左下角块坐标,需要移除偏移来对应数组下标。
-    Vector3 GetTileBottomLetfPosition(GameObject _tile,int _width,int _height)
-    {
-        Vector3 pos = _tile.transform.position;
-        if (_width > 1)
-        {
-            if (_width % 2 == 0)
-            { 
-                pos.x += 0.5f;
-                pos.x -= _width / 2.0f;
-            }
-            else
-            {
-                pos.x -= (_width - 1) / 2.0f;
-            }
-        }
-        if (_height > 1)
-        {
-            if (_height % 2 == 0)
-            {
-                pos.y += 0.5f;
-                pos.y -= _height / 2.0f;
-            }
-            else
-            {
-                pos.y -= (_height - 1) / 2.0f;
-            }
-        }
-        return pos;
-    }
+    ////获取Tile左下角块坐标,需要移除偏移来对应数组下标。
+    //Vector3 GetTileBottomLetfPosition(GameObject _tile,int _width,int _height)
+    //{
+    //    Vector3 pos = _tile.transform.position;
+    //    if (_width > 1)
+    //    {
+    //        if (_width % 2 == 0)
+    //        { 
+    //            pos.x += 0.5f;
+    //            pos.x -= _width / 2.0f;
+    //        }
+    //        else
+    //        {
+    //            pos.x -= (_width - 1) / 2.0f;
+    //        }
+    //    }
+    //    if (_height > 1)
+    //    {
+    //        if (_height % 2 == 0)
+    //        {
+    //            pos.y += 0.5f;
+    //            pos.y -= _height / 2.0f;
+    //        }
+    //        else
+    //        {
+    //            pos.y -= (_height - 1) / 2.0f;
+    //        }
+    //    }
+    //    return pos;
+    //}
     //获取当前层对象
     GameObject GetLayerObject(int _layer)
     {
@@ -571,7 +602,7 @@ public class LevelEditor : BasePage
             default: return layerPlayer;
         }
     }
-    //激活所有直接子物体Collider2D和Rigidbody2D
+    //激活所有子物体
     void SetAllChildPhysicsActivated(Transform _father)
     {
         foreach (Transform t in _father)
@@ -580,13 +611,13 @@ public class LevelEditor : BasePage
             {
                 t.GetComponent<Collider2D>().enabled = true;
             }
-            if (t.GetComponent<Rigidbody2D>())
+            if (t.GetComponent<ISleepWakeUp>() != null)
             {
-                t.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                t.GetComponent<ISleepWakeUp>().WakeUp();
             }
         }
     }
-    //冻结所有直接子物体Collider2D和Rigidbody2D
+    //冻结所有子物体
     void SetAllChildPhysicsFrozen(Transform _father)
     {
         foreach (Transform t in _father)
@@ -595,9 +626,9 @@ public class LevelEditor : BasePage
             {
                 t.GetComponent<Collider2D>().enabled = false;
             }
-            if (t.GetComponent<Rigidbody2D>())
+            if (t.GetComponent<ISleepWakeUp>() != null)
             {
-                t.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                t.GetComponent<ISleepWakeUp>().Sleep();
             }
         }
     }
@@ -690,18 +721,18 @@ public class LevelEditor : BasePage
                 {
                     obj.GetComponent<Collider2D>().enabled = false;
                 }
-                if (obj.GetComponent<Rigidbody2D>())
+                if (obj.GetComponent<ISleepWakeUp>()!=null)
                 {
-                    obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                    obj.GetComponent<ISleepWakeUp>().Sleep();
                 }
                 obj.transform.localScale = tile.scale;
                 obj.transform.SetParent(GetLayerObject(tile.layer).transform);
                 tile.tileObjcet = obj;
-                int width = obj.GetComponent<PublicProperties>().width;
-                int height = obj.GetComponent<PublicProperties>().height;
-                Vector3 pos = GetTileBottomLetfPosition(obj, width, height);
+                //int width = obj.GetComponent<PublicProperties>().width;
+                //int height = obj.GetComponent<PublicProperties>().height;
+                //Vector3 pos = GetTileBottomLetfPosition(obj, width, height);
 
-                SetTileInfo(pos, tile.id, obj,tile.layer);
+                SetTileInfo(tile.position, tile.id, obj, tile.layer);
             }
         }
     }

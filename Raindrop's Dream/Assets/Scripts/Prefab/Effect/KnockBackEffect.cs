@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/********************************************************************************* 
+  *Author:AICHEN
+  *Date:  2018-7-13
+  *Description: 击退、弹开效果
+**********************************************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

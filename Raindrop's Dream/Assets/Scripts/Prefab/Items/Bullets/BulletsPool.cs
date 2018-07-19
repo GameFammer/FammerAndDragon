@@ -72,12 +72,12 @@ public class BulletsPool : MonoBehaviour
             int index = (currentIndexs[_bulletName] + i) % bullets[_bulletName].Count;
 
             //找到未被激活的返回
-            if (!bullets[_bulletName][currentIndexs[_bulletName]].activeInHierarchy)
+            if (!bullets[_bulletName][index].activeInHierarchy)
             {
                 //当前位置后移
                 currentIndexs[_bulletName] = (index + 1) % bullets[_bulletName].Count;
                 //返回当前找到的可用子弹
-                return bullets[_bulletName][currentIndexs[_bulletName]];
+                return bullets[_bulletName][index];
             }
         }
 
@@ -85,6 +85,7 @@ public class BulletsPool : MonoBehaviour
         if (!isLockPoolSize)
         {
             AddBulletToBulletsByName(_bulletName);
+            currentIndexs[_bulletName] = (bullets[_bulletName].Count + 1) % bullets[_bulletName].Count;
             //返回刚才添加的最后一枚子弹
             return bullets[_bulletName][bullets[_bulletName].Count - 1];
         }

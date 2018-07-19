@@ -3,11 +3,12 @@
   *Date:2018.7.16
   *Description:风力漩涡-减速区域-根据速度期望值动态设置减速区域力大小
 **********************************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoWindNegativeForce : MonoBehaviour
+public class AutoWindNegativeForce : MonoBehaviour, ISleepWakeUp
 {
     [Header("离开时速度期望值")]
     public float exitSpeed;
@@ -48,5 +49,14 @@ public class AutoWindNegativeForce : MonoBehaviour
             }
 
         }
+    }
+    public void Sleep()
+    {
+        GetComponent<AreaEffector2D>().enabled = false;
+    }
+
+    public void WakeUp()
+    {
+        GetComponent<AreaEffector2D>().enabled = true;
     }
 }
