@@ -24,11 +24,4 @@ public class WindProducer : MonoBehaviour,ISleepWakeUp
     {
         wind.SetActive(true);
     }
-    void OnTriggerExit2D(Collider2D _col)
-    {
-        if (_col.gameObject.tag == "Player")
-        {
-            _col.gameObject.GetComponent<PlayerAction>().ChangeStatus(PlayerStatus.Player_Normal);
-        }
-    }
 }

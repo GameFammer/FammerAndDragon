@@ -9,6 +9,8 @@ using System.Collections;
 using System;
 using UnityEngine;
 using RDUI;
+using Cinemachine;
+
 public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
 {
     private PlayerProperties properties;
@@ -21,6 +23,11 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
     private Rigidbody2D rb2d;//刚体
     private Animator animator;//动画控制器
     private SpriteRenderer renderer;//渲染器
+    private Transform cameraTarget;//相机跟随物
+
+    public Vector2 viewUpCameraPosition;//向上移动摄像机后位置
+    public Vector2 viewDownCameraPosition;//向下移动摄像机后位置
+
     private float headDistance = 0.2f;//小于0.2即可认为在撞头了
     private float groundDistance = 0.2f;//小于0.2即可认为在地面上
     private float moveHorizontal;//水平移动
@@ -41,7 +48,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
         animator = this.GetComponent<Animator>();
         renderer = this.GetComponent<SpriteRenderer>();
         properties = this.gameObject.GetComponent<PlayerProperties>();//玩家属性
-
+        cameraTarget = this.transform.Find("CameraTarget");
     }
 
     void FixedUpdate()
@@ -55,6 +62,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
         Move(moveHorizontal);
         Jump();
         Shoot();
+        MoveView();
         //test
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -185,7 +193,23 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
             finally { }
         }
     }
-
+    //移动视野
+    void MoveView()
+    {
+        float vertical=Input.GetAxis("Vertical");
+        if (vertical > 0)
+        {
+            cameraTarget.localPosition = viewUpCameraPosition;
+        }
+        else if (vertical < 0)
+        {
+            cameraTarget.localPosition = viewDownCameraPosition;
+        }
+        else
+        {
+            cameraTarget.localPosition = Vector3.zero;
+        }
+    }
     //根据按键时间控制跳跃速度（高度）
     IEnumerator JumpRoutine()
     {

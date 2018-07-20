@@ -67,8 +67,7 @@ public class LevelEditor : BasePage
 
     /*Object*/
     private Camera mainCamera;//主相机
-    public CinemachineVirtualCamera playerCamera;
-    public CinemachineVirtualCamera sceneCamera;
+    public CinemachineVirtualCamera sceneCamera;//场景相机
     public Transform sceneTarget;
     [Header("层级父对象")]
     public GameObject layerBackground;//最底层，例如背景等,对应Sorting Layer:Background
@@ -142,7 +141,6 @@ public class LevelEditor : BasePage
 
         //camera
         sceneCamera.enabled = true;
-        playerCamera.enabled = false;
     }
 
     // Update is called once per frame
@@ -222,7 +220,7 @@ public class LevelEditor : BasePage
                     sceneCamera.m_Lens.OrthographicSize = 0.5f;
                 }
             }
-            //未开始运行水平、竖直输入移动地图
+            //未开始运行水平、竖直输入移动相机Fllow
             if (!isPlaying && !EventSystem.current.IsPointerOverGameObject())
             {
                 sceneTarget.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * 5f, Input.GetAxis("Vertical") * Time.deltaTime * 5f, 0);
@@ -399,7 +397,6 @@ public class LevelEditor : BasePage
 
         //切换Camera
         sceneCamera.enabled = false;
-        playerCamera.enabled = true;
     }
     //结束测试按钮
     void OnStopButtonClick()
@@ -420,7 +417,6 @@ public class LevelEditor : BasePage
 
         //切换Camera
         sceneCamera.enabled = true;
-        playerCamera.enabled = false;
     }
     //保存按钮
     void OnSaveButtonClick()

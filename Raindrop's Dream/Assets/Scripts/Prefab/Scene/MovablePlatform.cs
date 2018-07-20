@@ -18,13 +18,17 @@ public class MovablePlatform : MonoBehaviour, ISleepWakeUp
     public float maxDistance;//最大移动距离
     [Header("停留时间")]
     public float anchorTime;//停留时间
+
     private Rigidbody2D rb2d;
+    private GameObject player;
     private Vector2 startPosition;//起始位置
     private float stopTime;//刚停止移动的时间
+
     // Use this for initialization
     void Start()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+        player = GameObject.Find("player");
         startPosition = transform.position;
     }
 
