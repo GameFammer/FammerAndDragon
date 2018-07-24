@@ -13,9 +13,9 @@ public class PublicDataManager : MonoBehaviour
 {
     //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance = null;
-    private Dictionary<int, ItemModel> itemModel;
-    private Dictionary<int, LevelModel> levelModel;
-    private Dictionary<int, SceneTileModel> sceneTileModel;
+    private Dictionary<string, ItemModel> itemModel;
+    private Dictionary<string, LevelModel> levelModel;
+    private Dictionary<string, SceneTileModel> sceneTileModel;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -39,8 +39,7 @@ public class PublicDataManager : MonoBehaviour
     {
         //在这初始化每个Dictionary
         /*level*/
-        InitLevelModel(ref levelModel, "Dev");
-        InitLevelModel(ref levelModel, "User");
+        InitFromCsv<LevelModel>(ref levelModel, "Level.csv");
 
         /*prefab*/
         InitFromCsv<SceneTileModel>(ref sceneTileModel, "SceneTile.csv");
@@ -49,33 +48,33 @@ public class PublicDataManager : MonoBehaviour
 
     }
     //初始化CSV表
-    private void InitFromCsv<T>(ref Dictionary<int, T> _dataModel, string _fileName)
+    private void InitFromCsv<T>(ref Dictionary<string, T> _dataModel, string _fileName)
     {
         _dataModel = LoadCsvData<T>(_fileName);
      
     }
-    //从文件初始化关卡信息(Level)
-    private void InitLevelModel(ref Dictionary<int, LevelModel> _levelModel, string _path)
-    {
-        if (_levelModel == null)
-        {
-            _levelModel = new Dictionary<int, LevelModel>();
-        }
-        RDFileStream.ReadLevelTable(ref _levelModel, _path);
-    }
+    ////从文件初始化关卡信息(Level)
+    //private void InitLevelModel(ref Dictionary<string, LevelModel> _levelModel, string _path)
+    //{
+    //    if (_levelModel == null)
+    //    {
+    //        _levelModel = new Dictionary<int, LevelModel>();
+    //    }
+    //    RDFileStream.ReadLevelTable(ref _levelModel, _path);
+    //}
 
     //从CSV表初始化Dictionary
-    private static Dictionary<int, T> LoadCsvData<T>(string _fileName)
+    private static Dictionary<string, T> LoadCsvData<T>(string _fileName)
     {
-        Dictionary<int, T> dic = new Dictionary<int, T>();
+        Dictionary<string, T> dic = new Dictionary<string, T>();
 
         /* 从CSV文件读取数据 */
         Dictionary<string, Dictionary<string, string>> result = RDFileStream.ReadCsvFile(_fileName);
         /* 遍历每一行数据 */
-        foreach (string id in result.Keys)
+        foreach (string name in result.Keys)
         {
             /* CSV的一行数据 */
-            Dictionary<string, string> datas = result[id];
+            Dictionary<string, string> datas = result[name];
 
             /* 读取Csv数据对象的属性 */
             PropertyInfo[] props = typeof(T).GetProperties();
@@ -86,63 +85,51 @@ public class PublicDataManager : MonoBehaviour
                 ReflectUtil.PiSetValue<T>(datas[p.Name], p, obj);
             }
 
-            /* 按id-数据的形式存储 */
-            dic[Convert.ToInt32(id)] = obj;
+            /* 按name-数据的形式存储 */
+            dic[name] = obj;
         }
 
         return dic;
     }
 
     /*Level*/
-    public LevelModel GetLevelModel(int _id)
+    public LevelModel GetLevelModel(string _name)
     {
-        return levelModel[_id];
+        return levelModel[_name];
     }
-    public Dictionary<int, LevelModel>.KeyCollection GetLevelModelKeys()
+    public Dictionary<string, LevelModel>.KeyCollection GetLevelModelKeys()
     {
         return levelModel.Keys;
     }
-    public int GetLevelModelMaxKey()
+    public string GetLevelName(string _name)
     {
-        int maxKey = 0;
-        foreach (int key in levelModel.Keys)
-        {
-            if (key > maxKey)
-            {
-                maxKey = key;
-            }
-        }
-        return maxKey;
+        return levelModel[_name].name;
     }
-    public string GetLevelName(int _id)
+    public string GetLevelFilePath(string _name)
     {
-        return levelModel[_id].name;
-    }
-    public string GetLevelFilePath(int _id)
-    {
-        return levelModel[_id].filePath;
+        return levelModel[_name].filePath;
     }
 
     /*SceneTile*/
-    public Dictionary<int, SceneTileModel>.KeyCollection GetSceneTileModelKeys()
+    public Dictionary<string, SceneTileModel>.KeyCollection GetSceneTileModelKeys()
     {
         return sceneTileModel.Keys;
     }
-    public SceneTileModel SceneTileModel(int _id)
+    public SceneTileModel SceneTileModel(string _name)
     {
-        return sceneTileModel[_id];
+        return sceneTileModel[_name];
     }
-    public string GetSceneTileName(int _id)
+    public string GetSceneTileName(string _name)
     {
-        return sceneTileModel[_id].name;
+        return sceneTileModel[_name].name;
     }
-    public int GetSceneTileType(int _id)
+    public int GetSceneTileType(string _name)
     {
-        return sceneTileModel[_id].type;
+        return sceneTileModel[_name].type;
     }
-    public string GetSceneTileLevelType(int _id)
+    public string GetSceneTileLevelType(string _name)
     {
-        return sceneTileModel[_id].levelType;
+        return sceneTileModel[_name].levelType;
     }
 
 }

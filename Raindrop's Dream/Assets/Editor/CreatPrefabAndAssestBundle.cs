@@ -43,13 +43,10 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
                         assestPathList.Add(prefabFullPath);
                         //创建CSV表-行
                         SceneTileModel row = new SceneTileModel();
-                        row.id = lastId + 1;
                         row.name = tile.name;
                         row.type = tile.gameObject.isStatic ? 1 : 2;
                         row.levelType = levelTheme.name;
                         sceneTileModelList.Add(row);
-                        //更新最后一个id
-                        lastId = row.id;
                     }
                 }
 

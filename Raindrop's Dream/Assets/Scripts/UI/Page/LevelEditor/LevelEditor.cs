@@ -59,9 +59,8 @@ public class LevelEditor : BasePage
     public GameObject LevelPanel;//已有level面板
 
     /*Data*/
-    private Dictionary<int, GameObject> tilePrefabs;//Tile预制体
-    private int nowTileId;//当前选中TileID
-    private int nowLevelId;//当前编辑关卡ID
+    private Dictionary<string, GameObject> tilePrefabs;//Tile预制体
+    private string nowTileName;//当前选中Tile名
     private string nowLevelName;//当前关卡名称
     private string nowMakerName;//当前关卡制作者名
 
@@ -119,7 +118,7 @@ public class LevelEditor : BasePage
     // Use this for initialization
     void Start()
     {
-        tilePrefabs = new Dictionary<int, GameObject>();
+        tilePrefabs = new Dictionary<string, GameObject>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerAction>().Sleep();
@@ -136,8 +135,8 @@ public class LevelEditor : BasePage
         //初始化已有Level列表按钮
         InitDownLevelButtons();
         nowLayer = LAYER_PLAYER;//默认Player层
-        nowTileId = -1;
-        nowLevelId = -1;
+        nowTileName = string.Empty;
+        nowLevelName = string.Empty;
 
         //camera
         sceneCamera.enabled = true;
@@ -195,7 +194,7 @@ public class LevelEditor : BasePage
                     Destroy(nowTileObject);
                     nowTileObject = null;
                     nowTileImage.GetComponent<Image>().sprite = null;
-                    nowTileId = -1;
+                    nowTileName ="";
                 }
                 Vector3Int pos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 if (IsValidPosition(pos))
@@ -287,7 +286,7 @@ public class LevelEditor : BasePage
     void InitTilePrefabs()
     {
         Dictionary<string, AssetBundle> assest = RDFileStream.ReadAllAssestBudle();
-        foreach (int key in PublicDataManager.instance.GetSceneTileModelKeys())
+        foreach (string key in PublicDataManager.instance.GetSceneTileModelKeys())
         {
             string levelType = PublicDataManager.instance.GetSceneTileLevelType(key);
             GameObject prefab = assest[levelType].LoadAsset<GameObject>(PublicDataManager.instance.GetSceneTileName(key));
@@ -305,7 +304,7 @@ public class LevelEditor : BasePage
         enemyPageBtn.onClick.AddListener(() => { SwitchTilePanel(TILE_ENEMY); });
 
         //SceneTile
-        foreach (int key in PublicDataManager.instance.GetSceneTileModelKeys())
+        foreach (string key in PublicDataManager.instance.GetSceneTileModelKeys())
         {
 
             GameObject btn = null;
@@ -333,11 +332,11 @@ public class LevelEditor : BasePage
     //初始化已有Level列表
     void InitDownLevelButtons()
     {
-        foreach (int key in PublicDataManager.instance.GetLevelModelKeys())
+        foreach (string key in PublicDataManager.instance.GetLevelModelKeys())
         {
             GameObject btn = Instantiate(levelButton, LevelPanel.transform);
             btn.name = PublicDataManager.instance.GetLevelName(key);
-            btn.GetComponent<Image>().sprite = LoadLevelImage(key);
+          //  btn.GetComponent<Image>().sprite = LoadLevelImage(key);
             btn.GetComponent<Button>().onClick.AddListener(() => { RefreshLevel(); LoadLevel(key); });
         }
 
@@ -424,7 +423,7 @@ public class LevelEditor : BasePage
         SaveLevel();
     }
     //tile按钮
-    void OnTileButtonClick(int _ID)
+    void OnTileButtonClick(string _name)
     {
         if (!isPlaying)
         {
@@ -432,8 +431,8 @@ public class LevelEditor : BasePage
             {
                 Destroy(nowTileObject);
             }
-            //设置当前ID
-            nowTileId = _ID;
+            //设置当前名
+            nowTileName = _name;
             //设置当前选中Tile图标
             nowTileImage.sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
             //创建tile
@@ -497,18 +496,18 @@ public class LevelEditor : BasePage
             nowTileObject.transform.SetParent(GetLayerObject(nowLayer).transform);
             nowTileObject.layer = GetLayerObject(nowLayer).layer;
 
-            SetTileInfo(_pos, nowTileId, nowTileObject, nowTileObject.layer);
+            SetTileInfo(_pos, nowTileName, nowTileObject, nowTileObject.layer);
 
             CreatTileObjectOnMousePosition();
         }
     }
     //设置Tile数据
-    void SetTileInfo(Vector3 _BottomLeftPos, int _id, GameObject _tileObject, int _layer)
+    void SetTileInfo(Vector3 _BottomLeftPos, string _name, GameObject _tileObject, int _layer)
     {
         int x = Mathf.RoundToInt(_BottomLeftPos.x);
         int y = Mathf.RoundToInt(_BottomLeftPos.y);
 
-        tileInfos[_layer][x, y].id = _id;
+        tileInfos[_layer][x, y].name = _name;
         tileInfos[_layer][x, y].isEmpty = false;
         tileInfos[_layer][x, y].position = _tileObject.transform.position;
         tileInfos[_layer][x, y].rotation = _tileObject.transform.rotation;
@@ -523,7 +522,7 @@ public class LevelEditor : BasePage
         nowTileObjectWidth = 1;
         nowTileObjectHeight = 1;
         mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        nowTileObject = Instantiate(tilePrefabs[nowTileId], new Vector3Int(mousePos.x, mousePos.y, 0), tilePrefabs[nowTileId].transform.rotation);
+        nowTileObject = Instantiate(tilePrefabs[nowTileName], new Vector3Int(mousePos.x, mousePos.y, 0), tilePrefabs[nowTileName].transform.rotation);
         if (nowTileObject.GetComponent<PublicProperties>())
         {
             nowTileObjectWidth = nowTileObject.GetComponent<PublicProperties>().width;
@@ -663,23 +662,19 @@ public class LevelEditor : BasePage
     public void SaveLevel()
     {
         nowLevelName = levelNameInputField.text;
-        if (nowLevelName == null)
+        if (nowLevelName == string.Empty)
         {
             //请输入关卡名
             return;
         }
         nowMakerName = makerNameInputField.text;
-        if (nowMakerName == null)
+        if (nowMakerName == string.Empty)
         {
             //请输入制作者名
             return;
         }
-        if (nowLevelId < 0)
-        {
-            nowLevelId = PublicDataManager.instance.GetLevelModelMaxKey() + 1;
-        }
         LevelInfo level = new LevelInfo();
-        level.id = nowLevelId;
+        level.name = nowLevelName;
         level.name = nowLevelName;
         level.producer = nowMakerName;
 
@@ -702,17 +697,17 @@ public class LevelEditor : BasePage
     }
 
     //从level文件读取Level
-    public void LoadLevel(int _levelId)
+    public void LoadLevel(string _levelName)
     {
-        LevelInfo level = RDFileStream.ReadLevelFile(_levelId);
+        LevelInfo level = RDFileStream.ReadLevelFile(_levelName);
         if (!level.IsEmpty())
         {
-            nowLevelId = level.id;
+            nowLevelName = level.name;
             levelNameInputField.GetComponent<InputField>().text = level.name;
             makerNameInputField.GetComponent<InputField>().text = level.producer;
             foreach (TileInfo tile in level.tiles)
             {
-                GameObject obj = Instantiate(tilePrefabs[tile.id], tile.position, tile.rotation);
+                GameObject obj = Instantiate(tilePrefabs[tile.name], tile.position, tile.rotation);
                 if (obj.GetComponent<Collider2D>())
                 {
                     obj.GetComponent<Collider2D>().enabled = false;
@@ -728,21 +723,21 @@ public class LevelEditor : BasePage
                 //int height = obj.GetComponent<PublicProperties>().height;
                 //Vector3 pos = GetTileBottomLetfPosition(obj, width, height);
 
-                SetTileInfo(tile.position, tile.id, obj, tile.layer);
+                SetTileInfo(tile.position, tile.name, obj, tile.layer);
             }
         }
     }
     //读取level封面
-    private Sprite LoadLevelImage(int _mapId)
-    {
-        WWW www = new WWW("file:///" + RDPlatform.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
-        if (www != null && string.IsNullOrEmpty(www.error))
-        {
-            return Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
-        }
-        else
-            return null;
-    }
+    //private Sprite LoadLevelImage(int _mapId)
+    //{
+    //    WWW www = new WWW("file:///" + RDPlatform.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
+    //    if (www != null && string.IsNullOrEmpty(www.error))
+    //    {
+    //        return Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
+    //    }
+    //    else
+    //        return null;
+    //}
     //自动保存
     IEnumerator AutoSave()
     {

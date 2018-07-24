@@ -12,5 +12,5 @@ using UnityEngine;
 
 public class CSVModel
 {
-    public int id { get; set; }
+    public string name { get; set; }
 }

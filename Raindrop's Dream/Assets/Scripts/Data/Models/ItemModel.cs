@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class ItemModel:CSVModel
 {
-    public string name { get; set; }//名字
     public string type { get; set; }//类型
     public string producer { get; set; }//制作者名
     public string description { get; set; }//描述

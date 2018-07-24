@@ -9,9 +9,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelModel :CSVModel
+public class LevelModel : CSVModel
 {
-    public string name { get; set; }//关卡名
+    public int type { get; set; }
     public string producer { get; set; }//制作者名
     public string filePath { get; set; }//关卡文件路径
     public string imagePath { get; set; }//关卡封面路径

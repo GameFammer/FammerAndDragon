@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TileInfo
 {
-    public int id;
+    public string name;
     public bool isEmpty = true;
     public Vector3 position;
     public Quaternion rotation;
@@ -13,15 +13,15 @@ public class TileInfo
     public GameObject tileObjcet = null;
     public TileInfo()
     {
-        id = -1;
+        name = string.Empty;
     }
-    public TileInfo(int _id)
+    public TileInfo(string _name)
     {
-        id = _id;
+        name = _name;
     }
     public void Reset()
     {
-        id = -1;
+        name = string.Empty;
         isEmpty = true;
         tileObjcet = null;
     }

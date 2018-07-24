@@ -81,7 +81,7 @@ public class RDFileStream
         }
     }
     //从文件读取LevelTable
-    public static void ReadLevelTable(ref Dictionary<int, LevelModel> _levelModel, string _path)
+    public static void ReadLevelTable(ref Dictionary<string, LevelModel> _levelModel, string _path)
     {
         string allPath = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "Level", _path });
         if (!Directory.Exists(allPath))
@@ -101,7 +101,6 @@ public class RDFileStream
                         if (level.Extension == ".level")
                         {
                             LevelModel t = new LevelModel();
-                            t.id = int.Parse(level.Name.Split('.')[0].Split('#')[1]);
                             //maker、level名在最后
                             t.name = level.Name.Split('.')[0];
                             t.producer = producer.Name;
@@ -109,7 +108,7 @@ public class RDFileStream
                             t.filePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, level.Name });
                             string imgName = level.Name.Split('.')[0] + ".png";
                             t.imagePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, imgName });
-                            _levelModel.Add(t.id, t);
+                            _levelModel.Add(t.name, t);
                         }
 
                     }
@@ -122,12 +121,12 @@ public class RDFileStream
         }
     }
     //读取Level文件
-    public static LevelInfo ReadLevelFile(int _levelId)
+    public static LevelInfo ReadLevelFile(string _levelName)
     {
         LevelInfo level = new LevelInfo();
         try
         {
-            string url = RDPlatform.SplitPath(new string[] { PublicDataManager.instance.GetLevelFilePath(_levelId) });
+            string url = RDPlatform.SplitPath(new string[] { PublicDataManager.instance.GetLevelFilePath(_levelName) });
             FileStream fs = new FileStream(url, FileMode.Open);
             StreamReader reader = new StreamReader(fs);
             level.id = int.Parse(reader.ReadLine());
@@ -139,7 +138,7 @@ public class RDFileStream
                 string[] tileInfos = tileInfoLine.Split('#');//以#分5段
 
                 TileInfo tile = new TileInfo();
-                tile.id = int.Parse(tileInfos[0]); //position以,分2段
+                tile.name = tileInfos[0]; //position以,分2段
                 string[] posInfo = tileInfos[1].Split(','); 
                 tile.position = new Vector3(float.Parse(posInfo[0]), float.Parse(posInfo[1]),0);
                 tile.rotation = new Quaternion(0f, 0f, float.Parse(tileInfos[2]), 0f);
@@ -177,7 +176,7 @@ public class RDFileStream
             writer.WriteLine(_level.producer);
             foreach (TileInfo tile in _level.tiles)
             {
-                writer.WriteLine(tile.id + "#" + tile.position.x + "," + tile.position.y + "#" +tile.rotation.z+"#"+tile.scale.x+","+tile.scale.y+"#"+tile.layer);
+                writer.WriteLine(tile.name + "#" + tile.position.x + "," + tile.position.y + "#" +tile.rotation.z+"#"+tile.scale.x+","+tile.scale.y+"#"+tile.layer);
             }
             writer.Close();
             fs.Close();
