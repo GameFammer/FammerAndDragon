@@ -346,11 +346,11 @@ MonoBehaviour:
   moveBasicSpeed: 5
   moveSpeed: 5
   gravityScale: 4
-  maxJumpSpeed: 5
+  maxJumpSpeed: 0
   maxJumpTime: 3
   shootSpan: 0.2
   invincibleTime: 0
-  canDoubleJump: 0
+  canDoubleJump: 1
   itemsMaxAmount: 5
 --- !u!114 &114512116186997918
 MonoBehaviour:

@@ -49,6 +49,8 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
         renderer = this.GetComponent<SpriteRenderer>();
         properties = this.gameObject.GetComponent<PlayerProperties>();//玩家属性
         cameraTarget = this.transform.Find("CameraTarget");
+
+        rb2d.gravityScale = properties.gravityScale;
     }
 
     void FixedUpdate()
@@ -137,9 +139,9 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
                 if (Input.GetButtonDown("Jump"))
                 {
                     //播放跳跃动画（暂时没有）
-
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, properties.maxJumpSpeed);
                     //开启协程控制速度
-                    StartCoroutine("JumpRoutine");
+                    StartCoroutine("JumpUpdate");
                 }
             }
             else
@@ -150,10 +152,10 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
                     if (Input.GetButtonDown("Jump") && !isDoubleJump)
                     {
                         //播放二段跳跃动画（暂时没有）
-
+                        rb2d.velocity = new Vector2(rb2d.velocity.x, properties.maxJumpSpeed);
                         //开启协程控制速度
                         isDoubleJump = true;
-                        StartCoroutine("JumpRoutine");
+                        StartCoroutine("JumpUpdate");
                     }
                 }
             }
@@ -211,7 +213,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
         }
     }
     //根据按键时间控制跳跃速度（高度）
-    IEnumerator JumpRoutine()
+    IEnumerator JumpUpdate()
     {
         float timer = 0f,jumpSpeed = 0f;
         while (Input.GetButton("Jump") && timer < properties.maxJumpTime)

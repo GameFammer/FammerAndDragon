@@ -3479,7 +3479,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1468632585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.84563, y: 0.011827946, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 29351189}
@@ -3788,7 +3788,37 @@ Prefab:
       propertyPath: canDoubleJump
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114683614588833028, guid: 6291a83cd784e4bc2a4827aa4d090694,
+        type: 2}
+      propertyPath: maxJumpSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242999446901056, guid: 6291a83cd784e4bc2a4827aa4d090694, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.581281
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304069761534932, guid: 6291a83cd784e4bc2a4827aa4d090694,
+        type: 2}
+      propertyPath: gravityScale
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304069761534932, guid: 6291a83cd784e4bc2a4827aa4d090694,
+        type: 2}
+      propertyPath: maxJumpTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114683614588833028, guid: 6291a83cd784e4bc2a4827aa4d090694,
+        type: 2}
+      propertyPath: gravityScale
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114683614588833028, guid: 6291a83cd784e4bc2a4827aa4d090694,
+        type: 2}
+      propertyPath: maxJumpTime
+      value: 0.45
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114304069761534932, guid: 6291a83cd784e4bc2a4827aa4d090694, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6291a83cd784e4bc2a4827aa4d090694, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1854799008
