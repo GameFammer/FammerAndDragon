@@ -63,4 +63,12 @@ public class PlayerProperties: PublicProperties
     {
         equipments.Add("Weapon", "WatterBullet");
     }
+    public override EditorProperty[] GetEditorProperties()
+    {
+        return base.GetEditorProperties();
+    }
+    public override void SetEditorProperty(EditorProperty _property)
+    {
+        this.GetType().GetProperty(_property.name).SetValue(this, _property.value, null);
+    }
 }

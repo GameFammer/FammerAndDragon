@@ -51,7 +51,7 @@ public class RDFileStream
             foreach (CSVModel tableRow in _rowObject)
             {
                 PropertyInfo[] props = tableRow.GetType().GetProperties();
-                //ID在props最后一个，先处理
+                //Name在props最后一个，先处理
                 string row = props[props.Length - 1].GetValue(tableRow, null) == null ? "" : props[props.Length - 1].GetValue(tableRow, null).ToString() + ",";
                 for (int i = 0; i < props.Length - 1; i++)
                 {

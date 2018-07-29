@@ -523,7 +523,7 @@ public class LevelEditor : BasePage
         nowTileObjectHeight = 1;
         mousePos = Vector3Int.RoundToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         nowTileObject = Instantiate(tilePrefabs[nowTileName], new Vector3Int(mousePos.x, mousePos.y, 0), tilePrefabs[nowTileName].transform.rotation);
-        if (nowTileObject.GetComponent<PublicProperties>())
+        if (nowTileObject.GetComponent<PublicProperties>()!=null)
         {
             nowTileObjectWidth = nowTileObject.GetComponent<PublicProperties>().width;
             nowTileObjectHeight = nowTileObject.GetComponent<PublicProperties>().height;
@@ -606,9 +606,9 @@ public class LevelEditor : BasePage
             {
                 t.GetComponent<Collider2D>().enabled = true;
             }
-            if (t.GetComponent<ISleepWakeUp>() != null)
+            if (t.GetComponent<ILevelEditor>() != null)
             {
-                t.GetComponent<ISleepWakeUp>().WakeUp();
+                t.GetComponent<ILevelEditor>().WakeUp();
             }
         }
     }
@@ -621,9 +621,9 @@ public class LevelEditor : BasePage
             {
                 t.GetComponent<Collider2D>().enabled = false;
             }
-            if (t.GetComponent<ISleepWakeUp>() != null)
+            if (t.GetComponent<ILevelEditor>() != null)
             {
-                t.GetComponent<ISleepWakeUp>().Sleep();
+                t.GetComponent<ILevelEditor>().Sleep();
             }
         }
     }
@@ -712,9 +712,9 @@ public class LevelEditor : BasePage
                 {
                     obj.GetComponent<Collider2D>().enabled = false;
                 }
-                if (obj.GetComponent<ISleepWakeUp>()!=null)
+                if (obj.GetComponent<ILevelEditor>()!=null)
                 {
-                    obj.GetComponent<ISleepWakeUp>().Sleep();
+                    obj.GetComponent<ILevelEditor>().Sleep();
                 }
                 obj.transform.localScale = tile.scale;
                 obj.transform.SetParent(GetLayerObject(tile.layer).transform);

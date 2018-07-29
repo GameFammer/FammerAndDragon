@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovablePlatform : MonoBehaviour, ISleepWakeUp
+public class MovablePlatform : MonoBehaviour
 {
     [Header("默认循环移动")]
     public bool isLoop = true;//是否循环移动
@@ -23,7 +23,7 @@ public class MovablePlatform : MonoBehaviour, ISleepWakeUp
     private GameObject player;
     private Vector2 startPosition;//起始位置
     private float stopTime;//刚停止移动的时间
-
+    private PublicProperties properties;
     // Use this for initialization
     void Start()
     {

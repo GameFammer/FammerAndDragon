@@ -10,8 +10,9 @@ using System;
 using UnityEngine;
 using RDUI;
 using Cinemachine;
+using System.Reflection;
 
-public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
+public class PlayerAction : MonoBehaviour, IBeHitMessage, ILevelEditor
 {
     private PlayerProperties properties;
 
@@ -51,6 +52,13 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
         cameraTarget = this.transform.Find("CameraTarget");
 
         rb2d.gravityScale = properties.gravityScale;
+
+        EditorProperty[] p = GetProperties();
+        EditorProperty a;
+        a.name = "HpCurrentValue";
+        a.value = 1;
+        SetProperty(a);
+        Debug.Log(properties.HpCurrentValue);
     }
 
     void FixedUpdate()
@@ -265,7 +273,14 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ISleepWakeUp
             transform.position = entrannce.transform.position;
         }
     }
+    public EditorProperty[] GetEditorProperties()
+    {
+        return properties.GetEditorProperties();
+    }
+    public void SetEditorProperty(EditorProperty _property)
+    {
 
+    }
     public void Sleep()
     {
 
