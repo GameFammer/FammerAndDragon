@@ -1,8 +1,8 @@
 # Raindrop's Dream
 A roguelike game made by NUWCA
 
-## 环境
-unity 2018.2
+## 开发环境
+unity 2018.2    
 vs 2017
 
 ## 脚本目录
