@@ -2,7 +2,7 @@
 A roguelike game made by NUWCA
 
 ## 开发环境
-Unity 2018.2.1    
+Unity 2018.2.1f1    
 Visual Studio 2017
 
 ## 脚本
