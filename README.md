@@ -5,7 +5,7 @@ A roguelike game made by NUWCA
 unity 2018.2    
 vs 2017
 
-## 脚本目录
+## 脚本
 
 ```
 Scripts/
