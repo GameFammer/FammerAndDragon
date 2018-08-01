@@ -12,7 +12,7 @@ using RDUI;
 using Cinemachine;
 using System.Reflection;
 
-public class PlayerAction : MonoBehaviour, IBeHitMessage, ILevelEditor
+public class PlayerAction : MonoBehaviour, IBeHitMessage
 {
     private PlayerProperties properties;
 
@@ -52,13 +52,6 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ILevelEditor
         cameraTarget = this.transform.Find("CameraTarget");
 
         rb2d.gravityScale = properties.gravityScale;
-
-        EditorProperty[] p = GetProperties();
-        EditorProperty a;
-        a.name = "HpCurrentValue";
-        a.value = 1;
-        SetProperty(a);
-        Debug.Log(properties.HpCurrentValue);
     }
 
     void FixedUpdate()
@@ -73,37 +66,6 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage, ILevelEditor
         Jump();
         Shoot();
         MoveView();
-        //test
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (properties.HpCurrentValue > 0)
-                properties.HpCurrentValue -= 1;
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (properties.HpCurrentValue < properties.HpMaxValue)
-                properties.HpCurrentValue += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (properties.HpMaxValue < PlayerProperties.HP_MaxLimit_Value)
-                properties.HpMaxValue += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            if (properties.HpMaxValue > 0)
-                properties.HpMaxValue -= 1;
-        }
-    }
-    //应用状态效果
-    void ApplyStatus()
-    {
-        switch(properties.status)
-        {
-            case PlayerStatus.Player_Normal:rb2d.gravityScale = properties.gravityScale; break;
-            case PlayerStatus.Player_Weightlessness:rb2d.gravityScale = 0; break;
-            default:break;
-        }
     }
     //移动
     void Move(float _h)

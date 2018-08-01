@@ -9,9 +9,9 @@ namespace RDUI
     }
     public delegate void UIMessageDelegate(object _args);
 
-    public class UIDelegateManager
+    public static class UIDelegateManager
     {
-        public static Dictionary<UIMessageType, UIMessageDelegate> messageDelegates = new Dictionary<UIMessageType, UIMessageDelegate>();
+        private static Dictionary<UIMessageType, UIMessageDelegate> messageDelegates = new Dictionary<UIMessageType, UIMessageDelegate>();
         public static void NotifyUI(UIMessageType _messageType, int _value)
         {
             if (messageDelegates.ContainsKey(_messageType))

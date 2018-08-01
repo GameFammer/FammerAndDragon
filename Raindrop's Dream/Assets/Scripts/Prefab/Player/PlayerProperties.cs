@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RDUI;
-public enum PlayerStatus
-{
-    Player_Normal,
-    Player_CanntJump,
-    Player_CanntMove,
-    Player_Weightlessness //失重
-}
 public class PlayerProperties: PublicProperties
 {
 
-    public PlayerStatus status= PlayerStatus.Player_Normal;
     public const int HP_MaxLimit_Value = 8;//血量上限最大值
     [SerializeField]
     private int hpMaxValue;//血量上限

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PageCollection
+public static class PageCollection
 {
     public static string MapEditor = "MapEditor";
 }
