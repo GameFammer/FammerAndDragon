@@ -1,5 +1,4 @@
-# Raindrop's Dream
-A roguelike game made by NUWCA
+# Fammer And Dragon
 
 ## 开发环境
 Unity 2018.2.1f1    
