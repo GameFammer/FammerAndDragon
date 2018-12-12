@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using Cinemachine.Utility;
 using System.Collections.Generic;
@@ -77,9 +77,9 @@ namespace Cinemachine.Editor
         protected virtual void OnEnable()
         {
             mScreenGuideEditor = new CinemachineScreenComposerGuides();
-            mScreenGuideEditor.GetHardGuide = () => { return Target.HardGuideRect; };
+            mScreenGuideEditor.GetHaFDGuide = () => { return Target.HaFDGuideRect; };
             mScreenGuideEditor.GetSoftGuide = () => { return Target.SoftGuideRect; };
-            mScreenGuideEditor.SetHardGuide = (Rect r) => { Target.HardGuideRect = r; };
+            mScreenGuideEditor.SetHaFDGuide = (Rect r) => { Target.HaFDGuideRect = r; };
             mScreenGuideEditor.SetSoftGuide = (Rect r) => { Target.SoftGuideRect = r; };
             mScreenGuideEditor.Target = () => { return serializedObject; };
 
@@ -107,12 +107,12 @@ namespace Cinemachine.Editor
                     MessageType.Warning);
 
             // First snapshot some settings
-            Rect oldHard = Target.HardGuideRect;
+            Rect oldHaFD = Target.HaFDGuideRect;
             Rect oldSoft = Target.SoftGuideRect;
 
             // Draw the properties
             DrawRemainingPropertiesInInspector();
-            mScreenGuideEditor.SetNewBounds(oldHard, oldSoft, Target.HardGuideRect, Target.SoftGuideRect);
+            mScreenGuideEditor.SetNewBounds(oldHaFD, oldSoft, Target.HaFDGuideRect, Target.SoftGuideRect);
         }
 
         protected virtual void OnGUI()

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using Cinemachine.Utility;
 
@@ -8,7 +8,7 @@ namespace Cinemachine
     /// each of which has position and roll settings.  Bezier interpolation
     /// is performed between the waypoints, to get a smooth and continuous path.
     /// The path will pass through all waypoints, and (unlike CinemachinePath) first 
-    /// and second order continuity is guaranteed</summary>
+    /// and second oFDer continuity is guaranteed</summary>
     [DocumentationSorting(18.5f, DocumentationSortingAttribute.Level.UserRef)]
     [AddComponentMenu("Cinemachine/CinemachineSmoothPath")]
     [SaveDuringPlay]

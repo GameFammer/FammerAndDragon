@@ -1,4 +1,4 @@
-using Cinemachine.Utility;
+﻿using Cinemachine.Utility;
 using UnityEngine;
 
 namespace Cinemachine

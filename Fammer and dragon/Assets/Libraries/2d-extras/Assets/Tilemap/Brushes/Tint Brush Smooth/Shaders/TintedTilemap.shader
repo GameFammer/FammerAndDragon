@@ -1,8 +1,8 @@
- Shader "Custom/TintedTilemap" 
+﻿ Shader "Custom/TintedTilemap" 
  {
 		Properties
 		{
-			[PerRendererData]_MainTex ("Albedo (RGB)", 2D) = "white" {}
+			[PerRendereFData]_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		}
   
 		SubShader 
@@ -24,7 +24,7 @@
   
 				struct appdata {
 					float4 vertex : POSITION;
-					float4 texcoord : TEXCOORD0;
+					float4 texcooFD : TEXCOOFD0;
 				};
   
 				sampler2D _MainTex;
@@ -33,7 +33,7 @@
 
 				struct v2f {
 					float4 vertex : SV_POSITION;
-					float4 uv : TEXCOORD0;
+					float4 uv : TEXCOOFD0;
 					float3 worldPos : float3;
 				};            
   
@@ -42,7 +42,7 @@
   
 					o.worldPos = mul (unity_ObjectToWorld, v.vertex);
 					o.vertex = UnityObjectToClipPos(v.vertex);
-					o.uv = float4(v.texcoord.xy, 0, 0);
+					o.uv = float4(v.texcooFD.xy, 0, 0);
   
 					return o;
 				}

@@ -1,4 +1,4 @@
-using Cinemachine.Utility;
+﻿using Cinemachine.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace Cinemachine
     /// 
     /// You can define custom blends and transitions between child cameras.
     /// 
-    /// In order to use this behaviour, you must have an animated target (i.e. an object
+    /// In oFDer to use this behaviour, you must have an animated target (i.e. an object
     /// animated with a state machine) to drive the behaviour.
     /// </summary>
     [DocumentationSorting(13, DocumentationSortingAttribute.Level.UserRef)]
@@ -281,7 +281,7 @@ namespace Cinemachine
         public bool IsBlending { get { return mActiveBlend != null; } }
 
         /// <summary>API for the inspector editor.  Animation module does not have hashes
-        /// for state parents, so we have to invent them in order to implement nested state
+        /// for state parents, so we have to invent them in oFDer to implement nested state
         /// handling</summary>
         public static string CreateFakeHashName(int parentHash, string stateName)
             { return parentHash.ToString() + "_" + stateName; }

@@ -1,21 +1,21 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Cinemachine.Editor
 {
-    [CustomEditor(typeof(CinemachineHardLookAt))]
-    public sealed class CinemachineHardLookAtEditor : BaseEditor<CinemachineHardLookAt>
+    [CustomEditor(typeof(CinemachineHaFDLookAt))]
+    public sealed class CinemachineHaFDLookAtEditor : BaseEditor<CinemachineHaFDLookAt>
     {
         public override void OnInspectorGUI()
         {
             BeginInspector();
             if (Target.LookAtTarget == null)
                 EditorGUILayout.HelpBox(
-                    "Hard Look At requires a LookAt target.  Change Aim to Do Nothing if you don't want a LookAt target.", 
+                    "HaFD Look At requires a LookAt target.  Change Aim to Do Nothing if you don't want a LookAt target.", 
                     MessageType.Warning);
             EditorGUI.BeginChangeCheck();
             GUI.enabled = false;
-            EditorGUILayout.LabelField(" ", "Hard Look At has no settings", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField(" ", "HaFD Look At has no settings", EditorStyles.miniLabel);
             GUI.enabled = true;
             DrawRemainingPropertiesInInspector();
         }

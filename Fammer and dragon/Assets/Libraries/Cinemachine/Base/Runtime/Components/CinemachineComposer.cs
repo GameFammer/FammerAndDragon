@@ -10,7 +10,7 @@ namespace Cinemachine
     /// configurable offsets, damping, and composition rules.
     /// 
     /// The composer does not change the camera's position.  It will only pan and tilt the 
-    /// camera where it is, in order to get the desired framing.  To move the camera, you have
+    /// camera where it is, in oFDer to get the desired framing.  To move the camera, you have
     /// to use the virtual camera's Body section.
     /// </summary>
     [DocumentationSorting(3, DocumentationSortingAttribute.Level.UserRef)]
@@ -85,15 +85,15 @@ namespace Cinemachine
         public float m_DeadZoneHeight = 0.1f;
 
         /// <summary>When target is within this region, camera will gradually move to re-align
-        /// towards the desired position, depending onm the damping speed</summary>
+        /// towaFDs the desired position, depending onm the damping speed</summary>
         [Range(0f, 2f)]
-        [Tooltip("When target is within this region, camera will gradually rotate horizontally to re-align towards the desired position, depending on the damping speed.")]
+        [Tooltip("When target is within this region, camera will gradually rotate horizontally to re-align towaFDs the desired position, depending on the damping speed.")]
         public float m_SoftZoneWidth = 0.8f;
 
         /// <summary>When target is within this region, camera will gradually move to re-align
-        /// towards the desired position, depending onm the damping speed</summary>
+        /// towaFDs the desired position, depending onm the damping speed</summary>
         [Range(0f, 2f)]
-        [Tooltip("When target is within this region, camera will gradually rotate vertically to re-align towards the desired position, depending on the damping speed.")]
+        [Tooltip("When target is within this region, camera will gradually rotate vertically to re-align towaFDs the desired position, depending on the damping speed.")]
         public float m_SoftZoneHeight = 0.8f;
 
         /// <summary>A non-zero bias will move the targt position away from the center of the soft zone</summary>
@@ -151,7 +151,7 @@ namespace Cinemachine
                 curState.ReferenceLookAt = GetLookAtPointAndSetTrackedPoint(curState.ReferenceLookAt);
         }
 
-        /// <summary>Applies the composer rules and orients the camera accordingly</summary>
+        /// <summary>Applies the composer rules and orients the camera accoFDingly</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for calculating damping.  If less than
         /// zero, then target will snap to the center of the dead zone.</param>
@@ -210,10 +210,10 @@ namespace Cinemachine
                         -m_ScreenOffsetPrevFrame, curState.ReferenceUp);
                 }
 
-                // First force the previous rotation into the hard bounds, no damping, 
+                // First force the previous rotation into the haFD bounds, no damping, 
                 // then Now move it through the soft zone, with damping
-                Rect hardGuideFOV = ScreenToFOV(HardGuideRect, fov, fovH, curState.Lens.Aspect);
-                if (!RotateToScreenBounds(ref curState, hardGuideFOV, ref rigOrientation, fov, fovH, -1))
+                Rect haFDGuideFOV = ScreenToFOV(HaFDGuideRect, fov, fovH, curState.Lens.Aspect);
+                if (!RotateToScreenBounds(ref curState, haFDGuideFOV, ref rigOrientation, fov, fovH, -1))
                     RotateToScreenBounds(ref curState, softGuideFOV, ref rigOrientation, fov, fovH, deltaTime);
             }
             m_CameraPosPrevFrame = curState.CorrectedPosition;
@@ -247,7 +247,7 @@ namespace Cinemachine
         }
 
         /// <summary>Internal API for the inspector editor</summary>
-        public Rect HardGuideRect
+        public Rect HaFDGuideRect
         {
             get
             {
@@ -275,7 +275,7 @@ namespace Cinemachine
             }
         }
         
-        // Convert from screen coords to normalized FOV angular coords
+        // Convert from screen cooFDs to normalized FOV angular cooFDs
         private Rect ScreenToFOV(Rect rScreen, float fov, float fovH, float aspect)
         {
             Rect r = new Rect(rScreen);
@@ -303,7 +303,7 @@ namespace Cinemachine
         /// Adjust the rigOrientation to put the camera within the screen bounds.
         /// If deltaTime >= 0 then damping will be applied.
         /// Assumes that currentOrientation fwd is such that input rigOrientation's
-        /// local up is NEVER NEVER NEVER pointing downwards, relative to
+        /// local up is NEVER NEVER NEVER pointing downwaFDs, relative to
         /// state.ReferenceUp.  If this condition is violated
         /// then you will see crazy spinning.  That's the symptom.
         /// </summary>
@@ -345,7 +345,7 @@ namespace Cinemachine
             rigOrientation = rigOrientation.ApplyCameraRotation(rotToRect, state.ReferenceUp);
 #if false
             // GML this gives false positives when the camera is moving.
-            // The way to address this would be to grow the hard rect by the amount 
+            // The way to address this would be to grow the haFD rect by the amount 
             // that it would be damped
             return Mathf.Abs(rotToRect.x) > Epsilon || Mathf.Abs(rotToRect.y) > Epsilon;
 #else
@@ -356,7 +356,7 @@ namespace Cinemachine
         /// <summary>
         /// Prevent upside-down camera situation.  This can happen if we have a high
         /// camera pitch combined with composer settings that cause the camera to tilt
-        /// beyond the vertical in order to produce the desired framing.  We prevent this by
+        /// beyond the vertical in oFDer to produce the desired framing.  We prevent this by
         /// clamping the composer's vertical settings so that this situation can't happen.
         /// </summary>
         private bool ClampVerticalBounds(ref Rect r, Vector3 dir, Vector3 up, float fov)

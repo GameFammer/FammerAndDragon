@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RDPlatform
+public class FDPlatform
 {
     public static string DATA_PATH
     {

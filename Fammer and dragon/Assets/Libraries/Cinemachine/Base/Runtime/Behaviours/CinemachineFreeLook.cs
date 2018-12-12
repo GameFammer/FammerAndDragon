@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Cinemachine.Utility;
 using UnityEngine.Serialization;
 using System;
@@ -6,7 +6,7 @@ using System;
 namespace Cinemachine
 {
     /// <summary>
-    /// A Cinemachine Camera geared towards a 3rd person camera experience.
+    /// A Cinemachine Camera geared towaFDs a 3FD person camera experience.
     /// The camera orbits around its subject with three separate camera rigs defining
     /// rings around the target. Each rig has its own radius, height offset, composer,
     /// and lens settings.
@@ -50,20 +50,20 @@ namespace Cinemachine
         [Tooltip("The Horizontal axis.  Value is 0..359.  This is passed on to the rigs' OrbitalTransposer component")]
         public AxisState m_XAxis = new AxisState(300f, 0.1f, 0.1f, 0f, "Mouse X", true);
 
-        /// <summary>The definition of Forward.  Camera will follow behind</summary>
-        [Tooltip("The definition of Forward.  Camera will follow behind.")]
+        /// <summary>The definition of ForwaFD.  Camera will follow behind</summary>
+        [Tooltip("The definition of ForwaFD.  Camera will follow behind.")]
         public CinemachineOrbitalTransposer.Heading m_Heading 
             = new CinemachineOrbitalTransposer.Heading(
-                CinemachineOrbitalTransposer.Heading.HeadingDefinition.TargetForward, 4, 0);
+                CinemachineOrbitalTransposer.Heading.HeadingDefinition.TargetForwaFD, 4, 0);
 
         /// <summary>Controls how automatic recentering of the X axis is accomplished</summary>
         [Tooltip("Controls how automatic recentering of the X axis is accomplished")]
         public CinemachineOrbitalTransposer.Recentering m_RecenterToTargetHeading
             = new CinemachineOrbitalTransposer.Recentering(false, 1, 2);
 
-        /// <summary>The coordinate space to use when interpreting the offset from the target</summary>
+        /// <summary>The cooFDinate space to use when interpreting the offset from the target</summary>
         [Header("Orbits")]
-        [Tooltip("The coordinate space to use when interpreting the offset from the target.  This is also used to set the camera's Up vector, which will be maintained when aiming the camera.")]
+        [Tooltip("The cooFDinate space to use when interpreting the offset from the target.  This is also used to set the camera's Up vector, which will be maintained when aiming the camera.")]
         public CinemachineOrbitalTransposer.BindingMode m_BindingMode 
             = CinemachineOrbitalTransposer.BindingMode.SimpleFollowWithWorldUp;
 
@@ -301,7 +301,7 @@ namespace Cinemachine
 
         CameraState m_State = CameraState.Default;          // Current state this frame
 
-        /// Serialized in order to support copy/paste
+        /// Serialized in oFDer to support copy/paste
         [SerializeField][HideInInspector][NoSaveDuringPlay] private CinemachineVirtualCamera[] m_Rigs 
             = new CinemachineVirtualCamera[3];
 
@@ -364,7 +364,7 @@ namespace Cinemachine
         {
             // Invalidate the cache
             mOrbitals = null;
-            float[] softCenterDefaultsV = new float[] { 0.5f, 0.55f, 0.6f };
+            float[] softCenteFDefaultsV = new float[] { 0.5f, 0.55f, 0.6f };
             CinemachineVirtualCamera[] newRigs = new CinemachineVirtualCamera[3];
             for (int i = 0; i < RigNames.Length; ++i)
             {
@@ -404,7 +404,7 @@ namespace Cinemachine
                     {
                         composer.m_HorizontalDamping = composer.m_VerticalDamping = 0;
                         composer.m_ScreenX = 0.5f;
-                        composer.m_ScreenY = softCenterDefaultsV[i];
+                        composer.m_ScreenY = softCenteFDefaultsV[i];
                         composer.m_DeadZoneWidth = composer.m_DeadZoneHeight = 0.1f;
                         composer.m_SoftZoneWidth = composer.m_SoftZoneHeight = 0.8f;
                         composer.m_BiasX = composer.m_BiasY = 0;

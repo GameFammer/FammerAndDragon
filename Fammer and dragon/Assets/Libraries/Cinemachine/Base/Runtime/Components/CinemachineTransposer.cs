@@ -1,4 +1,4 @@
-using Cinemachine.Utility;
+﻿using Cinemachine.Utility;
 using UnityEngine;
 
 namespace Cinemachine
@@ -19,7 +19,7 @@ namespace Cinemachine
     public class CinemachineTransposer : CinemachineComponentBase
     {
         /// <summary>
-        /// The coordinate space to use when interpreting the offset from the target
+        /// The cooFDinate space to use when interpreting the offset from the target
         /// </summary>
         [DocumentationSorting(5.01f, DocumentationSortingAttribute.Level.UserRef)]
         public enum BindingMode
@@ -49,8 +49,8 @@ namespace Cinemachine
             /// <summary>Offsets will be calculated relative to the target, using Camera-local axes</summary>
             SimpleFollowWithWorldUp = 5
         }
-        /// <summary>The coordinate space to use when interpreting the offset from the target</summary>
-        [Tooltip("The coordinate space to use when interpreting the offset from the target.  This is also used to set the camera's Up vector, which will be maintained when aiming the camera.")]
+        /// <summary>The cooFDinate space to use when interpreting the offset from the target</summary>
+        [Tooltip("The cooFDinate space to use when interpreting the offset from the target.  This is also used to set the camera's Up vector, which will be maintained when aiming the camera.")]
         public BindingMode m_BindingMode = BindingMode.LockToTargetWithWorldUp;
 
         /// <summary>The distance which the transposer will attempt to maintain from the transposer subject</summary>
@@ -126,7 +126,7 @@ namespace Cinemachine
         /// Always returns the Body stage</summary>
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Body; } }
 
-        /// <summary>Positions the virtual camera according to the transposer rules.</summary>
+        /// <summary>Positions the virtual camera accoFDing to the transposer rules.</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for damping.  If less than 0, no damping is done.</param>
         public override void MutateCameraState(ref CameraState curState, float deltaTime)
@@ -173,7 +173,7 @@ namespace Cinemachine
             }
         }
 
-        /// <summary>Positions the virtual camera according to the transposer rules.</summary>
+        /// <summary>Positions the virtual camera accoFDing to the transposer rules.</summary>
         /// <param name="deltaTime">Used for damping.  If less than 0, no damping is done.</param>
         /// <param name="up">Current camera up</param>
         /// <param name="desiredCameraOffset">Where we want to put the camera relative to the follow target</param>
@@ -192,7 +192,7 @@ namespace Cinemachine
                 for (int i = 0; i < 3; ++i)
                     if (relative[i] > 180)
                         relative[i] -= 360;
-                relative = Damper.Damp(relative, AngularDamping, deltaTime);
+                relative = Damper.Damp(relative, AngulaFDamping, deltaTime);
                 dampedOrientation = m_PreviousReferenceOrientation * Quaternion.Euler(relative);
             }
             m_PreviousReferenceOrientation = dampedOrientation;
@@ -201,7 +201,7 @@ namespace Cinemachine
             Vector3 currentPosition = m_PreviousTargetPosition;
             Vector3 worldOffset = targetPosition - currentPosition;
 
-            // Adjust for damping, which is done in camera-offset-local coords
+            // Adjust for damping, which is done in camera-offset-local cooFDs
             if (deltaTime >= 0)
             {
                 Quaternion dampingSpace;
@@ -237,7 +237,7 @@ namespace Cinemachine
         /// <summary>
         /// Damping speeds for each of the 3 axes of the target's rotation
         /// </summary>
-        protected Vector3 AngularDamping
+        protected Vector3 AngulaFDamping
         {
             get 
             { 

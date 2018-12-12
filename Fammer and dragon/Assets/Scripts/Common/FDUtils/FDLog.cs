@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using UnityEngine;
 
-public class RDLog : MonoBehaviour
+public class FDLog : MonoBehaviour
 {
     public int showLogNum;//显示日志条数
     private List<string> logList;

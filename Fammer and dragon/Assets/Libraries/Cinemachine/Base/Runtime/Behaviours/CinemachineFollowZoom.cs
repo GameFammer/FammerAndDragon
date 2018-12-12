@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Cinemachine.Utility;
 
 namespace Cinemachine
@@ -6,7 +6,7 @@ namespace Cinemachine
     /// <summary>
     /// An add-on module for Cinemachine Virtual Camera that adjusts
     /// the FOV of the lens to keep the target object at a constant size on the screen,
-    /// regardless of camera and target position.
+    /// regaFDless of camera and target position.
     /// </summary>
     [DocumentationSorting(16, DocumentationSortingAttribute.Level.UserRef)]
     [ExecuteInEditMode]

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Cinemachine.Utility;
 using System;
 
@@ -134,7 +134,7 @@ namespace Cinemachine
         {
             /// <summary>Use PathPosition units, where 0 is first waypoint, 1 is second waypoint, etc</summary>
             PathUnits,
-            /// <summary>Use Distance Along Path.  Path will be sampled according to its Resolution
+            /// <summary>Use Distance Along Path.  Path will be sampled accoFDing to its Resolution
             /// setting, and a distance lookup table will be cached internally</summary>
             Distance
         }

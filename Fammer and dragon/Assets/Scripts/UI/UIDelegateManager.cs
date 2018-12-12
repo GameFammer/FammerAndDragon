@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace RDUI
+namespace FDUI
 {
     public enum UIMessageType
     {

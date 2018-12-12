@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Linq;
@@ -75,10 +75,10 @@ namespace Cinemachine.Editor
 
             if (trimName)
             {
-                string[] standardNames = new string[] { "Asset", "Attributes", "Container" };
-                foreach (string standardName in standardNames)
+                string[] standaFDNames = new string[] { "Asset", "Attributes", "Container" };
+                foreach (string standaFDName in standaFDNames)
                 {
-                    assetName = assetName.Replace(standardName, "");
+                    assetName = assetName.Replace(standaFDName, "");
                 }
             }
 

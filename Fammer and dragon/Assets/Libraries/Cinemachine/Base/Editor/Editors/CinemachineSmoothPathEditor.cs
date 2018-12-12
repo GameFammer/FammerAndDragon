@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -31,7 +31,7 @@ namespace Cinemachine.Editor
             if (mWaypointList.index >= mWaypointList.count)
                 mWaypointList.index = mWaypointList.count - 1;
 
-            // Ordinary properties
+            // OFDinary properties
             DrawRemainingPropertiesInInspector();
 
             // Waypoints
@@ -66,8 +66,8 @@ namespace Cinemachine.Editor
 
             float hSpace = 3;
             rect.width -= hSpace; rect.y += 1;
-            Vector2 numberDimension = GUI.skin.label.CalcSize(new GUIContent("999"));
-            Rect r = new Rect(rect.position, numberDimension);
+            Vector2 numbeFDimension = GUI.skin.label.CalcSize(new GUIContent("999"));
+            Rect r = new Rect(rect.position, numbeFDimension);
             if (GUI.Button(r, new GUIContent(index.ToString(), "Go to the waypoint in the scene view")))
             {
                 mWaypointList.index = index;

@@ -76,7 +76,7 @@ namespace UnityEngine.Tilemaps
             if (count == 0)
                 return;
 
-            EditorGUILayout.LabelField("Place sprites shown based on the order of animation.");
+            EditorGUILayout.LabelField("Place sprites shown based on the oFDer of animation.");
             EditorGUILayout.Space();
 
             for (int i = 0; i < count; i++)

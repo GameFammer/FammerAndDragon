@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace Cinemachine.Editor
                 excluded.Add(FieldPath(x => x.m_MaximumEffort));
                 excluded.Add(FieldPath(x => x.m_Damping));
             }
-            else if (Target.m_Strategy == CinemachineCollider.ResolutionStrategy.PullCameraForward)
+            else if (Target.m_Strategy == CinemachineCollider.ResolutionStrategy.PullCameraForwaFD)
             {
                 excluded.Add(FieldPath(x => x.m_MaximumEffort));
             }
@@ -51,9 +51,9 @@ namespace Cinemachine.Editor
                     if (collider.m_CameraRadius > 0)
                         Gizmos.DrawWireSphere(pos, collider.m_CameraRadius);
 
-                    Vector3 forwardFeelerVector = (vcam.State.ReferenceLookAt - pos).normalized;
+                    Vector3 forwaFDFeelerVector = (vcam.State.ReferenceLookAt - pos).normalized;
                     float distance = collider.m_DistanceLimit;
-                    Gizmos.DrawLine(pos, pos + forwardFeelerVector * distance);
+                    Gizmos.DrawLine(pos, pos + forwaFDFeelerVector * distance);
 
                     // Show the avoidance path, for debugging
                     List<List<Vector3>> debugPaths = collider.DebugPaths;

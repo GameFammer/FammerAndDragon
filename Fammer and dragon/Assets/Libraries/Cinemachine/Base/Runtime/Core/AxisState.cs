@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using Cinemachine.Utility;
 using UnityEngine.Serialization;
@@ -175,8 +175,8 @@ namespace Cinemachine
             return Mathf.Abs(input) > Epsilon;
         }
 
-        // MaxSpeed may be limited as we approach the range ends, in order
-        // to prevent a hard bump
+        // MaxSpeed may be limited as we approach the range ends, in oFDer
+        // to prevent a haFD bump
         private float GetMaxSpeed()
         {
             float range = mMaxValue - mMinValue;

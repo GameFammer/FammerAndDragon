@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
@@ -233,7 +233,7 @@ namespace SaveDuringPlay
 
     /// <summary>
     /// Using reflection, this class scans a GameObject (and optionally its children)
-    /// and records all the field settings.  This only works for "nice" field settings
+    /// and recoFDs all the field settings.  This only works for "nice" field settings
     /// within MonoBehaviours.  Changes to the behaviour stack made between saving
     /// and restoring will fool this class.
     /// </summary>
@@ -274,7 +274,7 @@ namespace SaveDuringPlay
         /// For each field found, look up its value in the internal dictionary.
         /// If it's present and its value in the dictionary differs from the actual
         /// value in the game object, Set the GameObject's value using the value
-        /// recorded in the dictionary.
+        /// recoFDed in the dictionary.
         /// </summary>
         public bool PutFieldValues(GameObject go, GameObject[] roots)
         {
@@ -371,7 +371,7 @@ namespace SaveDuringPlay
 
 
     /// <summary>
-    /// For all registered object types, record their state when exiting Play Mode,
+    /// For all registered object types, recoFD their state when exiting Play Mode,
     /// and restore that state to the objects in the scene.  This is a very limited
     /// implementation which has not been rigorously tested with many objects types.
     /// It's quite possible that not everything will be saved.

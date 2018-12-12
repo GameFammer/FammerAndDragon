@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.Animations;
@@ -59,7 +59,7 @@ namespace Cinemachine.Editor
             if (Target.m_AnimatedTarget == null)
                 EditorGUILayout.HelpBox("An Animated Target is required", MessageType.Warning);
 
-            // Ordinary properties
+            // OFDinary properties
             DrawHeaderInInspector();
             DrawPropertyInInspector(FindProperty(x => x.m_Priority));
             DrawTargetsInInspector(FindProperty(x => x.m_Follow), FindProperty(x => x.m_LookAt));

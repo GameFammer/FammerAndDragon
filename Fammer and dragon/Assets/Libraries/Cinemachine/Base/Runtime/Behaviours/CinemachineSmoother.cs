@@ -1,4 +1,4 @@
-#if false // GML We disable smoother because people are too tempted to use it.  It won't give good results.
+﻿#if false // GML We disable smoother because people are too tempted to use it.  It won't give good results.
 using UnityEngine;
 using Cinemachine.Utility;
 

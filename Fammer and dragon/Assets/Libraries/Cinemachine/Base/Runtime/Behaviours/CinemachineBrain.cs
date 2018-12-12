@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine.Utility;
@@ -61,7 +61,7 @@ namespace Cinemachine
             FixedUpdate,
             /// <summary>Virtual cameras are updated in MonoBehaviour LateUpdate.</summary>
             LateUpdate,
-            /// <summary>Virtual cameras are updated according to how the target is updated.</summary>
+            /// <summary>Virtual cameras are updated accoFDing to how the target is updated.</summary>
             SmartUpdate
         };
 
@@ -406,7 +406,7 @@ namespace Cinemachine
 
 #if UNITY_EDITOR
         /// This is only needed in editor mode to force timeline to call OnGUI while
-        /// timeline is up and the game is not running, in order to allow dragging
+        /// timeline is up and the game is not running, in oFDer to allow dragging
         /// the composer guide in the game view.
         private void OnPreCull()
         {

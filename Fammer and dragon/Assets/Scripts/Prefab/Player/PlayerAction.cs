@@ -8,7 +8,7 @@
 using System.Collections;
 using System;
 using UnityEngine;
-using RDUI;
+using FDUI;
 using Cinemachine;
 using System.Reflection;
 
@@ -23,7 +23,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
 
     private Rigidbody2D rb2d;//刚体
     private Animator animator;//动画控制器
-    private SpriteRenderer renderer;//渲染器
+    private new SpriteRenderer renderer;//渲染器
     private Transform cameraTarget;//相机跟随物
 
     public Vector2 viewUpCameraPosition;//向上移动摄像机后位置
@@ -56,7 +56,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
 
     void FixedUpdate()
     {
-        ApplyStatus();
+        //ApplyStatus();
         //获取水平输入
         moveHorizontal = Input.GetAxis("Horizontal");
         //判断是否位于地面/撞头
@@ -72,7 +72,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
     {
         if(properties.status<= PlayerStatus.Player_CanntMove)
         {
-            if (_h != 0)
+            if (!Equals(_h, 0))
             {
                 rb2d.velocity = new Vector2(_h * properties.moveSpeed, rb2d.velocity.y);
                 if (_h > 0)
@@ -86,9 +86,9 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
                 animator.SetBool("isWalk", false);
             }
         }      
-        if(properties.status==PlayerStatus.Player_Weightlessness)
+        if(properties.status== PlayerStatus.Player_Weightlessness)
         {
-            if (_h != 0)
+            if (!Equals(_h, 0))
             {
                
             }

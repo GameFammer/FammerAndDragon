@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using Cinemachine.Utility;
 using UnityEngine.Serialization;
@@ -27,7 +27,7 @@ namespace Cinemachine
         /// <summary>The position along the path at which the camera will be placed.
         /// This can be animated directly, or set automatically by the Auto-Dolly feature
         /// to get as close as possible to the Follow target.</summary>
-        [Tooltip("The position along the path at which the camera will be placed.  This can be animated directly, or set automatically by the Auto-Dolly feature to get as close as possible to the Follow target.  The value is interpreted according to the Position Units setting.")]
+        [Tooltip("The position along the path at which the camera will be placed.  This can be animated directly, or set automatically by the Auto-Dolly feature to get as close as possible to the Follow target.  The value is interpreted accoFDing to the Position Units setting.")]
         public float m_PathPosition;
 
         /// <summary>How to interpret the Path Position</summary>
@@ -66,7 +66,7 @@ namespace Cinemachine
         [DocumentationSorting(7.1f, DocumentationSortingAttribute.Level.UserRef)]
         public enum CameraUpMode
         {
-            /// <summary>Leave the camera's up vector alone.  It will be set according to the Brain's WorldUp.</summary>
+            /// <summary>Leave the camera's up vector alone.  It will be set accoFDing to the Brain's WorldUp.</summary>
             Default,
             /// <summary>Take the up vector from the path's up vector at the current point</summary>
             Path,
@@ -146,7 +146,7 @@ namespace Cinemachine
         /// Always returns the Body stage</summary>
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Body; } }
 
-        /// <summary>Positions the virtual camera according to the transposer rules.</summary>
+        /// <summary>Positions the virtual camera accoFDing to the transposer rules.</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for damping.  If less that 0, no damping is done.</param>
         public override void MutateCameraState(ref CameraState curState, float deltaTime)
@@ -246,7 +246,7 @@ namespace Cinemachine
                     for (int i = 0; i < 3; ++i)
                         if (relative[i] > 180)
                             relative[i] -= 360;
-                    relative = Damper.Damp(relative, AngularDamping, deltaTime);
+                    relative = Damper.Damp(relative, AngulaFDamping, deltaTime);
                     newOrientation = m_PreviousOrientation * Quaternion.Euler(relative);
                 }
                 m_PreviousOrientation = newOrientation;
@@ -288,7 +288,7 @@ namespace Cinemachine
             return Quaternion.LookRotation(transform.rotation * Vector3.forward, up);
         }
 
-        private Vector3 AngularDamping
+        private Vector3 AngulaFDamping
         {
             get 
             { 

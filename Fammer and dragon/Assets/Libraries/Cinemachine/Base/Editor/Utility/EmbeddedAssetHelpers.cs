@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System;
 
@@ -25,8 +25,8 @@ namespace Cinemachine.Editor
         /// Called after the asset editor is created, in case it needs
         /// to be customized
         /// </summary>
-        public OnCreateEditorDelegate OnCreateEditor;
-        public delegate void OnCreateEditorDelegate(UnityEditor.Editor editor);
+        public OnCreateEditoFDelegate OnCreateEditor;
+        public delegate void OnCreateEditoFDelegate(UnityEditor.Editor editor);
 
         /// <summary>
         /// Called when the asset being edited was changed by the user.

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Cinemachine.Utility;
 using System;
@@ -38,8 +38,8 @@ namespace Cinemachine
         [Tooltip("If camera is orthographic, screen edges will be confined to the volume.  If not checked, then only the camera center will be confined")]
         public bool m_ConfineScreenEdges = true;
 
-        /// <summary>How gradually to return the camera to the bounding volume if it goes beyond the borders</summary>
-        [Tooltip("How gradually to return the camera to the bounding volume if it goes beyond the borders.  Higher numbers are more gradual.")]
+        /// <summary>How gradually to return the camera to the bounding volume if it goes beyond the boFDers</summary>
+        [Tooltip("How gradually to return the camera to the bounding volume if it goes beyond the boFDers.  Higher numbers are more gradual.")]
         [Range(0, 10)]
         public float m_Damping = 0;
 
@@ -49,7 +49,7 @@ namespace Cinemachine
         /// <returns>True if the virtual camera has been repositioned</returns>
         public bool CameraWasDisplaced(CinemachineVirtualCameraBase vcam)
         {
-            return GetExtraState<VcamExtraState>(vcam).confinerDisplacement > 0;
+            return GetExtraState<VcamExtraState>(vcam).confineFDisplacement > 0;
         }
         
         private void OnValidate()
@@ -60,7 +60,7 @@ namespace Cinemachine
         class VcamExtraState
         {
             public Vector3 m_previousDisplacement;
-            public float confinerDisplacement;
+            public float confineFDisplacement;
         };
         
         /// <summary>Check if the bounding volume is defined</summary>
@@ -98,7 +98,7 @@ namespace Cinemachine
                     }
                     extra.m_previousDisplacement = displacement;
                     state.PositionCorrection += displacement;
-                    extra.confinerDisplacement = displacement.magnitude;
+                    extra.confineFDisplacement = displacement.magnitude;
                 }
             }
         }

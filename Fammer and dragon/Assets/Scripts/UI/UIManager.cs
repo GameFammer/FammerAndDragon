@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RDUI
+namespace FDUI
 {
     public class UIManager : MonoBehaviour
     {

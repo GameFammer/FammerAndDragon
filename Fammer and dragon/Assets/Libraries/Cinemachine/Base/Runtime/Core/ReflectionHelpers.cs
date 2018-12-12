@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -154,7 +154,7 @@ namespace Cinemachine.Utility
         }
 
         /// <summary>Returns a string path from an expression - mostly used to retrieve serialized properties
-        /// without hardcoding the field path. Safer, and allows for proper refactoring.</summary>
+        /// without haFDcoding the field path. Safer, and allows for proper refactoring.</summary>
         public static string GetFieldPath<TType, TValue>(Expression<Func<TType, TValue>> expr)
         {
             MemberExpression me;

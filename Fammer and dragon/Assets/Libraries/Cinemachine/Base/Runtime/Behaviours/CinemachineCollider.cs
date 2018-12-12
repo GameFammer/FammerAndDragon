@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Cinemachine.Utility;
 using UnityEngine.Serialization;
@@ -49,7 +49,7 @@ namespace Cinemachine
         /// The raycast distance to test for when checking if the line of sight to this camera's target is clear.
         /// </summary>
         [Tooltip("The maximum raycast distance when checking if the line of sight to this camera's target is clear.  If the setting is 0 or less, the current actual distance to target will be used.")]
-        [FormerlySerializedAs("m_LineOfSightFeelerDistance")]
+        [FormerlySerializedAs("m_LineOfSightFeeleFDistance")]
         public float m_DistanceLimit = 0f;
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Cinemachine
         { 
             /// <summary>Camera will be pulled forward along its Z axis until it is in front of 
             /// the nearest obstacle</summary>
-            PullCameraForward, 
+            PullCameraForwaFD, 
             /// <summary>In addition to pulling the camera forward, an effort will be made to 
             /// return the camera to its original height</summary>
             PreserveCameraHeight,
@@ -116,7 +116,7 @@ namespace Cinemachine
         /// target obstruction</returns>
         public bool CameraWasDisplaced(CinemachineVirtualCameraBase vcam)
         {
-            return GetExtraState<VcamExtraState>(vcam).colliderDisplacement > 0;
+            return GetExtraState<VcamExtraState>(vcam).collideFDisplacement > 0;
         }
 
         private void OnValidate()
@@ -141,7 +141,7 @@ namespace Cinemachine
         class VcamExtraState
         {
             public Vector3 m_previousDisplacement;
-            public float colliderDisplacement;
+            public float collideFDisplacement;
             public bool targetObscured;
             public List<Vector3> debugResolutionPath;
 
@@ -179,7 +179,7 @@ namespace Cinemachine
             {
                 extra = GetExtraState<VcamExtraState>(vcam);
                 extra.targetObscured = false;
-                extra.colliderDisplacement = 0;
+                extra.collideFDisplacement = 0;
                 extra.debugResolutionPath = null;
             }
 
@@ -197,7 +197,7 @@ namespace Cinemachine
                     }
                     extra.m_previousDisplacement = displacement;
                     state.PositionCorrection += displacement;
-                    extra.colliderDisplacement += displacement.magnitude;
+                    extra.collideFDisplacement += displacement.magnitude;
                 }
             }
             // Rate the shot after the aim was set
@@ -209,7 +209,7 @@ namespace Cinemachine
                 // GML these values are an initial arbitrary attempt at rating quality
                 if (extra.targetObscured)
                     state.ShotQuality *= 0.2f;
-                if (extra.colliderDisplacement > 0)
+                if (extra.collideFDisplacement > 0)
                     state.ShotQuality *= 0.8f;
 
                 float nearnessBoost = 0;
@@ -254,7 +254,7 @@ namespace Cinemachine
                     if (m_DistanceLimit > Epsilon)
                         rayLength = Mathf.Min(m_DistanceLimit, rayLength);
 
-                    // Make a ray that looks towards the camera, to get the most distant obstruction
+                    // Make a ray that looks towaFDs the camera, to get the most distant obstruction
                     Ray ray = new Ray(pos - rayLength * dir, dir);
                     rayLength += PrecisionSlush;
                     if (rayLength > Epsilon)
@@ -266,7 +266,7 @@ namespace Cinemachine
                             float adjustment = Mathf.Max(0, hitInfo.distance - PrecisionSlush);
                             pos = ray.GetPoint(adjustment);
                             extra.AddPointToDebugPath(pos);
-                            if (m_Strategy != ResolutionStrategy.PullCameraForward)
+                            if (m_Strategy != ResolutionStrategy.PullCameraForwaFD)
                             {
                                 pos = PushCameraBack(
                                     pos, dir, hitInfo, lookAtPos, 

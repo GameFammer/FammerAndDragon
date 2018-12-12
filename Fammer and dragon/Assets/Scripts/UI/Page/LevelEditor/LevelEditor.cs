@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using RDUI;
+using FDUI;
 using Cinemachine;
 
 public class LevelEditor : BasePage
@@ -208,7 +208,7 @@ public class LevelEditor : BasePage
                 }
             }
             //鼠标滑轮缩放
-            if (Input.GetAxis("Mouse ScrollWheel") != 0 && !EventSystem.current.IsPointerOverGameObject())
+            if (!Equals(Input.GetAxis("Mouse ScrollWheel"), 0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 if (sceneCamera.m_Lens.OrthographicSize>= 0.5f)
                 {
@@ -285,7 +285,7 @@ public class LevelEditor : BasePage
     //加载TilePrefabs
     void InitTilePrefabs()
     {
-        Dictionary<string, AssetBundle> assest = RDFileStream.ReadAllAssestBudle();
+        Dictionary<string, AssetBundle> assest = FDFileStream.ReadAllAssestBudle();
         foreach (string key in PublicDataManager.instance.GetSceneTileModelKeys())
         {
             string levelType = PublicDataManager.instance.GetSceneTileLevelType(key);
@@ -689,7 +689,7 @@ public class LevelEditor : BasePage
             }
         }
 
-        RDFileStream.WriteLevelFile(level);
+        FDFileStream.WriteLevelFile(level);
         //存取封面
 
         //写入CSV
@@ -699,7 +699,7 @@ public class LevelEditor : BasePage
     //从level文件读取Level
     public void LoadLevel(string _levelName)
     {
-        LevelInfo level = RDFileStream.ReadLevelFile(_levelName);
+        LevelInfo level = FDFileStream.ReadLevelFile(_levelName);
         if (!level.IsEmpty())
         {
             nowLevelName = level.name;
@@ -730,7 +730,7 @@ public class LevelEditor : BasePage
     //读取level封面
     //private Sprite LoadLevelImage(int _mapId)
     //{
-    //    WWW www = new WWW("file:///" + RDPlatform.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
+    //    WWW www = new WWW("file:///" + FDPlatform.DATA_PATH + PublicDataManager.instance.GetLevelFilePath(_mapId) + ".png");
     //    if (www != null && string.IsNullOrEmpty(www.error))
     //    {
     //        return Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);

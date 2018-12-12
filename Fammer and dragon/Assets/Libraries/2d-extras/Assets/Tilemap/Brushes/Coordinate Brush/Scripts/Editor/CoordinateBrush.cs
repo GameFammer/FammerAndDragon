@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace UnityEditor
 {
-    [CustomGridBrush(true, false, false, "Coordinate Brush")]
-    public class CoordinateBrush : GridBrush {
+    [CustomGridBrush(true, false, false, "CooFDinate Brush")]
+    public class CooFDinateBrush : GridBrush {
         public int z = 0;
 
         public override void Paint(GridLayout grid, GameObject brushTarget, Vector3Int position)
@@ -33,35 +33,35 @@ namespace UnityEditor
             base.BoxFill(gridLayout, brushTarget, position);
         }
 
-        [MenuItem("Assets/Create/Coordinate Brush")]
+        [MenuItem("Assets/Create/CooFDinate Brush")]
         public static void CreateBrush()
         {
-            string path = EditorUtility.SaveFilePanelInProject("Save Coordinate Brush", "New Coordinate Brush", "asset", "Save Coordinate Brush", "Assets");
+            string path = EditorUtility.SaveFilePanelInProject("Save CooFDinate Brush", "New CooFDinate Brush", "asset", "Save CooFDinate Brush", "Assets");
 
             if (path == "")
                 return;
 
-            AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<CoordinateBrush>(), path);
+            AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<CooFDinateBrush>(), path);
         }
     }
 
-    [CustomEditor(typeof(CoordinateBrush))]
-    public class CoordinateBrushEditor : GridBrushEditor
+    [CustomEditor(typeof(CooFDinateBrush))]
+    public class CooFDinateBrushEditor : GridBrushEditor
     {
-        private CoordinateBrush coordinateBrush { get { return target as CoordinateBrush; } }
+        private CooFDinateBrush cooFDinateBrush { get { return target as CooFDinateBrush; } }
 
         public override void PaintPreview(GridLayout grid, GameObject brushTarget, Vector3Int position)
         {
-            var zPosition = new Vector3Int(position.x, position.y, coordinateBrush.z);
+            var zPosition = new Vector3Int(position.x, position.y, cooFDinateBrush.z);
             base.PaintPreview(grid, brushTarget, zPosition);
         }
 
         public override void OnPaintSceneGUI(GridLayout grid, GameObject brushTarget, BoundsInt position, GridBrushBase.Tool tool, bool executing)
         {
             base.OnPaintSceneGUI(grid, brushTarget, position, tool, executing);
-            if (coordinateBrush.z != 0)
+            if (cooFDinateBrush.z != 0)
             {
-                var zPosition = new Vector3Int(position.min.x, position.min.y, coordinateBrush.z);
+                var zPosition = new Vector3Int(position.min.x, position.min.y, cooFDinateBrush.z);
                 BoundsInt newPosition = new BoundsInt(zPosition, position.size);
                 Vector3[] cellLocals = new Vector3[]
                 {
@@ -79,12 +79,12 @@ namespace UnityEditor
                 }
             }
 
-            var labelText = "Pos: " + new Vector3Int(position.x, position.y, coordinateBrush.z);
+            var labelText = "Pos: " + new Vector3Int(position.x, position.y, cooFDinateBrush.z);
             if (position.size.x > 1 || position.size.y > 1) {
                 labelText += " Size: " + new Vector2Int(position.size.x, position.size.y);
             }
 
-            Handles.Label(grid.CellToWorld(new Vector3Int(position.x, position.y, coordinateBrush.z)), labelText);
+            Handles.Label(grid.CellToWorld(new Vector3Int(position.x, position.y, cooFDinateBrush.z)), labelText);
         }
     }
 }

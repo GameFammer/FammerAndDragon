@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Cinemachine
 {
@@ -56,14 +56,14 @@ namespace Cinemachine
             UserRef 
         };
         /// <summary>Where this type appears in the manual.  Smaller number sort earlier.</summary>
-        public float SortOrder { get; private set; }
+        public float SortOFDer { get; private set; }
         /// <summary>Refinement level of the documentation.  The more refined, the more is excluded.</summary>
         public Level Category { get; private set; }
 
         /// <summary>Contructor with specific values</summary>
-        public DocumentationSortingAttribute(float sortOrder, Level category)
+        public DocumentationSortingAttribute(float sortOFDer, Level category)
         {
-            SortOrder = sortOrder;
+            SortOFDer = sortOFDer;
             Category = category;
         }
     }
