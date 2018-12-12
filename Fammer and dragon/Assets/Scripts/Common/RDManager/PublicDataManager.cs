@@ -14,8 +14,6 @@ public class PublicDataManager : MonoBehaviour
     //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance = null;
     private Dictionary<string, ItemModel> itemModel;
-    private Dictionary<string, LevelModel> levelModel;
-    private Dictionary<string, SceneTileModel> sceneTileModel;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -38,12 +36,6 @@ public class PublicDataManager : MonoBehaviour
     private void InitCsv()
     {
         //在这初始化每个Dictionary
-        /*level*/
-        InitFromCsv<LevelModel>(ref levelModel, "Level.csv");
-
-        /*prefab*/
-        InitFromCsv<SceneTileModel>(ref sceneTileModel, "SceneTile.csv");
-
         InitFromCsv<ItemModel>(ref itemModel, "Item.csv");
 
     }
@@ -91,45 +83,4 @@ public class PublicDataManager : MonoBehaviour
 
         return dic;
     }
-
-    /*Level*/
-    public LevelModel GetLevelModel(string _name)
-    {
-        return levelModel[_name];
-    }
-    public Dictionary<string, LevelModel>.KeyCollection GetLevelModelKeys()
-    {
-        return levelModel.Keys;
-    }
-    public string GetLevelName(string _name)
-    {
-        return levelModel[_name].name;
-    }
-    public string GetLevelFilePath(string _name)
-    {
-        return levelModel[_name].filePath;
-    }
-
-    /*SceneTile*/
-    public Dictionary<string, SceneTileModel>.KeyCollection GetSceneTileModelKeys()
-    {
-        return sceneTileModel.Keys;
-    }
-    public SceneTileModel SceneTileModel(string _name)
-    {
-        return sceneTileModel[_name];
-    }
-    public string GetSceneTileName(string _name)
-    {
-        return sceneTileModel[_name].name;
-    }
-    public int GetSceneTileType(string _name)
-    {
-        return sceneTileModel[_name].type;
-    }
-    public string GetSceneTileLevelType(string _name)
-    {
-        return sceneTileModel[_name].levelType;
-    }
-
 }

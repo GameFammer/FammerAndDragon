@@ -235,14 +235,6 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
             transform.position = entrannce.transform.position;
         }
     }
-    public EditorProperty[] GetEditorProperties()
-    {
-        return properties.GetEditorProperties();
-    }
-    public void SetEditorProperty(EditorProperty _property)
-    {
-
-    }
     public void Sleep()
     {
 
