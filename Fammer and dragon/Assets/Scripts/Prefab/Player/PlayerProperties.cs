@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RDUI;
+using FDUI;
 public class PlayerProperties: PublicProperties
 {
     public PlayerStatus status;

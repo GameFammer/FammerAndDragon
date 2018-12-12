@@ -6,9 +6,9 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
-public class RDMessageBox : MonoBehaviour
+public class FDMessageBox : MonoBehaviour
 {
-    private static GameObject rDMessageBox;
+    private static GameObject fDMessageBox;
     private static Text infoText;
     private static Button commitButton;
     private static Button cancelButton;
@@ -17,13 +17,13 @@ public class RDMessageBox : MonoBehaviour
     void Awake()
     {
         //获取控件
-        rDMessageBox = GameObject.Find("RDMessageBox");
-        infoText = rDMessageBox.transform.Find("InfoText").GetComponent<Text>();
-        commitButton = rDMessageBox.transform.Find("CommitButton").GetComponent<Button>();
-        cancelButton = rDMessageBox.transform.Find("CancelButton").GetComponent<Button>();
+        fDMessageBox = GameObject.Find("FDMessageBox");
+        infoText = fDMessageBox.transform.Find("InfoText").GetComponent<Text>();
+        commitButton = fDMessageBox.transform.Find("CommitButton").GetComponent<Button>();
+        cancelButton = fDMessageBox.transform.Find("CancelButton").GetComponent<Button>();
         //默认Commit
         commitAction = new UnityAction(Commit);
-        rDMessageBox.SetActive(false);
+        fDMessageBox.SetActive(false);
         DontDestroyOnLoad(gameObject);
     }
     //显示MessageBox
@@ -33,15 +33,15 @@ public class RDMessageBox : MonoBehaviour
         commitAction += _commitFuction;
         commitButton.onClick.AddListener(commitAction);
         cancelButton.onClick.AddListener(() => Cancel());
-        rDMessageBox.SetActive(true);
+        fDMessageBox.SetActive(true);
     }
     //取消
     static void Cancel()
     {
-        rDMessageBox.SetActive(false);
+        fDMessageBox.SetActive(false);
     }
     static void Commit()
     {
-        rDMessageBox.SetActive(false);
+        fDMessageBox.SetActive(false);
     }
 }

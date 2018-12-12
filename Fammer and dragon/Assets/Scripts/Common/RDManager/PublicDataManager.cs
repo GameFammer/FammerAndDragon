@@ -33,7 +33,7 @@ public class PublicDataManager : MonoBehaviour
     private void InitIni()
     {
         
-      //  RDLog.Log("111111111", LogType.Error);
+      //  FDLog.Log("111111111", LogType.Error);
     }
     private void InitCsv()
     {
@@ -60,7 +60,7 @@ public class PublicDataManager : MonoBehaviour
     //    {
     //        _levelModel = new Dictionary<int, LevelModel>();
     //    }
-    //    RDFileStream.ReadLevelTable(ref _levelModel, _path);
+    //    FDFileStream.ReadLevelTable(ref _levelModel, _path);
     //}
 
     //从CSV表初始化Dictionary
@@ -69,7 +69,7 @@ public class PublicDataManager : MonoBehaviour
         Dictionary<string, T> dic = new Dictionary<string, T>();
 
         /* 从CSV文件读取数据 */
-        Dictionary<string, Dictionary<string, string>> result = RDFileStream.ReadCsvFile(_fileName);
+        Dictionary<string, Dictionary<string, string>> result = FDFileStream.ReadCsvFile(_fileName);
         /* 遍历每一行数据 */
         foreach (string name in result.Keys)
         {
