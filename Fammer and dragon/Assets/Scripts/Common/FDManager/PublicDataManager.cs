@@ -1,10 +1,4 @@
-﻿/********************************************************************************* 
-  *Author:AICHEN
-  *Date:  2018-5-29
-  *Description: 存储CSV表数据，方便使用
-**********************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -14,8 +8,6 @@ public class PublicDataManager : MonoBehaviour
     //private static  Dictionary<int, AIName> items;
     public static PublicDataManager instance = null;
     private Dictionary<string, ItemModel> itemModel;
-    private Dictionary<string, LevelModel> levelModel;
-    private Dictionary<string, SceneTileModel> sceneTileModel;
     void Awake()
     {
         //单例，关卡切换不销毁
@@ -27,25 +19,11 @@ public class PublicDataManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         //初始化Ini
         InitIni();
-        //初始化CSV
-        InitCsv();
     }
     private void InitIni()
     {
         
       //  FDLog.Log("111111111", LogType.Error);
-    }
-    private void InitCsv()
-    {
-        //在这初始化每个Dictionary
-        /*level*/
-        InitFromCsv<LevelModel>(ref levelModel, "Level.csv");
-
-        /*prefab*/
-        InitFromCsv<SceneTileModel>(ref sceneTileModel, "SceneTile.csv");
-
-        InitFromCsv<ItemModel>(ref itemModel, "Item.csv");
-
     }
     //初始化CSV表
     private void InitFromCsv<T>(ref Dictionary<string, T> _dataModel, string _fileName)
@@ -90,46 +68,6 @@ public class PublicDataManager : MonoBehaviour
         }
 
         return dic;
-    }
-
-    /*Level*/
-    public LevelModel GetLevelModel(string _name)
-    {
-        return levelModel[_name];
-    }
-    public Dictionary<string, LevelModel>.KeyCollection GetLevelModelKeys()
-    {
-        return levelModel.Keys;
-    }
-    public string GetLevelName(string _name)
-    {
-        return levelModel[_name].name;
-    }
-    public string GetLevelFilePath(string _name)
-    {
-        return levelModel[_name].filePath;
-    }
-
-    /*SceneTile*/
-    public Dictionary<string, SceneTileModel>.KeyCollection GetSceneTileModelKeys()
-    {
-        return sceneTileModel.Keys;
-    }
-    public SceneTileModel SceneTileModel(string _name)
-    {
-        return sceneTileModel[_name];
-    }
-    public string GetSceneTileName(string _name)
-    {
-        return sceneTileModel[_name].name;
-    }
-    public int GetSceneTileType(string _name)
-    {
-        return sceneTileModel[_name].type;
-    }
-    public string GetSceneTileLevelType(string _name)
-    {
-        return sceneTileModel[_name].levelType;
     }
 
 }

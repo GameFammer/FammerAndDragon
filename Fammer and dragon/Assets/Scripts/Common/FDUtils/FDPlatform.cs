@@ -37,16 +37,10 @@ public class FDPlatform
     }
 
     //拼接路径
-    public static string SplitPath(string[] _paths){
+    public static string SplitPath(string[] strs){
 
         string splitCharacter = isOSXEditor ? "/" : "\\";
 
-        string path = _paths[0];
-
-        for (var i = 1; i < _paths.Length; i++){
-            path += splitCharacter + _paths[i];
-        }
-
-        return path;
+        return String.Join(splitCharacter, strs);
     }
 }

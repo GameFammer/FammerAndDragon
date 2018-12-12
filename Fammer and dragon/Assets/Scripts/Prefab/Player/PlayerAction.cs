@@ -1,11 +1,4 @@
-﻿/********************************************************************************* 
-  *Author:AICHEN
-  *Date:  2018-4-25
-  *Description: palyer move,jump,shoot
-**********************************************************************************/
-
-
-using System.Collections;
+﻿using System.Collections;
 using System;
 using UnityEngine;
 using FDUI;
@@ -23,7 +16,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
 
     private Rigidbody2D rb2d;//刚体
     private Animator animator;//动画控制器
-    private SpriteRenderer renderer;//渲染器
+    private new SpriteRenderer renderer;//渲染器
     private Transform cameraTarget;//相机跟随物
 
     public Vector2 viewUpCameraPosition;//向上移动摄像机后位置
