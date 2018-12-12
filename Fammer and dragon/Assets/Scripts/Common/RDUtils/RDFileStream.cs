@@ -10,13 +10,13 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class FDFileStream
+public class RDFileStream
 {
     //读取CSV文件
     public static Dictionary<string, Dictionary<string, string>> ReadCsvFile(string _fileName)
     {
         Dictionary<string, Dictionary<string, string>> result = new Dictionary<string, Dictionary<string, string>>();
-        string url = FDPlatform.SplitPath(new string[] { FDPlatform.DATA_PATH, "CSV", _fileName });
+        string url = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "CSV", _fileName });
         string[] fileData = File.ReadAllLines(url);
         if (fileData.Length < 3)
         {
@@ -45,7 +45,7 @@ public class FDFileStream
     {
         try
         {
-            string url = FDPlatform.SplitPath(new string[] { FDPlatform.DATA_PATH, "CSV", _fileName });
+            string url = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "CSV", _fileName });
             FileStream fs = new FileStream(url, FileMode.Append);
             StreamWriter writer = new StreamWriter(fs);
             foreach (CSVModel tableRow in _rowObject)
@@ -83,7 +83,7 @@ public class FDFileStream
     //从文件读取LevelTable
     public static void ReadLevelTable(ref Dictionary<string, LevelModel> _levelModel, string _path)
     {
-        string allPath = FDPlatform.SplitPath(new string[] { FDPlatform.DATA_PATH, "Level", _path });
+        string allPath = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "Level", _path });
         if (!Directory.Exists(allPath))
         {
             //文件读取失败
@@ -105,9 +105,9 @@ public class FDFileStream
                             t.name = level.Name.Split('.')[0];
                             t.producer = producer.Name;
                             //全路径：../Level/User/作者名/关卡名#关卡ID.level
-                            t.filePath = FDPlatform.SplitPath(new string[] { level.DirectoryName, level.Name });
+                            t.filePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, level.Name });
                             string imgName = level.Name.Split('.')[0] + ".png";
-                            t.imagePath = FDPlatform.SplitPath(new string[] { level.DirectoryName, imgName });
+                            t.imagePath = RDPlatform.SplitPath(new string[] { level.DirectoryName, imgName });
                             _levelModel.Add(t.name, t);
                         }
 
@@ -116,7 +116,7 @@ public class FDFileStream
             }
             catch (Exception e)
             {
-                // FDLog.Log(e);
+                // RDLog.Log(e);
             }
         }
     }
@@ -126,7 +126,7 @@ public class FDFileStream
         LevelInfo level = new LevelInfo();
         try
         {
-            string url = FDPlatform.SplitPath(new string[] { PublicDataManager.instance.GetLevelFilePath(_levelName) });
+            string url = RDPlatform.SplitPath(new string[] { PublicDataManager.instance.GetLevelFilePath(_levelName) });
             FileStream fs = new FileStream(url, FileMode.Open);
             StreamReader reader = new StreamReader(fs);
             level.id = int.Parse(reader.ReadLine());
@@ -163,13 +163,13 @@ public class FDFileStream
     {
         try
         {
-            string url = FDPlatform.SplitPath(new string[] { FDPlatform.DATA_PATH, "Level", "User", _level.producer });
+            string url = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "Level", "User", _level.producer });
             if (!Directory.Exists(url))
             {
                 Directory.CreateDirectory(url);
             }
             string fileName = _level.name + "#" + _level.id.ToString() + ".level";
-            FileStream fs = new FileStream(FDPlatform.SplitPath(new string[] { url, fileName }), FileMode.Create);
+            FileStream fs = new FileStream(RDPlatform.SplitPath(new string[] { url, fileName }), FileMode.Create);
             StreamWriter writer = new StreamWriter(fs);
             writer.WriteLine(_level.id);
             writer.WriteLine(_level.name);
@@ -201,7 +201,7 @@ public class FDFileStream
     //加载所有AssestBudle
     public static Dictionary<string, AssetBundle> ReadAllAssestBudle()
     {
-        string path = FDPlatform.SplitPath(new string[] { FDPlatform.DATA_PATH, "AssestBundles" });
+        string path = RDPlatform.SplitPath(new string[] { RDPlatform.DATA_PATH, "AssestBundles" });
         Dictionary<string, AssetBundle> assets = new Dictionary<string, AssetBundle>();
         if (!Directory.Exists(path))
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropItemAfteFDie : DieAction
+public class DropItemAfterDie : DieAction
 {
 
     // Use this for initialization

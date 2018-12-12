@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 namespace Cinemachine
@@ -24,9 +24,9 @@ namespace Cinemachine
 
         /// <summary>
         /// When using an orthographic camera, this defines the height, in world 
-        /// co-oFDinates, of the camera view.
+        /// co-ordinates, of the camera view.
         /// </summary>
-        [Tooltip("When using an orthographic camera, this defines the half-height, in world cooFDinates, of the camera view.")]
+        [Tooltip("When using an orthographic camera, this defines the half-height, in world coordinates, of the camera view.")]
         public float OrthographicSize;
 
         /// <summary>

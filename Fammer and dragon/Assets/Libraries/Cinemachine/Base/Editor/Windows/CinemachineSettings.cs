@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System;
 
@@ -67,13 +67,13 @@ namespace Cinemachine.Editor
         public static class ComposerSettings
         {
             private static readonly string kOverlayOpacityKey           = "CNMCN_Overlay_Opacity";
-            private static readonly string kComposerHaFDBoundsColourKey = "CNMCN_Composer_HaFDBounds_Colour";
+            private static readonly string kComposerHardBoundsColourKey = "CNMCN_Composer_HardBounds_Colour";
             private static readonly string kComposerSoftBoundsColourKey = "CNMCN_Composer_SoftBounds_Colour";
             private static readonly string kComposerTargetColourKey     = "CNMCN_Composer_Target_Colour";
             private static readonly string kComposerTargetSizeKey       = "CNMCN_Composer_Target_Size";
 
             public const float kDefaultOverlayOpacity = 0.15f;
-            public static readonly Color kDefaultHaFDBoundsColour = new Color32(255, 0, 72, 255);
+            public static readonly Color kDefaultHardBoundsColour = new Color32(255, 0, 72, 255);
             public static readonly Color kDefaultSoftBoundsColour = new Color32(0, 194, 255, 255);
             public static readonly Color kDefaultTargetColour = new Color32(255, 254, 25, 255);
 
@@ -89,20 +89,20 @@ namespace Cinemachine.Editor
                 }
             }
 
-            public static Color HaFDBoundsOverlayColour
+            public static Color HardBoundsOverlayColour
             {
                 get
                 {
-                    string packedColour = EditorPrefs.GetString(kComposerHaFDBoundsColourKey, PackColor(kDefaultHaFDBoundsColour));
+                    string packedColour = EditorPrefs.GetString(kComposerHardBoundsColourKey, PackColor(kDefaultHardBoundsColour));
                     return UnpackColour(packedColour);
                 }
 
                 set
                 {
-                    if (HaFDBoundsOverlayColour != value)
+                    if (HardBoundsOverlayColour != value)
                     {
                         string packedColour = PackColor(value);
-                        EditorPrefs.SetString(kComposerHaFDBoundsColourKey, packedColour);
+                        EditorPrefs.SetString(kComposerHardBoundsColourKey, packedColour);
                     }
                 }
             }
@@ -229,7 +229,7 @@ namespace Cinemachine.Editor
         private static readonly GUIContent sCoreInactiveGizmosColour = new GUIContent("Inactive Virtual Camera", "The colour for all inactive virtual camera gizmos");
 
         private static readonly GUIContent sComposerOverlayOpacity = new GUIContent("Overlay Opacity", "The alpha of the composer's overlay when a virtual camera is selected with composer module enabled");
-        private static readonly GUIContent sComposerHaFDBoundsOverlay = new GUIContent("HaFD Bounds Overlay", "The colour of the composer overlay's haFD bounds region");
+        private static readonly GUIContent sComposerHardBoundsOverlay = new GUIContent("Hard Bounds Overlay", "The colour of the composer overlay's hard bounds region");
         private static readonly GUIContent sComposerSoftBoundsOverlay = new GUIContent("Soft Bounds Overlay", "The colour of the composer overlay's soft bounds region");
         private static readonly GUIContent sComposerTargetOverlay = new GUIContent("Composer Target", "The colour of the composer overlay's target");
         private static readonly GUIContent sComposerTargetOverlayPixels = new GUIContent("Composer Target Size(px)", "The size of the composer overlay's target box in pixels");
@@ -322,16 +322,16 @@ namespace Cinemachine.Editor
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUI.BeginChangeCheck();
-                Color newHaFDEdgeColor = EditorGUILayout.ColorField(sComposerHaFDBoundsOverlay, ComposerSettings.HaFDBoundsOverlayColour);
+                Color newHardEdgeColor = EditorGUILayout.ColorField(sComposerHardBoundsOverlay, ComposerSettings.HardBoundsOverlayColour);
 
                 if (EditorGUI.EndChangeCheck())
                 {
-                    ComposerSettings.HaFDBoundsOverlayColour = newHaFDEdgeColor;
+                    ComposerSettings.HardBoundsOverlayColour = newHardEdgeColor;
                 }
 
                 if (GUILayout.Button("Reset"))
                 {
-                    ComposerSettings.HaFDBoundsOverlayColour = ComposerSettings.kDefaultHaFDBoundsColour;
+                    ComposerSettings.HardBoundsOverlayColour = ComposerSettings.kDefaultHardBoundsColour;
                 }
                 EditorGUILayout.EndHorizontal();
 

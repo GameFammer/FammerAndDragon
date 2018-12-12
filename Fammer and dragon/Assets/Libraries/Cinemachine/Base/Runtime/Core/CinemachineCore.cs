@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace Cinemachine
@@ -17,14 +17,14 @@ namespace Cinemachine
 
         /// <summary>
         /// Stages in the Cinemachine Component pipeline, used for
-        /// UI organization>.  This enum defines the pipeline oFDer.
+        /// UI organization>.  This enum defines the pipeline order.
         /// </summary>
         public enum Stage
         {
             /// <summary>Second stage: position the camera in space</summary>
             Body,
 
-            /// <summary>ThiFD stage: orient the camera to point at the target</summary>
+            /// <summary>Third stage: orient the camera to point at the target</summary>
             Aim,
 
             /// <summary>Final stage: apply noise (this is done separately, in the
@@ -150,7 +150,7 @@ namespace Cinemachine
                 mChildCameras[i].Remove(vcam);
         }
 
-        /// <summary>Update all the active vcams in the scene, in the correct dependency oFDer.</summary>
+        /// <summary>Update all the active vcams in the scene, in the correct dependency order.</summary>
         internal void UpdateAllActiveVirtualCameras(Vector3 worldUp, float deltaTime)
         {
             //UnityEngine.Profiling.Profiler.BeginSample("CinemachineCore.UpdateAllActiveVirtualCameras");
@@ -215,7 +215,7 @@ namespace Cinemachine
                 status.lastUpdateSubframe = 0;
 
             // If we're in smart update mode and the target moved, then we must examine
-            // how the target has been moving recently in oFDer to figure out whether to
+            // how the target has been moving recently in order to figure out whether to
             // update now
             bool updateNow = !isSmartUpdate;
             if (isSmartUpdate)

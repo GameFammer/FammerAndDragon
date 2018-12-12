@@ -13,7 +13,7 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
         List<AssetBundleBuild> assestBuildMap = new List<AssetBundleBuild>();//AssetBundel Map
         List<string> assestPathList = new List<string>();//Assest路径+文件名
         List<SceneTileModel> sceneTileModelList = new List<SceneTileModel>();
-        int lastId = FDFileStream.ReadCsvFile("SceneTile.csv").Count;
+        int lastId = RDFileStream.ReadCsvFile("SceneTile.csv").Count;
         GameObject root = GameObject.Find("Root");
         foreach (Transform levelTheme in root.transform)
         {
@@ -60,13 +60,13 @@ public class CreatPrefabAndAssestBundle : MonoBehaviour
         }
         if(sceneTileModelList.Count>0)
         {
-            FDFileStream.WriteCsvFile("SceneTile.csv", sceneTileModelList.ToArray());
+            RDFileStream.WriteCsvFile("SceneTile.csv", sceneTileModelList.ToArray());
             sceneTileModelList.Clear();
         }
         if(assestBuildMap.Count>0)
         {
             //AssestBundle路径:StreamingAssets/AssestBundles
-            BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath + "/AssestBundles", assestBuildMap.ToArray(), BuildAssetBundleOptions.None, FDPlatform.isOSXEditor ? BuildTarget.StandaloneOSX : BuildTarget.StandaloneWindows);
+            BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath + "/AssestBundles", assestBuildMap.ToArray(), BuildAssetBundleOptions.None, RDPlatform.isOSXEditor ? BuildTarget.StandaloneOSX : BuildTarget.StandaloneWindows);
             Debug.Log("Success");
         }
     }

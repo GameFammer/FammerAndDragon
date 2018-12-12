@@ -15,7 +15,7 @@ namespace Cinemachine.PostFX
 #if UNITY_POST_PROCESSING_STACK_V1 && !UNITY_POST_PROCESSING_STACK_V2
     /// <summary>
     /// This behaviour is a liaison between Cinemachine with the Post-Processing v1 module.  You must 
-    /// have the Post-Processing V1 stack asset store package installed in oFDer to use this behaviour.
+    /// have the Post-Processing V1 stack asset store package installed in order to use this behaviour.
     /// 
     /// It's used in 2 ways:
     ///

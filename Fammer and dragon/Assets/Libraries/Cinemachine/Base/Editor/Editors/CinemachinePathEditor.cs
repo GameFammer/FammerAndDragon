@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -33,7 +33,7 @@ namespace Cinemachine.Editor
             if (mWaypointList.index >= mWaypointList.count)
                 mWaypointList.index = mWaypointList.count - 1;
 
-            // OFDinary properties
+            // Ordinary properties
             DrawRemainingPropertiesInInspector();
 
             GUILayout.Label(new GUIContent("Selected Waypoint:"));
@@ -104,7 +104,7 @@ namespace Cinemachine.Editor
             // Needed for accessing string names of fields
             CinemachinePath.Waypoint def = new CinemachinePath.Waypoint();
 
-            Vector2 numbeFDimension = GUI.skin.button.CalcSize(new GUIContent("999"));
+            Vector2 numberDimension = GUI.skin.button.CalcSize(new GUIContent("999"));
             Vector2 labelDimension = GUI.skin.label.CalcSize(new GUIContent("Position"));
             Vector2 addButtonDimension = new Vector2(labelDimension.y + 5, labelDimension.y + 1);
             float vSpace = 2;
@@ -113,7 +113,7 @@ namespace Cinemachine.Editor
             SerializedProperty element = mWaypointList.serializedProperty.GetArrayElementAtIndex(index);
             rect.y += vSpace / 2;
 
-            Rect r = new Rect(rect.position, numbeFDimension);
+            Rect r = new Rect(rect.position, numberDimension);
             Color color = GUI.color;
             // GUI.color = Target.m_Appearance.pathColor;
             if (GUI.Button(r, new GUIContent(index.ToString(), "Go to the waypoint in the scene view")))
@@ -126,10 +126,10 @@ namespace Cinemachine.Editor
             GUI.color = color;
 
             r = new Rect(rect.position, labelDimension);
-            r.x += hSpace + numbeFDimension.x;
+            r.x += hSpace + numberDimension.x;
             EditorGUI.LabelField(r, "Position");
             r.x += hSpace + r.width;
-            r.width = rect.width - (numbeFDimension.x + hSpace + r.width + hSpace + addButtonDimension.x + hSpace);
+            r.width = rect.width - (numberDimension.x + hSpace + r.width + hSpace + addButtonDimension.x + hSpace);
             EditorGUI.PropertyField(r, element.FindPropertyRelative(() => def.position), GUIContent.none);
             r.x += r.width + hSpace;
             r.size = addButtonDimension;
@@ -147,11 +147,11 @@ namespace Cinemachine.Editor
             }
 
             r = new Rect(rect.position, labelDimension);
-            r.y += numbeFDimension.y + vSpace;
-            r.x += hSpace + numbeFDimension.x; r.width = labelDimension.x;
+            r.y += numberDimension.y + vSpace;
+            r.x += hSpace + numberDimension.x; r.width = labelDimension.x;
             EditorGUI.LabelField(r, "Tangent");
             r.x += hSpace + r.width;
-            r.width = rect.width - (numbeFDimension.x + hSpace + r.width + hSpace + addButtonDimension.x + hSpace);
+            r.width = rect.width - (numberDimension.x + hSpace + r.width + hSpace + addButtonDimension.x + hSpace);
             EditorGUI.PropertyField(r, element.FindPropertyRelative(() => def.tangent), GUIContent.none);
             r.x += r.width + hSpace;
             r.size = addButtonDimension;
@@ -168,12 +168,12 @@ namespace Cinemachine.Editor
             }
 
             r = new Rect(rect.position, labelDimension);
-            r.y += 2 * (numbeFDimension.y + vSpace);
-            r.x += hSpace + numbeFDimension.x; r.width = labelDimension.x;
+            r.y += 2 * (numberDimension.y + vSpace);
+            r.x += hSpace + numberDimension.x; r.width = labelDimension.x;
             EditorGUI.LabelField(r, "Roll");
             r.x += hSpace + labelDimension.x;
             r.width = rect.width
-                - (numbeFDimension.x + hSpace)
+                - (numberDimension.x + hSpace)
                 - (labelDimension.x + hSpace)
                 - (addButtonDimension.x + hSpace);
             r.width /= 3;

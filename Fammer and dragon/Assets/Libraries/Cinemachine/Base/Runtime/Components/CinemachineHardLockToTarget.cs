@@ -10,7 +10,7 @@ namespace Cinemachine
     [AddComponentMenu("")] // Don't display in add component menu
     [RequireComponent(typeof(CinemachinePipeline))]
     [SaveDuringPlay]
-    public class CinemachineHaFDLockToTarget : CinemachineComponentBase
+    public class CinemachineHardLockToTarget : CinemachineComponentBase
     {
         /// <summary>True if component is enabled and has a LookAt defined</summary>
         public override bool IsValid { get { return enabled && FollowTarget != null; } }
@@ -19,7 +19,7 @@ namespace Cinemachine
         /// Always returns the Aim stage</summary>
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Body; } }
 
-        /// <summary>Applies the composer rules and orients the camera accoFDingly</summary>
+        /// <summary>Applies the composer rules and orients the camera accordingly</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for calculating damping.  If less than
         /// zero, then target will snap to the center of the dead zone.</param>

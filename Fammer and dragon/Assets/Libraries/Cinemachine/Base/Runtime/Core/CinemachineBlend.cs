@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace Cinemachine
@@ -124,10 +124,10 @@ namespace Cinemachine
             EaseIn,
             /// <summary>Easy out of the outgoing shot, and linear into the incoming</summary>
             EaseOut,
-            /// <summary>Easy out of the outgoing, and haFD into the incoming</summary>
-            HaFDIn,
-            /// <summary>HaFD out of the outgoing, and easy into the incoming</summary>
-            HaFDOut,
+            /// <summary>Easy out of the outgoing, and hard into the incoming</summary>
+            HardIn,
+            /// <summary>Hard out of the outgoing, and easy into the incoming</summary>
+            HardOut,
             /// <summary>Linear blend.  Mechanical-looking.</summary>
             Linear
         };
@@ -181,7 +181,7 @@ namespace Cinemachine
                         curve.keys = keys;
                         return curve;
                     }
-                    case Style.HaFDIn:
+                    case Style.HardIn:
                     {
                         AnimationCurve curve = AnimationCurve.Linear(0f, 0f, time, 1f);
                         Keyframe[] keys = curve.keys;
@@ -190,7 +190,7 @@ namespace Cinemachine
                         curve.keys = keys;
                         return curve;
                     }
-                    case Style.HaFDOut:
+                    case Style.HardOut:
                     {
                         AnimationCurve curve = AnimationCurve.Linear(0f, 0f, time, 1f);
                         Keyframe[] keys = curve.keys;

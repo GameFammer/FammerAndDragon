@@ -34,12 +34,12 @@ namespace Cinemachine
         public CinemachinePathBase.PositionUnits m_PositionUnits = CinemachinePathBase.PositionUnits.Distance;
 
         /// <summary>Move the cart with this speed</summary>
-        [Tooltip("Move the cart with this speed along the path.  The value is interpreted accoFDing to the Position Units setting.")]
+        [Tooltip("Move the cart with this speed along the path.  The value is interpreted according to the Position Units setting.")]
         [FormerlySerializedAs("m_Velocity")]
         public float m_Speed;
 
         /// <summary>The cart's current position on the path, in distance units</summary>
-        [Tooltip("The position along the path at which the cart will be placed.  This can be animated directly or, if the velocity is non-zero, will be updated automatically.  The value is interpreted accoFDing to the Position Units setting.")]
+        [Tooltip("The position along the path at which the cart will be placed.  This can be animated directly or, if the velocity is non-zero, will be updated automatically.  The value is interpreted according to the Position Units setting.")]
         [FormerlySerializedAs("m_CurrentDistance")]
         public float m_Position;
 

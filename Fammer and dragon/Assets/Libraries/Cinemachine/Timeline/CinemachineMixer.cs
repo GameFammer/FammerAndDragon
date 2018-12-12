@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace Cinemachine.Timeline
@@ -17,15 +17,15 @@ namespace Cinemachine.Timeline
             mBrainOverrideId = -1;
         }
 
-        public override void ProcessFrame(Playable playable, FrameData info, object playeFData)
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            base.ProcessFrame(playable, info, playeFData);
+            base.ProcessFrame(playable, info, playerData);
 
             // Get the brain that this track controls.
             // Older versions of timeline sent the gameObject by mistake.
-            GameObject go = playeFData as GameObject;
+            GameObject go = playerData as GameObject;
             if (go == null)
-                mBrain = (CinemachineBrain)playeFData;
+                mBrain = (CinemachineBrain)playerData;
             else
                 mBrain = go.GetComponent<CinemachineBrain>();
             if (mBrain == null)

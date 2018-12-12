@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 namespace Cinemachine
@@ -60,7 +60,7 @@ namespace Cinemachine
                     {
                         return blendParams.m_Blend.BlendCurve;
                     }
-                    // If we come across default applicable wildcaFDs, remember them
+                    // If we come across default applicable wildcards, remember them
                     if (blendParams.m_From == kBlendFromAnyCameraLabel)
                     {
                         if (!string.IsNullOrEmpty(toCameraName)
@@ -80,7 +80,7 @@ namespace Cinemachine
                 }
             }
 
-            // If nothing is found try to find wild caFD blends from any
+            // If nothing is found try to find wild card blends from any
             // camera to our new one
             if (anyToMe != null)
                 return anyToMe;

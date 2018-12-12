@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Cinemachine.Utility;
 
 namespace Cinemachine
@@ -63,7 +63,7 @@ namespace Cinemachine
         public AdjustmentMode m_AdjustmentMode = AdjustmentMode.DollyThenZoom;
 
         /// <summary>How much closer to the target can the camera go?</summary>
-        [Tooltip("The maximum distance towaFD the target that this behaviour is allowed to move the camera.")]
+        [Tooltip("The maximum distance toward the target that this behaviour is allowed to move the camera.")]
         public float m_MaxDollyIn = 5000f;
 
         /// <summary>How much farther from the target can the camera go?</summary>
@@ -121,7 +121,7 @@ namespace Cinemachine
             }
         }
         
-        /// <summary>Applies the composer rules and orients the camera accoFDingly</summary>
+        /// <summary>Applies the composer rules and orients the camera accordingly</summary>
         /// <param name="state">The current camera state</param>
         /// <param name="deltaTime">Used for calculating damping.  If less than
         /// zero, then target will snap to the center of the dead zone.</param>

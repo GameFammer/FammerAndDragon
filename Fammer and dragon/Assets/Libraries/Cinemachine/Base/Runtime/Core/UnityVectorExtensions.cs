@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Cinemachine.Utility
 {
@@ -63,7 +63,7 @@ namespace Cinemachine.Utility
         /// <summary>Get a signed angle between two vectors</summary>
         /// <param name="from">Start direction</param>
         /// <param name="to">End direction</param>
-        /// <param name="refNormal">This is needed in oFDer to determine the sign.
+        /// <param name="refNormal">This is needed in order to determine the sign.
         /// For example, if from an to lie on the XZ plane, then this would be the
         /// Y unit vector, or indeed any vector which, when dotted with Y unit vector,
         /// would give a positive result.</param>

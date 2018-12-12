@@ -18,7 +18,7 @@ namespace Cinemachine.PostFX
 {
     /// <summary>
     /// This behaviour is a liaison between Cinemachine with the Post-Processing v2 module.  You must 
-    /// have the Post-Processing V2 stack asset store package installed in oFDer to use this behaviour.
+    /// have the Post-Processing V2 stack asset store package installed in order to use this behaviour.
     /// 
     /// As a component on the Virtual Camera, it holds
     /// a Post-Processing Profile asset that will be applied to the Unity camera whenever 

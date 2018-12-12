@@ -1,14 +1,14 @@
 ﻿/********************************************************************************* 
   *Author:AICHEN
   *Date:  2018-7-2
-  *Description: MessageBox,需要在游戏的第一个场景中增加FDMessageBoxCanvas
+  *Description: MessageBox,需要在游戏的第一个场景中增加RDMessageBoxCanvas
 **********************************************************************************/
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
-public class FDMessageBox : MonoBehaviour
+public class RDMessageBox : MonoBehaviour
 {
-    private static GameObject fDMessageBox;
+    private static GameObject rDMessageBox;
     private static Text infoText;
     private static Button commitButton;
     private static Button cancelButton;
@@ -17,13 +17,13 @@ public class FDMessageBox : MonoBehaviour
     void Awake()
     {
         //获取控件
-        fDMessageBox = GameObject.Find("FDMessageBox");
-        infoText = fDMessageBox.transform.Find("InfoText").GetComponent<Text>();
-        commitButton = fDMessageBox.transform.Find("CommitButton").GetComponent<Button>();
-        cancelButton = fDMessageBox.transform.Find("CancelButton").GetComponent<Button>();
+        rDMessageBox = GameObject.Find("RDMessageBox");
+        infoText = rDMessageBox.transform.Find("InfoText").GetComponent<Text>();
+        commitButton = rDMessageBox.transform.Find("CommitButton").GetComponent<Button>();
+        cancelButton = rDMessageBox.transform.Find("CancelButton").GetComponent<Button>();
         //默认Commit
         commitAction = new UnityAction(Commit);
-        fDMessageBox.SetActive(false);
+        rDMessageBox.SetActive(false);
         DontDestroyOnLoad(gameObject);
     }
     //显示MessageBox
@@ -33,15 +33,15 @@ public class FDMessageBox : MonoBehaviour
         commitAction += _commitFuction;
         commitButton.onClick.AddListener(commitAction);
         cancelButton.onClick.AddListener(() => Cancel());
-        fDMessageBox.SetActive(true);
+        rDMessageBox.SetActive(true);
     }
     //取消
     static void Cancel()
     {
-        fDMessageBox.SetActive(false);
+        rDMessageBox.SetActive(false);
     }
     static void Commit()
     {
-        fDMessageBox.SetActive(false);
+        rDMessageBox.SetActive(false);
     }
 }

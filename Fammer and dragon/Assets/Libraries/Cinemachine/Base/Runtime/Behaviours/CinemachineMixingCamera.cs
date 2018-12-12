@@ -9,7 +9,7 @@ namespace Cinemachine
     /// the weighted average of the states of its child virtual cameras.
     /// 
     /// A fixed number of slots are made available for cameras, rather than a dynamic array.  
-    /// We do it this way in oFDer to support weight animation from the Timeline.
+    /// We do it this way in order to support weight animation from the Timeline.
     /// Timeline cannot animate array elements.
     /// </summary>
     [DocumentationSorting(20, DocumentationSortingAttribute.Level.UserRef)]
@@ -30,8 +30,8 @@ namespace Cinemachine
         /// <summary>Weight of the second tracked camera</summary>
         [Tooltip("The weight of the second tracked camera")]
         public float m_Weight1 = 0.5f;
-        /// <summary>Weight of the thiFD tracked camera</summary>
-        [Tooltip("The weight of the thiFD tracked camera")]
+        /// <summary>Weight of the third tracked camera</summary>
+        [Tooltip("The weight of the third tracked camera")]
         public float m_Weight2 = 0.5f;
         /// <summary>Weight of the fourth tracked camera</summary>
         [Tooltip("The weight of the fourth tracked camera")]

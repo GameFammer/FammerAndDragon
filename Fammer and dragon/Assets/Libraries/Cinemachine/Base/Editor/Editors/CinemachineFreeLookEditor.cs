@@ -37,7 +37,7 @@ namespace Cinemachine
 
         public override void OnInspectorGUI()
         {
-            // OFDinary properties
+            // Ordinary properties
             BeginInspector();
             DrawHeaderInInspector();
             DrawPropertyInInspector(FindProperty(x => x.m_Priority));
@@ -149,7 +149,7 @@ namespace Cinemachine
         [DrawGizmo(GizmoType.Active | GizmoType.Selected, typeof(CinemachineFreeLook))]
         private static void DrawFreeLookGizmos(CinemachineFreeLook vcam, GizmoType selectionType)
         {
-            // StandaFD frustum and logo
+            // Standard frustum and logo
             CinemachineBrainEditor.DrawVirtualCameraBaseGizmos(vcam, selectionType);
 
             Color originalGizmoColour = Gizmos.color;

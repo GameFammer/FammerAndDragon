@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 namespace Cinemachine
@@ -35,7 +35,7 @@ namespace Cinemachine
         }
 
         /// <summary>
-        /// Contains the behaviour of noise for the noise module for all 3 caFDinal axes of the camera
+        /// Contains the behaviour of noise for the noise module for all 3 cardinal axes of the camera
         /// </summary>
         [DocumentationSorting(9.2f, DocumentationSortingAttribute.Level.UserRef)]
         [Serializable]

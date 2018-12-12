@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuaFDAction : EnemyAction
+public class GuardAction : EnemyAction
 {
     
 }

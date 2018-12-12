@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,7 +87,7 @@ namespace Cinemachine.Utility
             return initial /  Mathf.Exp(decayConstant * deltaTime);
         }
 
-        /// <summary>StandaFD residual</summary>
+        /// <summary>Standard residual</summary>
         public const float kNegligibleResidual = 0.01f;
 
         /// <summary>Get a damped version of a quantity.  This is the portion of the

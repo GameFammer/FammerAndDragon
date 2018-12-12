@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuaFDProperties : EnemyProperties
+public class GuardProperties : EnemyProperties
 {
     
 }

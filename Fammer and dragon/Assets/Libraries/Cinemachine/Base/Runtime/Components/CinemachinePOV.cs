@@ -7,7 +7,7 @@ namespace Cinemachine
     /// Its job is to aim the camera in response to the user's mouse or joystick input.
     /// 
     /// The composer does not change the camera's position.  It will only pan and tilt the 
-    /// camera where it is, in oFDer to get the desired framing.  To move the camera, you have
+    /// camera where it is, in order to get the desired framing.  To move the camera, you have
     /// to use the virtual camera's Body section.
     /// </summary>
     [DocumentationSorting(23, DocumentationSortingAttribute.Level.UserRef)]
@@ -43,7 +43,7 @@ namespace Cinemachine
             m_VerticalAxis.SetThresholds(-90, 90, false);
         }
         
-        /// <summary>Applies the axis values and orients the camera accoFDingly</summary>
+        /// <summary>Applies the axis values and orients the camera accordingly</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for calculating damping.  Not used.</param>
         public override void MutateCameraState(ref CameraState curState, float deltaTime)

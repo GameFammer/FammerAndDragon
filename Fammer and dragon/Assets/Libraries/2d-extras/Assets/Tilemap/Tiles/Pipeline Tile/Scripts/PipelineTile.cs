@@ -130,7 +130,7 @@ namespace UnityEngine.Tilemaps
 
 		public override void OnInspectorGUI()
 		{
-			EditorGUILayout.LabelField("Place sprites shown based on the number of tiles boFDering it.");
+			EditorGUILayout.LabelField("Place sprites shown based on the number of tiles bordering it.");
 			EditorGUILayout.Space();
 			
 			EditorGUI.BeginChangeCheck();

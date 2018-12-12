@@ -78,7 +78,7 @@ namespace Cinemachine.Editor
                 DrawCameraFrustumGizmo(
                     brain, LensSettings.FromCamera(brain.OutputCamera), 
                     brain.transform.localToWorldMatrix, 
-                    Color.white); // GML why is this color haFDcoded?
+                    Color.white); // GML why is this color hardcoded?
             }
         }
 

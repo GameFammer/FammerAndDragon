@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System;
 using System.IO;
@@ -172,7 +172,7 @@ namespace Cinemachine.Editor
         }
 
         /// <summary>
-        /// Create a default Virtual Camera, with standaFD components
+        /// Create a default Virtual Camera, with standard components
         /// </summary>
         public static CinemachineVirtualCamera CreateDefaultVirtualCamera()
         {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cinemachine.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -22,7 +22,7 @@ namespace Cinemachine
     /// The Follow target will define what the camera is looking at.
     /// 
     /// If the Follow target is a CinemachineTargetGroup, then additional controls will 
-    /// be available to dynamically adjust the camera抯 view in oFDer to frame the entire group.
+    /// be available to dynamically adjust the camera�s view in order to frame the entire group.
     /// 
     /// Although this component was designed for orthographic cameras, it works equally  
     /// well with persective cameras and can be used in 3D environments.
@@ -115,15 +115,15 @@ namespace Cinemachine
         public bool m_UnlimitedSoftZone = false;
 
         /// <summary>When target is within this region, camera will gradually move to re-align
-        /// towaFDs the desired position, depending onm the damping speed</summary>
+        /// towards the desired position, depending onm the damping speed</summary>
         [Range(0f, 2f)]
-        [Tooltip("When target is within this region, camera will gradually move horizontally to re-align towaFDs the desired position, depending on the damping speed.")]
+        [Tooltip("When target is within this region, camera will gradually move horizontally to re-align towards the desired position, depending on the damping speed.")]
         public float m_SoftZoneWidth = 0.8f;
 
         /// <summary>When target is within this region, camera will gradually move to re-align
-        /// towaFDs the desired position, depending onm the damping speed</summary>
+        /// towards the desired position, depending onm the damping speed</summary>
         [Range(0f, 2f)]
-        [Tooltip("When target is within this region, camera will gradually move vertically to re-align towaFDs the desired position, depending on the damping speed.")]
+        [Tooltip("When target is within this region, camera will gradually move vertically to re-align towards the desired position, depending on the damping speed.")]
         public float m_SoftZoneHeight = 0.8f;
 
         /// <summary>A non-zero bias will move the targt position away from the center of the soft zone</summary>
@@ -177,7 +177,7 @@ namespace Cinemachine
         public float m_GroupFramingSize = 0.8f;
 
         /// <summary>How much closer to the target can the camera go?</summary>
-        [Tooltip("The maximum distance towaFD the target that this behaviour is allowed to move the camera.")]
+        [Tooltip("The maximum distance toward the target that this behaviour is allowed to move the camera.")]
         public float m_MaxDollyIn = 5000f;
 
         /// <summary>How much farther from the target can the camera go?</summary>
@@ -231,7 +231,7 @@ namespace Cinemachine
         }
 
         /// <summary>Internal API for the inspector editor</summary>
-        public Rect HaFDGuideRect
+        public Rect HardGuideRect
         {
             get
             {
@@ -295,7 +295,7 @@ namespace Cinemachine
         /// <summary>Internal API for inspector</summary>
         public Vector3 TrackedPoint { get; private set; }
 
-        /// <summary>Positions the virtual camera accoFDing to the transposer rules.</summary>
+        /// <summary>Positions the virtual camera according to the transposer rules.</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for damping.  If less than 0, no damping is done.</param>
         public override void MutateCameraState(ref CameraState curState, float deltaTime)
@@ -346,7 +346,7 @@ namespace Cinemachine
             Rect softGuideOrtho = ScreenToOrtho(SoftGuideRect, screenSize, curState.Lens.Aspect);
             if (deltaTime < 0)
             {
-                // No damping or haFD bounds, just snap to central bounds, skipping the soft zone
+                // No damping or hard bounds, just snap to central bounds, skipping the soft zone
                 Rect rect = new Rect(softGuideOrtho.center, Vector2.zero); // Force to center
                 cameraOffset += OrthoOffsetToScreenBounds(targetPos, rect);
             }
@@ -355,24 +355,24 @@ namespace Cinemachine
                 // Move it through the soft zone
                 cameraOffset += OrthoOffsetToScreenBounds(targetPos, softGuideOrtho);
 
-                // Find where it intersects the haFD zone
-                Vector3 haFD = Vector3.zero;
+                // Find where it intersects the hard zone
+                Vector3 hard = Vector3.zero;
                 if (!m_UnlimitedSoftZone)
                 {
-                    Rect haFDGuideOrtho = ScreenToOrtho(HaFDGuideRect, screenSize, curState.Lens.Aspect);
-                    haFD = OrthoOffsetToScreenBounds(targetPos, haFDGuideOrtho);
-                    float t = Mathf.Max(haFD.x / (cameraOffset.x + Epsilon), haFD.y / (cameraOffset.y + Epsilon));
-                    haFD = cameraOffset * t;
+                    Rect hardGuideOrtho = ScreenToOrtho(HardGuideRect, screenSize, curState.Lens.Aspect);
+                    hard = OrthoOffsetToScreenBounds(targetPos, hardGuideOrtho);
+                    float t = Mathf.Max(hard.x / (cameraOffset.x + Epsilon), hard.y / (cameraOffset.y + Epsilon));
+                    hard = cameraOffset * t;
                 }
-                // Apply damping, but only to the portion of the move that's inside the haFD zone
-                cameraOffset = haFD + Damper.Damp(
-                    cameraOffset - haFD, new Vector3(m_XDamping, m_YDamping, m_ZDamping), deltaTime);
+                // Apply damping, but only to the portion of the move that's inside the hard zone
+                cameraOffset = hard + Damper.Damp(
+                    cameraOffset - hard, new Vector3(m_XDamping, m_YDamping, m_ZDamping), deltaTime);
             }
             curState.RawPosition = m_PreviousCameraPosition = localToWorld * (cameraPos + cameraOffset);
             //UnityEngine.Profiling.Profiler.EndSample();
         }
 
-        // Convert from screen cooFDs to normalized orthographic distance cooFDs
+        // Convert from screen coords to normalized orthographic distance coords
         private Rect ScreenToOrtho(Rect rScreen, float orthoSize, float aspect)
         {
             Rect r = new Rect();

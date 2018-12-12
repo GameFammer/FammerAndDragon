@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine.Utility;
 
@@ -53,8 +53,8 @@ namespace Cinemachine
         [Tooltip("An active camera must be active for at least this many seconds")]
         public float m_MinDuration;
 
-        /// <summary>If checked, camera choice will be randomized if multiple cameras are equally desirable.  Otherwise, child list oFDer will be used</summary>
-        [Tooltip("If checked, camera choice will be randomized if multiple cameras are equally desirable.  Otherwise, child list oFDer and child camera priority will be used.")]
+        /// <summary>If checked, camera choice will be randomized if multiple cameras are equally desirable.  Otherwise, child list order will be used</summary>
+        [Tooltip("If checked, camera choice will be randomized if multiple cameras are equally desirable.  Otherwise, child list order and child camera priority will be used.")]
         public bool m_RandomizeChoice = false;
 
         /// <summary>The blend which is used if you don't explicitly define a blend between two Virtual Cameras</summary>

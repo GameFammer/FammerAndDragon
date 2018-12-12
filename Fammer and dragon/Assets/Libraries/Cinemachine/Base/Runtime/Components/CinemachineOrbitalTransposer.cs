@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Cinemachine.Utility;
 using UnityEngine.Serialization;
@@ -59,11 +59,11 @@ namespace Cinemachine
                 /// <summary>
                 /// Target heading calculated from the Target <b>Transform</b>'s euler Y angle
                 /// </summary>
-                TargetForwaFD,
+                TargetForward,
                 /// <summary>
                 /// Default heading is a constant world space heading.
                 /// </summary>
-                WorldForwaFD,
+                WorldForward,
             }
             /// <summary>The method by which the 'default heading' is calculated if
             /// recentering to target heading is enabled</summary>
@@ -91,10 +91,10 @@ namespace Cinemachine
             }
         };
 
-        /// <summary>The definition of ForwaFD.  Camera will follow behind.</summary>
+        /// <summary>The definition of Forward.  Camera will follow behind.</summary>
         [Space]
-        [Tooltip("The definition of ForwaFD.  Camera will follow behind.")]
-        public Heading m_Heading = new Heading(Heading.HeadingDefinition.TargetForwaFD, 4, 0);
+        [Tooltip("The definition of Forward.  Camera will follow behind.")]
+        public Heading m_Heading = new Heading(Heading.HeadingDefinition.TargetForward, 4, 0);
 
         /// <summary>Controls how automatic orbit recentering occurs</summary>
         [DocumentationSorting(6.5f, DocumentationSortingAttribute.Level.UserRef)]
@@ -292,7 +292,7 @@ namespace Cinemachine
         private Quaternion mHeadingPrevFrame = Quaternion.identity;
         private Vector3 mOffsetPrevFrame = Vector3.zero;
 
-        /// <summary>Positions the virtual camera accoFDing to the transposer rules.</summary>
+        /// <summary>Positions the virtual camera according to the transposer rules.</summary>
         /// <param name="curState">The current camera state</param>
         /// <param name="deltaTime">Used for damping.  If less than 0, no damping is done.</param>
         public override void MutateCameraState(ref CameraState curState, float deltaTime)
@@ -390,11 +390,11 @@ namespace Cinemachine
                 case Heading.HeadingDefinition.Velocity:
                     velocity = mTargetRigidBody.velocity;
                     break;
-                case Heading.HeadingDefinition.TargetForwaFD:
+                case Heading.HeadingDefinition.TargetForward:
                     velocity = FollowTarget.forward;
                     break;
                 default:
-                case Heading.HeadingDefinition.WorldForwaFD:
+                case Heading.HeadingDefinition.WorldForward:
                     return 0;
             }
 

@@ -10,7 +10,7 @@ namespace Cinemachine
     /// This behaviour is intended to be attached to an empty Transform GameObject, 
     /// and it represents a Virtual Camera within the Unity scene.
     /// 
-    /// The Virtual Camera will animate its Transform accoFDing to the rules contained
+    /// The Virtual Camera will animate its Transform according to the rules contained
     /// in its CinemachineComponent pipeline (Aim, Body, and Noise).  When the virtual
     /// camera is Live, the Unity camera will assume the position and orientation
     /// of the virtual camera.
@@ -22,7 +22,7 @@ namespace Cinemachine
     /// for dynamically tracking specific game objects. 
     /// 
     /// A virtual camera is very lightweight, and does no rendering of its own. It merely 
-    /// tracks interesting GameObjects, and positions itself accoFDingly. A typical game 
+    /// tracks interesting GameObjects, and positions itself accordingly. A typical game 
     /// can have dozens of virtual cameras, each set up to follow a particular character 
     /// or capture a particular event. 
     /// 
@@ -42,7 +42,7 @@ namespace Cinemachine
     /// logic can choose the virtual camera to make live by manipulating the virtual 
     /// cameras' enabled flags and their priorities, based on game logic. 
     ///
-    /// In oFDer to be driven by a virtual camera, the Unity Camera must have a CinemachineBrain 
+    /// In order to be driven by a virtual camera, the Unity Camera must have a CinemachineBrain 
     /// behaviour, which will select the most eligible virtual camera based on its priority 
     /// or on other criteria, and will manage blending. 
     /// </summary>
@@ -58,7 +58,7 @@ namespace Cinemachine
     {
         /// <summary>The object that the camera wants to look at (the Aim target).
         /// The Aim component of the CinemachineComponent pipeline
-        /// will refer to this target and orient the vcam in accoFDance with rules and
+        /// will refer to this target and orient the vcam in accordance with rules and
         /// settings that are provided to it.
         /// If this is null, then the vcam's Transform orientation will be used.</summary>
         [Tooltip("The object that the camera wants to look at (the Aim target).  If this is null, then the vcam's Transform orientation will define the camera's orientation.")]
@@ -67,7 +67,7 @@ namespace Cinemachine
 
         /// <summary>The object that the camera wants to move with (the Body target).
         /// The Body component of the CinemachineComponent pipeline
-        /// will refer to this target and position the vcam in accoFDance with rules and
+        /// will refer to this target and position the vcam in accordance with rules and
         /// settings that are provided to it.
         /// If this is null, then the vcam's Transform position will be used.</summary>
         [Tooltip("The object that the camera wants to move with (the Body target).  If this is null, then the vcam's Transform position will define the camera's position.")]
@@ -150,9 +150,9 @@ namespace Cinemachine
             if (ValidatingStreamVersion < 20170927)
             {
                 if (Follow != null && GetCinemachineComponent(CinemachineCore.Stage.Body) == null)
-                    AddCinemachineComponent<CinemachineHaFDLockToTarget>();
+                    AddCinemachineComponent<CinemachineHardLockToTarget>();
                 if (LookAt != null && GetCinemachineComponent(CinemachineCore.Stage.Aim) == null)
-                    AddCinemachineComponent<CinemachineHaFDLookAt>();
+                    AddCinemachineComponent<CinemachineHardLookAt>();
             }
         }
 

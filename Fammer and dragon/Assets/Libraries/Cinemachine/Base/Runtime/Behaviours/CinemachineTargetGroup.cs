@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using Cinemachine.Utility;
 
@@ -21,8 +21,8 @@ namespace Cinemachine
         [Serializable] public struct Target
         {
             /// <summary>The target objects.  This object's position and orientation will contribute to the 
-            /// group's average position and orientation, in accoFDance with its weight</summary>
-            [Tooltip("The target objects.  This object's position and orientation will contribute to the group's average position and orientation, in accoFDance with its weight")]
+            /// group's average position and orientation, in accordance with its weight</summary>
+            [Tooltip("The target objects.  This object's position and orientation will contribute to the group's average position and orientation, in accordance with its weight")]
             public Transform target;
             /// <summary>How much weight to give the target when averaging.  Cannot be negative</summary>
             [Tooltip("How much weight to give the target when averaging.  Cannot be negative")]

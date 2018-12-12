@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-namespace FDUI
+namespace RDUI
 {
     public class PlayerInfoHUD : BasePage
     {

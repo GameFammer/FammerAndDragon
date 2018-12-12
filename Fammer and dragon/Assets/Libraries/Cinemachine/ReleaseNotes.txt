@@ -1,4 +1,4 @@
-﻿<size=20><b>Version 2.1.10</b></size>
+<size=20><b>Version 2.1.10</b></size>
 
 - New Aim component: Same As Follow Target simply uses the same orientation as the Follow target
 - Perlin Noise component: added UI to clone or locate existing Noise profiles, and to create new ones inspector
@@ -18,10 +18,10 @@
 - New <b>CinemachineConfiner</b>: confine a virtual camera to a simple bounding volume or PolygonCollider2D.
 - New <b>Framing Transposer</b>.  This is a special transposer that will respect composition and framing rules by moving the camera without rotating it.  Takes only a Follow Target (no LookAt - this is important).  Designed for Orthographic cameras, but will also work for Perspective cameras.  If Follow target is a CinemachineTargetGroup, then will also provide Group Framing options.
 - New <b>CinemachinePOV</b> Aim component.  Camera aim is entirely controlled by user, using 2 input axes.
-- New <b>CinemachineMixingCamera</b>.  Drive a continuous blend of up to 8 virtual cameras from timeline or game logic.  Create complex rigs with custom blends and expose them as oFDinary vcams.
+- New <b>CinemachineMixingCamera</b>.  Drive a continuous blend of up to 8 virtual cameras from timeline or game logic.  Create complex rigs with custom blends and expose them as ordinary vcams.
 - New <b>CinemachineBlendListCamera</b>.  A mini vcam sequencer that provides a quick and easy way to do AB camera moves on the fly.
 - New <b>CinemachineDollyCart</b> behaviour, for moving anything along a path.  No need to create dummy vcams just for that.
-- New <b>CinemachineSmoothPath</b> component.  You can use it instead of the old CinemachinePath.  The difference is that the SmoothPath guarantees second-oFDer continuity, which means that there will never be any sudden camera rotation changes baked into the path tangents.  Easier to use, too: no tangents to mess around with (they get automatically set for smoothness).
+- New <b>CinemachineSmoothPath</b> component.  You can use it instead of the old CinemachinePath.  The difference is that the SmoothPath guarantees second-order continuity, which means that there will never be any sudden camera rotation changes baked into the path tangents.  Easier to use, too: no tangents to mess around with (they get automatically set for smoothness).
 - Path now supports <b>Distance Units</b> in addition to Path units, making it easy to create steady motion.
 - TrackedDolly: added ability to use <b>Distance or Path units</b> for path position.
 - Transposer and TrackedDolly: added target <b>angular damping</b> on 3 axes.
@@ -49,9 +49,9 @@
 - Orbital and FreeLook: damping no longer interferes with camera response to user input.  Axis movement bypasses all damping.
 - TrackedDolly: added path position offset to Auto-Dolly.  Stays on the path (unlike path offset, which is based on the path tangent and so can go off the path)
 - Noise component inspector now has a dropdown for Profile presets, instead of directly allowing editing of the Profile asset.
-- Added concept of <b>Cinemachine Extension</b>.  Collider, confiner, PostProcessing, etc are now Extensions.  They are available via a dropdown at the bottom of the inspection for virtual cameras.  They will no longer appear in the standaFD Components menu.
+- Added concept of <b>Cinemachine Extension</b>.  Collider, confiner, PostProcessing, etc are now Extensions.  They are available via a dropdown at the bottom of the inspection for virtual cameras.  They will no longer appear in the standard Components menu.
 - Time.timeScale = 0 is now supported.  Pausing the game will also pause the virtual cameras.
-- HaFDConstraint has been split into two settings: Do Nothing and HaFD LookAt/Follow.  Do Nothing will leave the camera's transform alone, ignoring any target that may have been set.
+- HardConstraint has been split into two settings: Do Nothing and Hard LookAt/Follow.  Do Nothing will leave the camera's transform alone, ignoring any target that may have been set.
 - CinemachineBrain no longer requires a Camera component.  Can be used with any GameObject, making it possible to use Cinemachine to control the transforms of arbitrary objects.
 - Improved logic for AxisState accel/decel.  More realistic behaviour.
 
