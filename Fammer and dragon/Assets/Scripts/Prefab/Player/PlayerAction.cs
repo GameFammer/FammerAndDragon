@@ -56,7 +56,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
 
     void FixedUpdate()
     {
-        ApplyStatus();
+        //ApplyStatus();
         //获取水平输入
         moveHorizontal = Input.GetAxis("Horizontal");
         //判断是否位于地面/撞头
@@ -72,7 +72,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
     {
         if(properties.status<= PlayerStatus.Player_CanntMove)
         {
-            if (_h != 0)
+            if (!Equals(_h, 0))
             {
                 rb2d.velocity = new Vector2(_h * properties.moveSpeed, rb2d.velocity.y);
                 if (_h > 0)
@@ -88,7 +88,7 @@ public class PlayerAction : MonoBehaviour, IBeHitMessage
         }      
         if(properties.status==PlayerStatus.Player_Weightlessness)
         {
-            if (_h != 0)
+            if (!Equals(_h, 0))
             {
                
             }

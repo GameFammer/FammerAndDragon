@@ -4,7 +4,7 @@ using UnityEngine;
 using RDUI;
 public class PlayerProperties: PublicProperties
 {
-
+    public PlayerStatus status;
     public const int HP_MaxLimit_Value = 8;//血量上限最大值
     [SerializeField]
     private int hpMaxValue;//血量上限
