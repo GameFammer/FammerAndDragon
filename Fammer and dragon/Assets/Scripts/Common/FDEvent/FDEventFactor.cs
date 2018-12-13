@@ -3,108 +3,138 @@ using System.Collections.Generic;
 
 public class FDEventFactor
 {
-    private static Dictionary<FDEvent, Delegate> fd_EventCenter = new Dictionary<FDEvent, Delegate>();
+    private static Dictionary<FDEvent, Dictionary<Type, Delegate>> fd_EventCenter = new Dictionary<FDEvent, Dictionary<Type, Delegate>>();
 
     public static void AddListener(FDEvent fdEvent, FDDelegate fdDelegate)
     {
         if (!ValidateAdd(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate)fd_EventCenter[fdEvent] + fdDelegate;
+        fd_EventCenter[fdEvent][typeof(FDDelegate)] = (FDDelegate)fd_EventCenter[fdEvent][typeof(FDDelegate)] + fdDelegate;
     }
 
     public static void AddListener<T>(FDEvent fdEvent, FDDelegate<T> fdDelegate)
     {
         if (!ValidateAdd(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate<T>)fd_EventCenter[fdEvent] + fdDelegate;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T>)] = (FDDelegate<T>)fd_EventCenter[fdEvent][typeof(FDDelegate<T>)] + fdDelegate;
     }
 
     public static void AddListener<T, A>(FDEvent fdEvent, FDDelegate<T, A> fdDelegate)
     {
         if (!ValidateAdd(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate<T, A>)fd_EventCenter[fdEvent] + fdDelegate;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T, A>)] = (FDDelegate<T, A>)fd_EventCenter[fdEvent][typeof(FDDelegate<T, A>)] + fdDelegate;
     }
 
     public static void AddListener<T, A, B>(FDEvent fdEvent, FDDelegate<T, A, B> fdDelegate)
     {
         if (!ValidateAdd(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate<T, A, B>)fd_EventCenter[fdEvent] + fdDelegate;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B>)] = (FDDelegate<T, A, B>)fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B>)] + fdDelegate;
+    }
+
+    public static void AddListener<T, A, B, C>(FDEvent fdEvent, FDDelegate<T, A, B, C> fdDelegate)
+    {
+        if (!ValidateAdd(fdEvent, fdDelegate)) return;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B, C>)] = (FDDelegate<T, A, B, C>)fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B, C>)] + fdDelegate;
     }
 
     public static void RemoveListener(FDEvent fdEvent, FDDelegate fdDelegate)
     {
         if (!ValidateRemove(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate)fd_EventCenter[fdEvent] - fdDelegate;
+        fd_EventCenter[fdEvent][typeof(FDDelegate)] = (FDDelegate)fd_EventCenter[fdEvent][typeof(FDDelegate)] - fdDelegate;
         AfterRemoved(fdEvent);
     }
 
     public static void RemoveListener<T>(FDEvent fdEvent, FDDelegate<T> fdDelegate)
     {
-        if(!ValidateRemove(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate<T>)fd_EventCenter[fdEvent] - fdDelegate;
+        if (!ValidateRemove(fdEvent, fdDelegate)) return;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T>)] = (FDDelegate<T>)fd_EventCenter[fdEvent][typeof(FDDelegate<T>)] - fdDelegate;
         AfterRemoved(fdEvent);
     }
 
     public static void RemoveListener<T, A>(FDEvent fdEvent, FDDelegate<T, A> fdDelegate)
     {
-        if(!ValidateRemove(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate<T, A>)fd_EventCenter[fdEvent] - fdDelegate;
+        if (!ValidateRemove(fdEvent, fdDelegate)) return;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T, A>)] = (FDDelegate<T, A>)fd_EventCenter[fdEvent][typeof(FDDelegate<T, A>)] - fdDelegate;
         AfterRemoved(fdEvent);
     }
 
     public static void RemoveListener<T, A, B>(FDEvent fdEvent, FDDelegate<T, A, B> fdDelegate)
     {
-        if(!ValidateRemove(fdEvent, fdDelegate)) return;
-        fd_EventCenter[fdEvent] = (FDDelegate<T, A, B>)fd_EventCenter[fdEvent] - fdDelegate;
+        if (!ValidateRemove(fdEvent, fdDelegate)) return;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B>)] = (FDDelegate<T, A, B>)fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B>)] - fdDelegate;
+        AfterRemoved(fdEvent);
+    }
+
+    public static void RemoveListener<T, A, B, C>(FDEvent fdEvent, FDDelegate<T, A, B, C> fdDelegate)
+    {
+        if (!ValidateRemove(fdEvent, fdDelegate)) return;
+        fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B, C>)] = (FDDelegate<T, A, B, C>)fd_EventCenter[fdEvent][typeof(FDDelegate<T, A, B, C>)] - fdDelegate;
         AfterRemoved(fdEvent);
     }
 
     public static void Broadcast(FDEvent fdEvent)
     {
-        Delegate d;
-        if (fd_EventCenter.TryGetValue(fdEvent, out d))
+        Dictionary<Type, Delegate> eventCenter;
+        if (fd_EventCenter.TryGetValue(fdEvent, out eventCenter))
         {
-            FDDelegate fdDelegate = d as FDDelegate;
-            if (fdDelegate != null)
+            Delegate fdDelegate;
+            if (eventCenter.TryGetValue(typeof(FDDelegate), out fdDelegate))
             {
-                fdDelegate();
+                ((FDDelegate)fdDelegate)();
             }
         }
     }
 
-    public static void Broadcast<T>(FDEvent fdEvent, T arg)
+    public static void Broadcast<T>(FDEvent fdEvent, T t)
     {
-        Delegate d;
-        if (fd_EventCenter.TryGetValue(fdEvent, out d))
+        Broadcast(fdEvent);
+        Dictionary<Type, Delegate> eventCenter;
+        if (fd_EventCenter.TryGetValue(fdEvent, out eventCenter))
         {
-            FDDelegate<T> fdDelegate = d as FDDelegate<T>;
-            if (fdDelegate != null)
+            Delegate fdDelegate;
+            if (eventCenter.TryGetValue(typeof(FDDelegate<T>), out fdDelegate))
             {
-                fdDelegate(arg);
+                ((FDDelegate<T>)fdDelegate)(t);
             }
         }
     }
 
-    public static void Broadcast<T, A>(FDEvent fdEvent, T arg1, A arg2)
+    public static void Broadcast<T, A>(FDEvent fdEvent, T t, A a)
     {
-        Delegate d;
-        if (fd_EventCenter.TryGetValue(fdEvent, out d))
+        Broadcast<T>(fdEvent, t);
+        Dictionary<Type, Delegate> eventCenter;
+        if (fd_EventCenter.TryGetValue(fdEvent, out eventCenter))
         {
-            FDDelegate<T, A> fdDelegate = d as FDDelegate<T, A>;
-            if (fdDelegate != null)
+            Delegate fdDelegate;
+            if (eventCenter.TryGetValue(typeof(FDDelegate<T, A>), out fdDelegate))
             {
-                fdDelegate(arg1, arg2);
+                ((FDDelegate<T, A>)fdDelegate)(t, a);
             }
         }
     }
 
-    public static void Broadcast<T, A, B>(FDEvent fdEvent, T arg1, A arg2, B arg3)
+    public static void Broadcast<T, A, B>(FDEvent fdEvent, T t, A a, B b)
     {
-        Delegate d;
-        if (fd_EventCenter.TryGetValue(fdEvent, out d))
+        Broadcast<T, A>(fdEvent, t, a);
+        Dictionary<Type, Delegate> eventCenter;
+        if (fd_EventCenter.TryGetValue(fdEvent, out eventCenter))
         {
-            FDDelegate<T, A, B> fdDelegate = d as FDDelegate<T, A, B>;
-            if (fdDelegate != null)
+            Delegate fdDelegate;
+            if (eventCenter.TryGetValue(typeof(FDDelegate<T, A, B>), out fdDelegate))
             {
-                fdDelegate(arg1, arg2, arg3);
+                ((FDDelegate<T, A, B>)fdDelegate)(t, a, b);
+            }
+        }
+    }
+
+    public static void Broadcast<T, A, B, C>(FDEvent fdEvent, T t, A a, B b, C c)
+    {
+        Broadcast<T, A, B>(fdEvent, t, a, b);
+        Dictionary<Type, Delegate> eventCenter;
+        if (fd_EventCenter.TryGetValue(fdEvent, out eventCenter))
+        {
+            Delegate fdDelegate;
+            if (eventCenter.TryGetValue(typeof(FDDelegate<T, A, B, C>), out fdDelegate))
+            {
+                ((FDDelegate<T, A, B, C>)fdDelegate)(t, a, b, c);
             }
         }
     }
@@ -121,11 +151,11 @@ public class FDEventFactor
     {
         if (!fd_EventCenter.ContainsKey(fdEvent))
         {
-            fd_EventCenter.Add(fdEvent, null);
+            fd_EventCenter.Add(fdEvent, new Dictionary<Type, Delegate>());
         }
-        if (fd_EventCenter[fdEvent] != null && fd_EventCenter[fdEvent].GetType() != fdDelegate.GetType())
+        if(!fd_EventCenter[fdEvent].ContainsKey(fdDelegate.GetType()))
         {
-            return false;
+            fd_EventCenter[fdEvent].Add(fdDelegate.GetType(), null);
         }
         return true;
     }
@@ -134,7 +164,8 @@ public class FDEventFactor
     {
         if (fd_EventCenter.ContainsKey(fdEvent))
         {
-            if (fd_EventCenter[fdEvent] != null && fd_EventCenter[fdEvent].GetType() == fdDelegate.GetType())
+            if (fd_EventCenter[fdEvent] != null && fd_EventCenter[fdEvent].ContainsKey(fdDelegate.GetType())
+                    && fd_EventCenter[fdEvent][fdDelegate.GetType()] != null)
             {
                 return true;
             }
