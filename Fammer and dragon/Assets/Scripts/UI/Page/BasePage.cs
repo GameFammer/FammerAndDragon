@@ -31,6 +31,10 @@ namespace FDUI
             {
                 gameObject.SetActive(false);
             }
+            else
+            {
+                Open();
+            }
         }
         //打开
         public virtual void Open()
