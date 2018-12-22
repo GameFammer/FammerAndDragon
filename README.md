@@ -1,27 +1,42 @@
 # Fammer And Dragon
 
-## 开发环境
+## Build Environment
 Unity 2018.2.1f1    
 Visual Studio 2017
 
-## 脚本
+## Scripts
 
 ```
-Scripts/
-+-- Action/常用Action
-+-- Common/共通的代码
-|   +-- RDManager/游戏运行控制相关
-|   +-- RDUtils	/一些较为底层的工具类
-+-- Data/游戏数据
-|   +-- Model/数据模型
-+-- Prefab/所有预制体相关
-|   +-- Effects/特效相关
-|   +-- Enemy/敌人相关
-|   +-- Item/物品相关
-|   |   +-- Consumables/消耗品相关
-|   |   |   +-- Medicines/药品相关
-|   |   +-- Bullets/子弹相关
-|   +-- Player/玩家脚本
-|   +-- Scene/场景脚本
-+-- UI/所有界面控件相关脚本
+Scripts
+├─Action
+├─Common
+│  ├─FDEvent
+│  │  └─FDEventArgs
+│  ├─FDManager
+│  ├─FDUtils
+│  └─Interface
+├─Data
+│  └─Models
+├─Map
+├─Prefab
+│  ├─Effect
+│  ├─Enemy
+│  │  ├─DieAction
+│  │  ├─Guard
+│  │  └─Patrol
+│  ├─Items
+│  │  ├─Bullets
+│  │  │  ├─HitAction
+│  │  │  └─MoveAction
+│  │  ├─Consumables
+│  │  │  └─Medicines
+│  │  └─Equipments
+│  │      ├─Shoes
+│  │      └─Weapons
+│  ├─Player
+│  └─Scene
+└─UI
+    └─Page
+        └─PlayerInfo
 ```
+
