@@ -20,6 +20,8 @@ public class PlayerProperties: PublicProperties
     [SerializeField]
     private int hpCurrentValue;//当前血量
 
+    //背包
+    public Backpack backpack= new Backpack();
     //道具列表
     public int itemsMaxAmount = 5;
     public Dictionary<string, GameObject> items = new Dictionary<string, GameObject>();
@@ -56,6 +58,7 @@ public class PlayerProperties: PublicProperties
 
     void Start()
     {
+        backpack.Init();
         equipments.Add("Weapon", "WatterBullet");
     }
 }

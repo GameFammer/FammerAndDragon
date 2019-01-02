@@ -2,27 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour {
-
+public class Item : MonoBehaviour
+{
+    public string Name;
+    public int MaxStackSize;
+    public int stackSize;
     public bool hasOwner = false;
 
     public GameObject owner;
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    private BoxCollider2D boxCollider;
+    private void Start()
     {
-        //没有拥有者的道具首先会被捡起，否则调用该道具的使用效果
-        if(!hasOwner)
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
+    protected void OnMouseOver()
+    {
+        //悬停
+        MouseOver();
+        //左键按下
+        if (Input.GetMouseButtonDown(0))
         {
-            SetOwner(collision);
+            LeftMouseDown();
         }
-        else
+        //右键按下
+        else if (Input.GetMouseButtonDown(1))
         {
-            Effect(collision);
+            RightMouseDown();
         }
+        //左键抬起
+        else if (Input.GetMouseButtonUp(0))
+        {
+            LeftMouseUp();
+        }
+        //右键抬起
+        else if (Input.GetMouseButtonUp(1))
+        {
+            RightMouseUp();
+        }
+    }
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("OnTrigger");
+        //test
+        var playerProperties = collision.gameObject.GetComponent<PlayerProperties>();
+        playerProperties.backpack.Packing(this);
+        if (stackSize <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
+        ////没有拥有者的道具首先会被捡起，否则调用该道具的使用效果
+        //if(!hasOwner)
+        //{
+        //    SetOwner(collision);
+        //}
+        //else
+        //{
+        //    Effect(collision);
+        //}
+
     }
 
     //为道具指定拥有者
-    public void SetOwner(Collider2D _collision)
+    public virtual void SetOwner(Collider2D _collision)
     {
         if (_collision.gameObject.name != "player")
         {
@@ -31,7 +74,7 @@ public class Item : MonoBehaviour {
 
         var playerProperties = _collision.gameObject.GetComponent<PlayerProperties>();
 
-        if(playerProperties.items.Count < playerProperties.itemsMaxAmount)
+        if (playerProperties.items.Count < playerProperties.itemsMaxAmount)
         {
             hasOwner = true;
             owner = _collision.gameObject;
@@ -41,8 +84,29 @@ public class Item : MonoBehaviour {
     }
 
     //子类继承Effect实现道具效果
-    public void Effect(Collider2D _collision)
+    public virtual void Effect(Collider2D _collision)
     {
-        Destroy(gameObject,2);
+        Destroy(gameObject, 2);
+    }
+    public virtual void MouseOver()
+    {
+
+    }
+    public virtual void LeftMouseDown()
+    {
+        //test
+        boxCollider.isTrigger = true;
+    }
+    public virtual void RightMouseDown()
+    {
+
+    }
+    public virtual void LeftMouseUp()
+    {
+
+    }
+    public virtual void RightMouseUp()
+    {
+
     }
 }

@@ -7,7 +7,7 @@ TagManager:
   - Item
   - BulletPool
   - Enemy
-  - LevelEntrance
+  - Cursor
   layers:
   - Default
   - TransparentFX
