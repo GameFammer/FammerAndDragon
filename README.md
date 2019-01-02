@@ -10,6 +10,7 @@ Visual Studio 2017
 Scripts
 ├─Action
 ├─Common
+│  ├─Cursor
 │  ├─FDEvent
 │  │  └─FDEventArgs
 │  ├─FDManager
@@ -37,6 +38,8 @@ Scripts
 │  └─Scene
 └─UI
     └─Page
-        └─PlayerInfo
+        └─HUD
+            ├─Backpack
+            └─PlayerInfo
 ```
 
