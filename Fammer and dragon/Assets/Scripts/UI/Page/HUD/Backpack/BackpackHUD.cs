@@ -30,14 +30,7 @@ namespace FDUI
             blocks = new Block[count];
             for (int i = 0; i < count; i++)
             {
-                if (i < FASTBLOCK_COUNT)
-                {
-                    blocks[i] = Instantiate<FastBlock>(fastBlockPrefab, fastInventory);
-                }
-                else
-                {
-                    blocks[i] = Instantiate<Block>(blockPrefab, inventory);
-                }
+                blocks[i] = i < FASTBLOCK_COUNT ? Instantiate<FastBlock>(fastBlockPrefab, fastInventory) : blocks[i] = Instantiate<Block>(blockPrefab, inventory);
                 blocks[i].Id = i;
                 blocks[i].Init(backpack,cursor);
             }

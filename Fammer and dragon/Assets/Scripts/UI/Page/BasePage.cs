@@ -11,19 +11,23 @@ namespace FDUI
         Float,//浮动消息,如Boss技能提示
         PopUp//弹出窗口，如MessageBox
     }
+
     public enum PageStatus
     {
         Active,//正在显示
         DeActive//未显示
     }
+
     public class BasePage : MonoBehaviour
     {
         public PageType pageType;//页面类型
         public PageStatus pageStatus = PageStatus.DeActive;//页面状态
+
         void Start()
         {
             Init();
         }
+
         //初始化
         protected virtual void Init()
         {
@@ -36,28 +40,24 @@ namespace FDUI
                 Open();
             }
         }
+
         //打开
         public virtual void Open()
         {
             pageStatus = PageStatus.Active;
             gameObject.SetActive(true);
         }
+
         //关闭
         public virtual void Close()
         {
             pageStatus = PageStatus.DeActive;
             gameObject.SetActive(false);
         }
+
         public virtual bool IsOpen()
         {
-            if (pageStatus == PageStatus.Active)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return pageStatus == PageStatus.Active;
         }
     }
 }
