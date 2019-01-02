@@ -20,7 +20,7 @@ namespace FDUI
             //获取每格血高度
             hpTextureHeight = HpBarImage.rectTransform.sizeDelta.y;
             //获取Player当前血量上限
-            playerHpMax = GameObject.Find("player").GetComponent<PlayerProperties>().HpMaxValue;
+            playerHpMax = GameObject.Find("Player").GetComponent<PlayerProperties>().HpMaxValue;
             //根据Player血量初始化
             HpBarImage.fillAmount = (float)playerHpMax / (float)PlayerProperties.HP_MaxLimit_Value;
             HpEmptyBarImage.fillAmount = 0;

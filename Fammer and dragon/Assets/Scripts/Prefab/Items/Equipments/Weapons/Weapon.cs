@@ -6,13 +6,13 @@ public class Weapon : Equipment
 {
     public GameObject bullet;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         SetOwner(collision);
         Destroy();
     }
 
-    public void SetOwner(Collider2D _collision)
+    public override void SetOwner(Collider2D _collision)
     {
         if (_collision.gameObject.name != "Player")
         {

@@ -15,8 +15,6 @@ namespace FDUI
         private Transform uiPage;
         private Transform uiFloat;
         private Transform uiPopUp;
-
-        public BasePage health;
         void Awake()
         {
             if (instance == null)
