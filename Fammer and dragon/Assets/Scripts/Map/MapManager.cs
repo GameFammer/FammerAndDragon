@@ -57,7 +57,6 @@ public class MapManager : MonoBehaviour
     }
     IEnumerator GenerateMap()
     {
-       
         groundNoise.fastNoise.SetSeed(seed);
         caveNoise.fastNoise.SetSeed(seed);
 
