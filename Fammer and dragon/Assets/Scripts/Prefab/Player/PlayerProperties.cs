@@ -58,7 +58,6 @@ public class PlayerProperties: PublicProperties
 
     void Start()
     {
-        backpack.Init();
         equipments.Add("Weapon", "WatterBullet");
     }
 }

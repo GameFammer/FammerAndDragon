@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public Guid Id = new Guid();
     public string Name;
     public int MaxStackSize;
     public int stackSize;

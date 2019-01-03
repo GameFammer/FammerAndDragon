@@ -2,76 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel;
+using System.Linq;
 
 public class Backpack
 {
     public const int MAX_CAPACITY = 50;
 
     private const int INVALID_ID = -1;
-    private ItemBlock[] itemBlocks;
+    private Dictionary<int, ItemBlock> itemBlockDic = new Dictionary<int, ItemBlock>();
     private int emptyCount = MAX_CAPACITY;
 
     public Backpack()
     {
-        itemBlocks = new ItemBlock[MAX_CAPACITY];
-    }
-    public void Init()
-    {
-        //test
         for (int i = 0; i < MAX_CAPACITY; i++)
         {
-            itemBlocks[i] = new ItemBlock(i);
+            itemBlockDic.Add(i, new ItemBlock(i));
         }
-        emptyCount = 50;
     }
-    //public void SetItem(int _id, Item _item)
-    //{
-    //    if (emptyCount > 0)
-    //    {
-    //        if (_id < 0 || _id >= MAX_CAPACITY)
-    //        {
-    //            return;
-    //        }
-    //        if (_item == null)
-    //        {
-    //            return;
-    //        }
-    //        //同种物品 && 可叠加->叠加
-    //        if (itemBlocks[_id].IsIdentical(_item) && _item.MaxStackSize > 1)
-    //        {
-    //            itemBlocks[_id].Add(_item.stackSize);
-    //        }
-    //        else
-    //        {
-    //            itemBlocks[_id].Item = _item;
-    //            emptyCount--;
-    //        }
-    //    }
-    //}
-    //public void Packing(ItemBlock _block)
-    //{
-    //    Packing(_block.Item);
-    //}
+
     public void PackingById(int _id, Item _item)
     {
         if (_id < 0 || _id >= MAX_CAPACITY)
         {
             return;
         }
-        itemBlocks[_id].Item = _item;
+        itemBlockDic[_id].Item = _item;
         if (_item != null)
         {
             //状态转换
             _item.gameObject.SetActive(false);
         }
     }
+
     public void Packing(Item _item)
     {
         if (_item == null)
         {
             return;
         }
-        if (IsFull())
+        if (emptyCount <= 0)
         {
             return;
         }
@@ -79,15 +48,15 @@ public class Backpack
         //能够叠加
         if (_item.MaxStackSize > 1)
         {
-            id = FindItemNotFull(_item);
+            id = FindAvailableItemCellId(_item);
             //存在未满&&同种物品，优先填满
             if (id != INVALID_ID)
             {
-                int temp = _item.MaxStackSize - itemBlocks[id].Size;
+                int temp = _item.MaxStackSize - itemBlockDic[id].Size;
                 //填充数量
                 int fillSize = _item.stackSize > temp ? temp : _item.stackSize;
                 //填充
-                itemBlocks[id].Add(fillSize);
+                itemBlockDic[id].Add(fillSize);
                 //剩余数量
                 _item.stackSize -= fillSize;
             }
@@ -119,7 +88,7 @@ public class Backpack
     //放置在第一个空位置
     public int PackingFirstEmpty(Item _item, int _size)
     {
-        int id = FindFirstEmpty();
+        int id = FindEmptyCellId();
         if (id != INVALID_ID)
         {
             _item.stackSize -= _size;
@@ -127,7 +96,7 @@ public class Backpack
             copy.stackSize = _size;
             //状态转换
             copy.gameObject.SetActive(false);
-            itemBlocks[id].Item = copy;
+            itemBlockDic[id].Item = copy;
             emptyCount--;
         }
         return id;
@@ -138,76 +107,57 @@ public class Backpack
         {
             return null;
         }
-        if (itemBlocks[_id].IsEmpty())
+        if (itemBlockDic[_id].IsEmpty())
         {
             return null;
         }
-        if (_size > itemBlocks[_id].Size)
+        if (_size > itemBlockDic[_id].Size)
         {
             return null;
         }
         //全部取出
-        if (_size == itemBlocks[_id].Size)
+        if (_size == itemBlockDic[_id].Size)
         {
             //状态转换
-            var temp = itemBlocks[_id].Item;
-            itemBlocks[_id].Item = null;
+            var temp = itemBlockDic[_id].Item;
+            itemBlockDic[_id].Item = null;
             emptyCount++;
             return temp;
         }
         //部分取出
-        itemBlocks[_id].Remove(_size);
-        var copy = GameObject.Instantiate<Item>(itemBlocks[_id].Item);
+        itemBlockDic[_id].Remove(_size);
+        var copy = GameObject.Instantiate<Item>(itemBlockDic[_id].Item);
         copy.stackSize = _size;
         //状态转换
         copy.gameObject.SetActive(false);
         return copy;
     }
+
     public Item TakeOutAll(int _id)
     {
         if (_id < 0 || _id >= MAX_CAPACITY)
         {
             return null;
         }
-        if (itemBlocks[_id].IsEmpty())
+        if (itemBlockDic[_id].IsEmpty())
         {
             return null;
         }
-        var temp = itemBlocks[_id].Item;
-        itemBlocks[_id].Item = null;
+        var temp = itemBlockDic[_id].Item;
+        itemBlockDic[_id].Item = null;
         emptyCount++;
         return temp;
     }
-    public bool IsFull()
+
+    public int FindAvailableItemCellId(Item _item)
     {
-        return emptyCount > 0 ? false : true;
+        KeyValuePair<int, ItemBlock>[] pairs = itemBlockDic.Where(pair => pair.Value.IsIdentical(_item) && pair.Value.Size < _item.MaxStackSize).ToArray();
+        return pairs.Length > 0 ? pairs[0].Key : INVALID_ID;
     }
-    public int FindItemNotFull(Item _item)
+
+    public int FindEmptyCellId()
     {
-        for (int i = 0; i < MAX_CAPACITY; i++)
-        {
-            if (itemBlocks[i].IsIdentical(_item) && itemBlocks[i].Size < _item.MaxStackSize)
-            {
-                return i;
-            }
-        }
-        return INVALID_ID;
-    }
-    public int FindFirstEmpty()
-    {
-        if (IsFull())
-        {
-            return INVALID_ID;
-        }
-        int id = INVALID_ID;
-        for (int i = 0; i < MAX_CAPACITY; i++)
-        {
-            if (itemBlocks[i].IsEmpty())
-            {
-                id = i;
-                break;
-            }
-        }
-        return id;
+        KeyValuePair<int, ItemBlock>[] pairs = itemBlockDic.Where(pair => pair.Value.IsEmpty()).ToArray();
+        return pairs.Length > 0 ? pairs[0].Key : INVALID_ID;
     }
 }
